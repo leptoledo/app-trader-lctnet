@@ -6,6 +6,7 @@ import { Trade } from "@/types"
 import { calculateMetrics } from "@/lib/analytics"
 import { BarChart3, TrendingUp, TrendingDown, Target, Award, Wallet } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { InfoTooltip } from "@/components/ui/info-tooltip"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LineChart, Line } from "recharts"
 import { analyzeByDayOfWeek, analyzeBySymbol } from "@/lib/advanced-analytics"
 import { cn } from "@/lib/utils"
@@ -110,37 +111,37 @@ export default function ReportsPage() {
     ].filter(d => d.count > 0)
 
     return (
-        <div className="p-8 pb-12 bg-slate-50 dark:bg-[#020617] min-h-screen transition-colors duration-500">
+        <div className="p-8 pb-12 bg-[#f7f9fc] dark:bg-[#0b1220] min-h-screen transition-colors duration-500">
             <div className="max-w-7xl mx-auto space-y-8">
                 <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
-                        <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                        <BarChart3 className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                     </div>
                     <div>
-                        <p className="text-xs font-bold text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">Analytics</p>
-                        <h1 className="text-3xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">Relatórios Avançados</h1>
+                        <p className="text-xs font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-widest mb-1">Analytics</p>
+                        <h1 className="text-3xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">Relatórios Avançados</h1>
                     </div>
                 </div>
 
                 <div className="animate-in fade-in slide-in-from-top-6 duration-500 delay-75">
-                    <Card className="rounded-[2rem] border-none shadow-xl bg-gradient-to-br from-slate-900 to-slate-800 dark:from-blue-950/40 dark:to-slate-900/50 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                    <Card className="rounded-[2rem] border border-slate-200/70 dark:border-slate-800 shadow-lg bg-white dark:bg-slate-900/40 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 p-32 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
                         <CardContent className="p-8 flex flex-col md:flex-row items-center justify-between relative z-10 gap-6">
                             <div className="flex items-center gap-6">
-                                <div className="w-16 h-16 rounded-3xl bg-white/10 backdrop-blur-md flex items-center justify-center border border-white/10 shadow-inner">
-                                    <Wallet className="h-8 w-8 text-white" />
+                                <div className="w-16 h-16 rounded-3xl bg-blue-50 flex items-center justify-center border border-blue-100 shadow-inner">
+                                    <Wallet className="h-8 w-8 text-blue-500" />
                                 </div>
                                 <div>
                                     <div className="flex items-center gap-3 mb-1">
-                                        <h2 className="text-sm font-bold text-slate-400 uppercase tracking-widest">Saldo Atual</h2>
+                                        <h2 className="text-sm font-semibold text-slate-400 uppercase tracking-widest">Saldo Atual</h2>
                                         {accounts.length > 0 && (
                                             <Select value={selectedAccountId} onValueChange={setSelectedAccountId}>
-                                                <SelectTrigger className="h-6 w-auto gap-2 border-none bg-white/5 hover:bg-white/10 text-white rounded-lg text-xs font-medium px-2 focus:ring-0">
+                                                <SelectTrigger className="h-6 w-auto gap-2 border border-slate-200 bg-white hover:bg-slate-50 text-slate-600 rounded-lg text-xs font-normal px-2 focus:ring-0">
                                                     <SelectValue placeholder="Selecione..." />
                                                 </SelectTrigger>
-                                                <SelectContent className="bg-slate-900 border-slate-800 text-white">
+                                                <SelectContent className="bg-white border-slate-200 text-slate-700">
                                                     {accounts.map(acc => (
-                                                        <SelectItem key={acc.id} value={acc.id} className="focus:bg-slate-800 focus:text-white cursor-pointer">
+                                                        <SelectItem key={acc.id} value={acc.id} className="focus:bg-slate-100 focus:text-slate-900 cursor-pointer">
                                                             {acc.name}
                                                         </SelectItem>
                                                     ))}
@@ -149,20 +150,20 @@ export default function ReportsPage() {
                                         )}
                                     </div>
                                     <div className="flex items-baseline gap-2">
-                                        <span className="text-4xl md:text-5xl font-heading font-bold text-white tracking-tight">
+                                        <span className="text-4xl md:text-5xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">
                                             ${currentBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                         </span>
-                                        <span className="flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-400/10 px-2.5 py-1 rounded-full border border-emerald-400/20">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
                                             {selectedAccount?.currency || 'USD'}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex gap-8 border-t md:border-t-0 md:border-l border-white/10 pt-6 md:pt-0 md:pl-8 w-full md:w-auto">
+                            <div className="flex gap-8 border-t md:border-t-0 md:border-l border-slate-200 pt-6 md:pt-0 md:pl-8 w-full md:w-auto">
                                 <div>
-                                    <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Conta Selecionada</p>
-                                    <p className="text-xl font-bold text-white font-heading truncate max-w-[150px]">{selectedAccount?.name || 'Carregando...'}</p>
+                                    <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-1">Conta Selecionada</p>
+                                    <p className="text-xl font-semibold text-slate-800 dark:text-white font-heading truncate max-w-[150px]">{selectedAccount?.name || 'Carregando...'}</p>
                                 </div>
                             </div>
                         </CardContent>
@@ -172,12 +173,12 @@ export default function ReportsPage() {
                 <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
                     <Card className="rounded-[2rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden group">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">P&L Total</CardTitle>
-                            <TrendingUp className="h-4 w-4 text-slate-400" />
+                            <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">P&L Total</CardTitle>
+                            <InfoTooltip text="Resultado líquido total" />
                         </CardHeader>
                         <CardContent>
                             <div className={cn(
-                                "text-3xl font-heading font-bold tracking-tight",
+                                "text-3xl font-heading font-semibold tracking-tight",
                                 metrics.netPnL >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-500 dark:text-red-400"
                             )}>
                                 {formatLargeNumber(metrics.netPnL)}
@@ -190,11 +191,11 @@ export default function ReportsPage() {
 
                     <Card className="rounded-[2rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden group">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Taxa de Acerto</CardTitle>
-                            <Target className="h-4 w-4 text-slate-400" />
+                            <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Taxa de Acerto</CardTitle>
+                            <InfoTooltip text="% de trades vencedores" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-heading font-bold text-slate-900 dark:text-white">{metrics.winRate.toFixed(1)}%</div>
+                            <div className="text-3xl font-heading font-semibold text-slate-800 dark:text-white">{metrics.winRate.toFixed(1)}%</div>
                             <p className="text-xs font-medium text-slate-400 mt-1">
                                 Média Win: <span className="text-emerald-600 dark:text-emerald-400">${metrics.avgWin.toFixed(2)}</span>
                             </p>
@@ -203,11 +204,11 @@ export default function ReportsPage() {
 
                     <Card className="rounded-[2rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden group">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Profit Factor</CardTitle>
-                            <Award className="h-4 w-4 text-slate-400" />
+                            <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Profit Factor</CardTitle>
+                            <InfoTooltip text="Lucro bruto / perda bruta" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-heading font-bold text-slate-900 dark:text-white">{metrics.profitFactor.toFixed(2)}</div>
+                            <div className="text-3xl font-heading font-semibold text-slate-800 dark:text-white">{metrics.profitFactor.toFixed(2)}</div>
                             <p className="text-xs font-medium text-slate-400 mt-1">
                                 Ideal: <span className="text-blue-600 dark:text-blue-400">&gt; 1.5</span>
                             </p>
@@ -216,11 +217,11 @@ export default function ReportsPage() {
 
                     <Card className="rounded-[2rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden group">
                         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                            <CardTitle className="text-sm font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Max Drawdown</CardTitle>
-                            <TrendingDown className="h-4 w-4 text-slate-400" />
+                            <CardTitle className="text-sm font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest">Max Drawdown</CardTitle>
+                            <InfoTooltip text="Maior queda acumulada" />
                         </CardHeader>
                         <CardContent>
-                            <div className="text-3xl font-heading font-bold text-red-500 dark:text-red-400">-{formatLargeNumber(maxDrawdown)}</div>
+                            <div className="text-3xl font-heading font-semibold text-red-500/90 dark:text-red-400">-{formatLargeNumber(maxDrawdown)}</div>
                             <p className="text-xs font-medium text-slate-400 mt-1">
                                 Máxima queda acumulada
                             </p>
@@ -231,7 +232,7 @@ export default function ReportsPage() {
                 <div className="grid gap-6 md:grid-cols-2 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
                     <Card className="md:col-span-2 rounded-[2.5rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm">
                         <CardHeader className="pl-8 pt-8">
-                            <CardTitle className="text-xl font-heading font-bold text-slate-900 dark:text-white">Curva de Patrimônio</CardTitle>
+                            <CardTitle className="text-xl font-heading font-semibold text-slate-800 dark:text-white">Curva de Patrimônio</CardTitle>
                             <CardDescription className="text-slate-500 dark:text-slate-400">Evolução do resultado acumulado</CardDescription>
                         </CardHeader>
                         <CardContent className="p-8">
@@ -289,7 +290,7 @@ export default function ReportsPage() {
 
                     <Card className="rounded-[2.5rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm">
                         <CardHeader className="pl-6 pt-6">
-                            <CardTitle className="text-lg font-heading font-bold text-slate-900 dark:text-white">Performance por Dia</CardTitle>
+                            <CardTitle className="text-lg font-heading font-semibold text-slate-800 dark:text-white">Performance por Dia</CardTitle>
                             <CardDescription className="text-slate-500 dark:text-slate-400">Resultados por dia da semana</CardDescription>
                         </CardHeader>
                         <CardContent className="p-6">
@@ -337,7 +338,7 @@ export default function ReportsPage() {
 
                     <Card className="rounded-[2.5rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm">
                         <CardHeader className="pl-6 pt-6">
-                            <CardTitle className="text-lg font-heading font-bold text-slate-900 dark:text-white">Distribuição de Resultados</CardTitle>
+                            <CardTitle className="text-lg font-heading font-semibold text-slate-800 dark:text-white">Distribuição de Resultados</CardTitle>
                             <CardDescription className="text-slate-500 dark:text-slate-400">Frequência de faixas de P&L</CardDescription>
                         </CardHeader>
                         <CardContent className="p-6">
@@ -382,7 +383,7 @@ export default function ReportsPage() {
 
                     <Card className="md:col-span-2 rounded-[2.5rem] bg-white dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 shadow-sm">
                         <CardHeader className="pl-8 pt-8">
-                            <CardTitle className="text-xl font-heading font-bold text-slate-900 dark:text-white">Performance por Símbolo</CardTitle>
+                            <CardTitle className="text-xl font-heading font-semibold text-slate-800 dark:text-white">Performance por Símbolo</CardTitle>
                             <CardDescription className="text-slate-500 dark:text-slate-400">Ranking dos ativos mais lucrativos</CardDescription>
                         </CardHeader>
                         <CardContent className="p-8">
@@ -390,9 +391,9 @@ export default function ReportsPage() {
                                 {symbolData.slice(0, 10).map((item, idx) => (
                                     <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center text-xs font-bold text-slate-400">#{idx + 1}</div>
+                                            <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center text-xs font-semibold text-slate-400">#{idx + 1}</div>
                                             <div className="flex flex-col">
-                                                <span className="font-bold font-heading text-slate-900 dark:text-white">{item.symbol}</span>
+                                                <span className="font-semibold font-heading text-slate-800 dark:text-white">{item.symbol}</span>
                                                 <span className="text-xs text-slate-400 font-medium">
                                                     {item.trades} trades • <span className={item.winRate >= 50 ? "text-emerald-500" : "text-amber-500"}>{item.winRate.toFixed(0)}% win</span>
                                                 </span>
@@ -400,7 +401,7 @@ export default function ReportsPage() {
                                         </div>
                                         <div className="flex flex-col items-end">
                                             <span className={cn(
-                                                "font-bold font-mono",
+                                                "font-semibold font-mono",
                                                 item.pnl >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-500 dark:text-red-400"
                                             )}>
                                                 {item.pnl >= 0 ? '+' : ''}${item.pnl.toFixed(2)}

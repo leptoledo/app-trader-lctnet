@@ -1,13 +1,14 @@
 import { NextResponse } from 'next/server';
-import { supabase } from '@/lib/supabase';
+import { createSupabaseServerClient } from '@/lib/supabase-server';
 import { createCheckoutSession } from '@/lib/stripe';
 import { PLANS, SubscriptionPlan } from '@/config/plans';
 
 export async function POST(req: Request) {
     try {
-        const { data: { user } } = await (supabase as any).auth.getUser();
+        const supabase = createSupabaseServerClient();
+        const { data: { user }, error: authError } = await supabase.auth.getUser();
 
-        if (!user) {
+        if (authError || !user) {
             return NextResponse.json({ error: 'Não autorizado' }, { status: 401 });
         }
 

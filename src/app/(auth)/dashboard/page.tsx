@@ -24,6 +24,8 @@ import { cn } from "@/lib/utils"
 import { DashboardSkeleton } from "@/components/dashboard-skeleton"
 import { useAccounts } from "@/hooks/useAccounts"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { InfoTooltip } from "@/components/ui/info-tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 export default function Dashboard() {
   const router = useRouter()
@@ -115,31 +117,31 @@ export default function Dashboard() {
   const recentTrades = trades.slice(0, 3)
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col font-sans pb-12 transition-colors duration-500">
+    <div className="min-h-screen bg-[#f7f9fc] dark:bg-[#0b1220] flex flex-col font-sans pb-12 transition-colors duration-500">
 
       {/* World-Class Dashboard Header */}
-      <div className="bg-white/80 dark:bg-[#020617]/80 backdrop-blur-xl border-b border-slate-200/60 dark:border-slate-800/60 px-8 py-5 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 transition-all duration-500 shadow-sm gap-4">
+      <div className="bg-white/90 dark:bg-[#0b1220]/80 backdrop-blur-xl border-b border-slate-200/70 dark:border-slate-800/60 px-8 py-5 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 transition-all duration-500 shadow-sm gap-4">
         <div className="flex items-center gap-6 w-full md:w-auto">
           <div className="flex flex-col">
-            <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.4em] mb-1">Visão Global</p>
-            <h1 className="text-3xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">Dashboard</h1>
+            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.4em] mb-1">Visão Global</p>
+            <h1 className="text-3xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">Dashboard</h1>
           </div>
 
           <div className="h-10 w-[1px] bg-slate-100 dark:bg-slate-800 hidden lg:block" />
 
           <Select value={selectedAccountId} onValueChange={setSelectedAccountId}>
-            <SelectTrigger className="w-full md:w-[220px] h-11 rounded-[1.25rem] border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 text-slate-900 dark:text-slate-100 shadow-sm font-black text-[10px] tracking-widest uppercase focus:ring-blue-500 transition-all group">
-              <SelectValue placeholder="Contas" />
-            </SelectTrigger>
-            <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950">
-              <SelectItem value="all" className="font-black text-[10px] uppercase tracking-widest cursor-pointer py-3">Todas as Contas</SelectItem>
-              {accounts.map(acc => (
-                <SelectItem key={acc.id} value={acc.id} className="font-bold text-[10px] uppercase tracking-widest cursor-pointer py-3">
-                  {acc.name} ({acc.currency})
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <SelectTrigger className="w-full md:w-[220px] h-11 rounded-[1.25rem] border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/50 text-slate-800 dark:text-slate-100 shadow-sm font-semibold text-[10px] tracking-widest uppercase focus:ring-blue-400 transition-all group">
+            <SelectValue placeholder="Contas" />
+          </SelectTrigger>
+          <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950">
+            <SelectItem value="all" className="font-semibold text-[10px] uppercase tracking-widest cursor-pointer py-3">Todas as Contas</SelectItem>
+            {accounts.map(acc => (
+              <SelectItem key={acc.id} value={acc.id} className="font-semibold text-[10px] uppercase tracking-widest cursor-pointer py-3">
+                {acc.name} ({acc.currency})
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         </div>
 
         <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto scrollbar-hide pb-2 md:pb-0">
@@ -156,11 +158,18 @@ export default function Dashboard() {
             }}
           />
 
-          <Button asChild className="rounded-2xl h-11 px-6 bg-blue-600 hover:bg-blue-700 text-white font-black text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 flex-shrink-0">
-            <Link href="/trades/new" className="flex items-center gap-2">
-              <Plus className="h-4 w-4" /> Novo Trade
-            </Link>
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button asChild className="rounded-2xl h-11 px-6 bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-[10px] uppercase tracking-[0.2em] shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 flex-shrink-0">
+                  <Link href="/trades/new" className="flex items-center gap-2">
+                    <Plus className="h-4 w-4" /> Novo Trade
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Registrar nova operação</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </div>
 
@@ -170,12 +179,15 @@ export default function Dashboard() {
         <section className="animate-in fade-in slide-in-from-top-6 duration-700">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
             <div className="space-y-1">
-              <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]" suppressHydrationWarning>
+              <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em]" suppressHydrationWarning>
                 Consistência Diária • {new Date().toLocaleDateString('pt-BR', { month: 'long', year: 'numeric' })}
               </p>
-              <h2 className="text-2xl font-black font-heading text-slate-900 dark:text-white tracking-tight uppercase">Performance Mensal</h2>
+              <div className="flex items-center gap-2">
+                <h2 className="text-2xl font-semibold font-heading text-slate-800 dark:text-white tracking-tight uppercase">Performance Mensal</h2>
+                <InfoTooltip text="Resumo diário do mês atual" />
+              </div>
             </div>
-            <Button variant="ghost" size="sm" asChild className="h-10 rounded-xl font-black text-[10px] uppercase tracking-widest text-slate-500 hover:text-blue-600 transition-colors">
+            <Button variant="ghost" size="sm" asChild className="h-10 rounded-xl font-semibold text-[10px] uppercase tracking-widest text-slate-500 hover:text-blue-500 transition-colors">
               <Link href="/calendar">Ver Calendário Criativo <ArrowRight className="ml-2 h-4 w-4" /></Link>
             </Button>
           </div>
@@ -198,10 +210,10 @@ export default function Dashboard() {
                 >
                   <div className="flex justify-between items-start relative z-10">
                     <div className="flex flex-col">
-                      <span className={cn("text-[9px] font-black uppercase tracking-widest", isToday ? "text-blue-600 dark:text-blue-400" : "text-slate-400")} suppressHydrationWarning>
+                      <span className={cn("text-[9px] font-semibold uppercase tracking-widest", isToday ? "text-blue-600 dark:text-blue-400" : "text-slate-400")} suppressHydrationWarning>
                         {date.toLocaleDateString('pt-BR', { weekday: 'short' })}
                       </span>
-                      <span className={cn("text-2xl font-black font-heading", isToday ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-white")} suppressHydrationWarning>
+                      <span className={cn("text-2xl font-semibold font-heading", isToday ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-white")} suppressHydrationWarning>
                         {date.getDate()}
                       </span>
                     </div>
@@ -213,7 +225,7 @@ export default function Dashboard() {
                     )}
                   </div>
 
-                  <div className={cn("text-sm font-black font-heading tracking-tight mt-auto relative z-10",
+                  <div className={cn("text-sm font-semibold font-heading tracking-tight mt-auto relative z-10",
                     dayM ? (dayM.pnl >= 0 ? "text-emerald-500" : "text-red-500") : "text-slate-200 dark:text-slate-800"
                   )}>
                     {dayM ? `${dayM.pnl >= 0 ? '+' : '-'}$${Math.abs(dayM.pnl).toLocaleString()}` : "$0.00"}
@@ -231,7 +243,7 @@ export default function Dashboard() {
             })}
             <div className="bg-slate-50 dark:bg-slate-900/20 border-2 border-dashed border-slate-200 dark:border-slate-800 h-32 rounded-[2.5rem] p-4 flex items-center justify-center flex-col text-slate-400 dark:text-slate-600 hover:bg-slate-100 dark:hover:bg-slate-800/40 hover:border-blue-500/40 transition-all duration-300 cursor-pointer group">
               <ChevronRight className="h-8 w-8 mb-1 group-hover:translate-x-1 transition-transform group-hover:text-blue-500" />
-              <span className="text-[9px] font-black uppercase tracking-widest group-hover:text-blue-500">Mais dias</span>
+              <span className="text-[9px] font-semibold uppercase tracking-widest group-hover:text-blue-500">Mais dias</span>
             </div>
           </div>
         </section>
@@ -243,12 +255,15 @@ export default function Dashboard() {
             <section>
               <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8 px-2">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Crescimento</p>
-                  <h2 className="text-3xl font-black font-heading text-slate-900 dark:text-white tracking-tight uppercase">CURVA DE PATRIMÔNIO</h2>
+                  <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Crescimento</p>
+                  <div className="flex items-center gap-2">
+                  <h2 className="text-3xl font-semibold font-heading text-slate-900 dark:text-white tracking-tight uppercase">CURVA DE PATRIMÔNIO</h2>
+                  <InfoTooltip text="Evolução acumulada do resultado" />
+                </div>
                 </div>
                 <div className="flex bg-white dark:bg-slate-900 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                  <Button variant="ghost" size="sm" className="h-10 text-[10px] font-black uppercase tracking-widest rounded-xl bg-slate-900 dark:bg-blue-600 text-white shadow-lg shadow-blue-500/20 px-6 transition-all">SALDO</Button>
-                  <Button variant="ghost" size="sm" className="h-10 text-[10px] font-black uppercase tracking-widest rounded-xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white px-6 transition-all">DRAWDOWN</Button>
+                  <Button variant="ghost" size="sm" className="h-10 text-[10px] font-semibold uppercase tracking-widest rounded-xl bg-slate-900 dark:bg-blue-600 text-white shadow-lg shadow-blue-500/20 px-6 transition-all">SALDO</Button>
+                  <Button variant="ghost" size="sm" className="h-10 text-[10px] font-semibold uppercase tracking-widest rounded-xl text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white px-6 transition-all">DRAWDOWN</Button>
                 </div>
               </div>
               <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-[3rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl h-[520px] relative overflow-hidden group">
@@ -261,10 +276,13 @@ export default function Dashboard() {
             <section>
               <div className="flex items-center justify-between mb-8 px-2">
                 <div className="space-y-1">
-                  <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Atividade Recente</p>
-                  <h2 className="text-3xl font-black font-heading text-slate-900 dark:text-white tracking-tight uppercase">Últimas Execuções</h2>
+                  <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Atividade Recente</p>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-3xl font-semibold font-heading text-slate-900 dark:text-white tracking-tight uppercase">Últimas Execuções</h2>
+                    <InfoTooltip text="Últimos trades registrados" />
+                  </div>
                 </div>
-                <Button variant="ghost" size="sm" asChild className="h-10 rounded-xl font-black text-[10px] uppercase tracking-widest text-slate-500 hover:text-blue-600">
+                <Button variant="ghost" size="sm" asChild className="h-10 rounded-xl font-semibold text-[10px] uppercase tracking-widest text-slate-500 hover:text-blue-600">
                   <Link href="/trades">Ver Diário <ChevronRight className="ml-1 h-4 w-4" /></Link>
                 </Button>
               </div>
@@ -286,10 +304,13 @@ export default function Dashboard() {
           {/* RIGHT COLUMN: ELITE PERFORMANCE ANALYTICS */}
           <div className="lg:col-span-4 space-y-12 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
             <section>
-              <div className="flex flex-col mb-8 px-2">
-                <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.4em] mb-1">Índice de Eficiência</p>
-                <h2 className="text-2xl font-black font-heading text-slate-900 dark:text-white tracking-tight uppercase">Performance Elite</h2>
-              </div>
+                <div className="flex flex-col mb-8 px-2">
+                  <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.4em] mb-1">Índice de Eficiência</p>
+                  <div className="flex items-center gap-2">
+                    <h2 className="text-2xl font-semibold font-heading text-slate-900 dark:text-white tracking-tight uppercase">Performance Elite</h2>
+                    <InfoTooltip text="Indicadores de consistência e risco" />
+                  </div>
+                </div>
               <div className="grid gap-8">
                 {/* Profit Factor Card - High Impact */}
                 <Card className="rounded-[3.5rem] border-none shadow-2xl bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden group">
@@ -300,9 +321,9 @@ export default function Dashboard() {
                   <CardHeader className="pb-4 relative z-10 p-10 pt-12">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
-                      <CardTitle className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em]">FATOR DE LUCRO GLOBAL</CardTitle>
+                      <CardTitle className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.3em]">FATOR DE LUCRO GLOBAL</CardTitle>
                     </div>
-                    <div className="text-7xl font-heading font-black tracking-tighter text-white">
+                    <div className="text-7xl font-heading font-semibold tracking-tighter text-white">
                       {metrics.profitFactor.toFixed(2)}
                     </div>
                   </CardHeader>
@@ -316,7 +337,7 @@ export default function Dashboard() {
                           className="bg-gradient-to-r from-blue-500 to-indigo-400 h-full shadow-[0_0_20px_rgba(59,130,246,0.6)] rounded-full"
                         />
                       </div>
-                      <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest px-1">
+                      <div className="flex justify-between items-center text-[10px] font-semibold uppercase tracking-widest px-1">
                         <span className="text-slate-500 tracking-tighter">Mín: 1.0</span>
                         <span className="text-blue-400 tracking-tighter italic">Meta Ideal: &gt; 2.50</span>
                       </div>
@@ -326,8 +347,8 @@ export default function Dashboard() {
                       <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
                         <Sparkles className="h-5 w-5 text-blue-400" />
                       </div>
-                      <p className="text-xs font-bold text-slate-400 leading-relaxed italic">
-                        Matematicamente robusto. Seu modelo apresenta uma vantagem estatística <span className="text-white font-black">considerável</span>.
+                      <p className="text-xs font-semibold text-slate-400 leading-relaxed italic">
+                        Matematicamente robusto. Seu modelo apresenta uma vantagem estatística <span className="text-white font-semibold">considerável</span>.
                       </p>
                     </div>
                   </CardContent>
@@ -337,21 +358,21 @@ export default function Dashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                   <Card className="rounded-[2.5rem] border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 p-8 group hover:-translate-y-1 transition-all">
                     <div className="flex items-center justify-between mb-4">
-                      <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-black tracking-[0.2em]">Taxa de Acerto</p>
+                      <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-semibold tracking-[0.2em]">Taxa de Acerto</p>
                       <Target className="h-4 w-4 text-emerald-500 opacity-50" />
                     </div>
-                    <div className="text-4xl font-heading font-black text-slate-900 dark:text-white tracking-tighter">{metrics.winRate.toFixed(1)}%</div>
+                    <div className="text-4xl font-heading font-semibold text-slate-900 dark:text-white tracking-tighter">{metrics.winRate.toFixed(1)}%</div>
                     <div className="mt-5 h-2 w-full bg-slate-100 dark:bg-slate-950 rounded-full overflow-hidden">
                       <div className="bg-emerald-500 h-full rounded-full transition-all duration-1000 shadow-md" style={{ width: `${metrics.winRate}%` }}></div>
                     </div>
                   </Card>
                   <Card className="rounded-[2.5rem] border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 p-8 group hover:-translate-y-1 transition-all">
                     <div className="flex items-center justify-between mb-4">
-                      <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-black tracking-[0.2em]">Volume Total</p>
+                      <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-semibold tracking-[0.2em]">Volume Total</p>
                       <Activity className="h-4 w-4 text-blue-500 opacity-50" />
                     </div>
-                    <div className="text-4xl font-heading font-black text-slate-900 dark:text-white tracking-tighter">{metrics.totalTrades}</div>
-                    <div className="mt-5 text-[10px] font-black text-emerald-500 flex items-center gap-2 uppercase tracking-tight">
+                    <div className="text-4xl font-heading font-semibold text-slate-900 dark:text-white tracking-tighter">{metrics.totalTrades}</div>
+                    <div className="mt-5 text-[10px] font-semibold text-emerald-500 flex items-center gap-2 uppercase tracking-tight">
                       <TrendingUp className="h-3.5 w-3.5" /> <span className="italic">+12.4% no mês</span>
                     </div>
                   </Card>
@@ -361,35 +382,38 @@ export default function Dashboard() {
 
             {/* Hourly Analytics Section */}
             <section className="animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-              <div className="flex items-center justify-between mb-8 px-2">
-                <div className="space-y-1">
-                  <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Delta Temporal</p>
-                  <h2 className="text-2xl font-black font-heading text-slate-900 dark:text-white tracking-tight uppercase">Vantagem Horária</h2>
+                <div className="flex items-center justify-between mb-8 px-2">
+                  <div className="space-y-1">
+                    <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Delta Temporal</p>
+                    <div className="flex items-center gap-2">
+                      <h2 className="text-2xl font-semibold font-heading text-slate-900 dark:text-white tracking-tight uppercase">Vantagem Horária</h2>
+                      <InfoTooltip text="Faixas de horário com melhor resultado" />
+                    </div>
+                  </div>
+                  <div className="p-2 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+                    <Filter className="h-4 w-4 text-slate-400" />
+                  </div>
                 </div>
-                <div className="p-2 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                  <Filter className="h-4 w-4 text-slate-400" />
-                </div>
-              </div>
               <Card className="rounded-[3rem] border-slate-200/60 dark:border-slate-800/60 shadow-2xl overflow-hidden bg-white dark:bg-slate-900/40 backdrop-blur-md">
                 <CardContent className="p-4 space-y-1">
                   {hourlyData.slice(0, 6).map((h: any, i: number) => (
                     <div key={i} className="flex items-center justify-between p-5 rounded-[1.75rem] hover:bg-white dark:hover:bg-slate-800/60 transition-all duration-300 group hover:shadow-lg hover:-translate-y-0.5">
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center font-mono text-xs font-black text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent transition-all border border-slate-100 dark:border-slate-800">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center font-mono text-xs font-semibold text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent transition-all border border-slate-100 dark:border-slate-800">
                           {h.hour}
                         </div>
                         <div className="flex flex-col">
-                          <p className="text-[10px] font-black text-slate-900 dark:text-white tracking-widest uppercase mb-1">Delta de Tempo</p>
+                          <p className="text-[10px] font-semibold text-slate-900 dark:text-white tracking-widest uppercase mb-1">Delta de Tempo</p>
                           <div className="h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
                             <div className={cn("h-full rounded-full transition-all duration-1000", h.pnl >= 0 ? "bg-emerald-500" : "bg-red-500")} style={{ width: `${Math.min(Math.abs(h.pnl) / 500 * 100, 100)}%` }}></div>
                           </div>
                         </div>
                       </div>
                       <div className="text-right space-y-0.5">
-                        <div className={cn("text-lg font-heading font-black tracking-tighter", h.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
+                        <div className={cn("text-lg font-heading font-semibold tracking-tighter", h.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
                           {h.pnl >= 0 ? '+' : '-'}${Math.abs(h.pnl).toLocaleString()}
                         </div>
-                        <div className="text-[9px] text-slate-400 font-bold uppercase tracking-widest italic opacity-50">
+                        <div className="text-[9px] text-slate-400 font-semibold uppercase tracking-widest italic opacity-50">
                           RESULTADO LÍQUIDO
                         </div>
                       </div>

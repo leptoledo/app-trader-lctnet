@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { useSubscription } from "@/hooks/useSubscription"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
@@ -7,9 +8,117 @@ import { Badge } from "@/components/ui/badge"
 import { Settings as SettingsIcon, CreditCard, Shield, User, Crown, ArrowLeft, Loader2, Sparkles, ChevronRight, Zap } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { Input } from "@/components/ui/input"
+import { supabase } from "@/lib/supabase"
+import { toast } from "sonner"
+import { PwaInstallButton } from "@/components/pwa-install-button"
 
 export default function SettingsPage() {
     const { plan, loading, isFree } = useSubscription()
+    const [publicName, setPublicName] = useState("")
+    const [profileLoading, setProfileLoading] = useState(true)
+    const [savingProfile, setSavingProfile] = useState(false)
+    const [profileSettings, setProfileSettings] = useState<Record<string, unknown>>({})
+    const [outlierThreshold, setOutlierThreshold] = useState("25")
+    const [savingPreferences, setSavingPreferences] = useState(false)
+
+    useEffect(() => {
+        let isMounted = true
+
+        async function loadProfile() {
+            setProfileLoading(true)
+            try {
+                const { data: { user } } = await supabase.auth.getUser()
+                if (!user) return
+
+                const { data, error } = await supabase
+                    .from("profiles")
+                    .select("username, settings")
+                    .eq("id", user.id)
+                    .single()
+
+                if (error) throw error
+                const settings = (data?.settings as Record<string, unknown>) || {}
+                if (isMounted) {
+                    setProfileSettings(settings)
+                    const nameFromSettings = (settings.public_name as string) || ""
+                    setPublicName(nameFromSettings || data?.username || "")
+                    const thresholdFromSettings = typeof settings.outlier_threshold_percent === "number"
+                        ? settings.outlier_threshold_percent
+                        : 25
+                    setOutlierThreshold(String(thresholdFromSettings))
+                }
+            } catch {
+                // Ignore profile load errors to avoid blocking settings
+            } finally {
+                if (isMounted) setProfileLoading(false)
+            }
+        }
+
+        loadProfile()
+        return () => {
+            isMounted = false
+        }
+    }, [])
+
+    const handleSaveProfile = async () => {
+        const trimmed = publicName.trim().slice(0, 32)
+        setSavingProfile(true)
+        try {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) {
+                toast.error("Faça login para salvar o perfil.")
+                return
+            }
+
+            const nextSettings = { ...profileSettings, public_name: trimmed }
+            const { error } = await supabase
+                .from("profiles")
+                .update({ settings: nextSettings })
+                .eq("id", user.id)
+
+            if (error) throw error
+            setProfileSettings(nextSettings)
+            setPublicName(trimmed)
+            toast.success("Perfil atualizado.")
+        } catch (error: any) {
+            toast.error(error.message || "Erro ao salvar perfil.")
+        } finally {
+            setSavingProfile(false)
+        }
+    }
+
+    const handleSavePreferences = async () => {
+        const parsed = Number(outlierThreshold)
+        if (Number.isNaN(parsed) || parsed < 0 || parsed > 100) {
+            toast.error("Defina um percentual válido entre 0 e 100.")
+            return
+        }
+
+        setSavingPreferences(true)
+        try {
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) {
+                toast.error("Faça login para salvar as preferências.")
+                return
+            }
+
+            const nextSettings = { ...profileSettings, outlier_threshold_percent: parsed }
+            const { error } = await supabase
+                .from("profiles")
+                .update({ settings: nextSettings })
+                .eq("id", user.id)
+
+            if (error) throw error
+            setProfileSettings(nextSettings)
+            setOutlierThreshold(String(parsed))
+            toast.success("Preferências salvas.")
+        } catch (error: any) {
+            toast.error(error.message || "Erro ao salvar preferências.")
+        } finally {
+            setSavingPreferences(false)
+        }
+    }
 
     if (loading) return (
         <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#020617]">
@@ -32,6 +141,7 @@ export default function SettingsPage() {
                             <h1 className="text-3xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">Configurações</h1>
                         </div>
                     </div>
+                    <PwaInstallButton />
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -53,6 +163,80 @@ export default function SettingsPage() {
                     </div>
 
                     <div className="lg:col-span-9 space-y-8 animate-in fade-in slide-in-from-right-8 duration-700 delay-150">
+
+                        {/* Public Profile Card */}
+                        <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden">
+                            <CardHeader className="p-10 pb-6 border-b border-slate-100 dark:border-slate-800/50">
+                                <CardTitle className="text-2xl font-heading font-black text-slate-900 dark:text-white tracking-tight">
+                                    Perfil Público
+                                </CardTitle>
+                                <CardDescription className="text-slate-500 dark:text-slate-400 font-bold uppercase text-[10px] tracking-widest">
+                                    Nome exibido em trades compartilhados.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="p-10 space-y-6">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Nome Público</label>
+                                    <Input
+                                        value={publicName}
+                                        onChange={(e) => setPublicName(e.target.value)}
+                                        placeholder="Ex: TraderLCTNET"
+                                        className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold text-sm"
+                                        disabled={profileLoading}
+                                    />
+                                    <p className="text-xs text-slate-400 font-medium">Máx. 32 caracteres.</p>
+                                </div>
+                                <div className="flex justify-end">
+                                    <Button
+                                        onClick={handleSaveProfile}
+                                        disabled={savingProfile || profileLoading}
+                                        className="h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-lg shadow-blue-500/20"
+                                    >
+                                        {savingProfile ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                                        Salvar Perfil
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Trade Preferences Card */}
+                        <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden">
+                            <CardHeader className="p-10 pb-6 border-b border-slate-100 dark:border-slate-800/50">
+                                <CardTitle className="text-2xl font-heading font-black text-slate-900 dark:text-white tracking-tight">
+                                    Preferências de Trades
+                                </CardTitle>
+                                <CardDescription className="text-slate-500 dark:text-slate-400 font-bold uppercase text-[10px] tracking-widest">
+                                    Ajuste limites de alerta para fechamento.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="p-10 space-y-6">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Alerta de Outlier (%)</label>
+                                    <Input
+                                        type="number"
+                                        step="0.1"
+                                        min="0"
+                                        max="100"
+                                        value={outlierThreshold}
+                                        onChange={(e) => setOutlierThreshold(e.target.value)}
+                                        placeholder="Ex: 25"
+                                        className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold text-sm"
+                                        disabled={profileLoading}
+                                    />
+                                    <p className="text-xs text-slate-400 font-medium">Defina 0% para desativar o alerta.</p>
+                                </div>
+                                <div className="flex justify-end">
+                                    <Button
+                                        onClick={handleSavePreferences}
+                                        disabled={savingPreferences || profileLoading}
+                                        className="h-11 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-lg shadow-blue-500/20"
+                                    >
+                                        {savingPreferences ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                                        Salvar Preferências
+                                    </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
 
                         {/* Subscription Status Card */}
                         <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden relative group">

@@ -8,6 +8,7 @@ import { motion } from "framer-motion"
 import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/mode-toggle"
 import { toast } from "sonner"
+import { PwaInstallButton } from "@/components/pwa-install-button"
 
 export default function PricingPage() {
     const handleSubscribe = async (planId: string) => {
@@ -50,8 +51,8 @@ export default function PricingPage() {
                             <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-2 rounded-xl shadow-lg shadow-blue-500/20">
                                 <TrendingUp className="h-5 w-5 text-white" />
                             </div>
-                            <span className="text-xl font-heading font-bold tracking-tight text-slate-900 dark:text-white">
-                                Trader<span className="text-blue-600">LCTNET</span>
+                            <span className="text-xl font-heading font-semibold tracking-tight text-slate-800 dark:text-white">
+                                Trader<span className="text-blue-500">LCTNET</span>
                             </span>
                         </Link>
 
@@ -71,7 +72,10 @@ export default function PricingPage() {
                         <div className="flex items-center gap-4">
                             <ModeToggle />
                             <Link href="/login" className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">Login</Link>
-                            <Button asChild className="rounded-xl bg-slate-900 dark:bg-blue-600 hover:bg-slate-800 dark:hover:bg-blue-500 px-6 h-11 text-sm font-bold text-white shadow-lg transition-all hover:-translate-y-0.5 active:scale-95">
+                            <div className="hidden md:block">
+                                <PwaInstallButton />
+                            </div>
+                            <Button asChild className="rounded-xl bg-[#2b7de9] hover:bg-[#256bd1] px-6 h-11 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 active:scale-95">
                                 <Link href="/login">Começar Grátis</Link>
                             </Button>
                         </div>
@@ -90,7 +94,7 @@ export default function PricingPage() {
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-100 dark:border-blue-900/50"
+                            className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-semibold uppercase tracking-widest border border-blue-100 dark:border-blue-900/50"
                         >
                             <Globe className="h-3 w-3" /> Planos Flexíveis
                         </motion.div>
@@ -98,7 +102,7 @@ export default function PricingPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-4xl md:text-6xl font-heading font-black tracking-tight text-slate-900 dark:text-white leading-tight"
+                            className="text-4xl md:text-6xl font-heading font-semibold tracking-tight text-slate-900 dark:text-white leading-tight"
                         >
                             Invista na sua <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Consistência</span>
                         </motion.h1>
@@ -106,7 +110,7 @@ export default function PricingPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-lg text-slate-500 dark:text-slate-400 font-medium"
+                            className="text-lg text-slate-500 dark:text-slate-400 font-normal"
                         >
                             Escolha o plano ideal para o seu momento no mercado. <br className="hidden md:block" /> De iniciantes a traders profissionais institucionais.
                         </motion.p>
@@ -122,12 +126,12 @@ export default function PricingPage() {
                             className="group relative bg-white dark:bg-slate-900/40 backdrop-blur-md rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
                         >
                             <div className="mb-8">
-                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tight">Gratuito</h3>
+                                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 uppercase tracking-tight">Gratuito</h3>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">R$ 0</span>
-                                    <span className="text-slate-500 text-sm font-bold">/mês</span>
+                                    <span className="text-4xl font-semibold text-slate-900 dark:text-white tracking-tighter">R$ 0</span>
+                                    <span className="text-slate-500 text-sm font-semibold">/mês</span>
                                 </div>
-                                <p className="text-xs text-slate-400 font-medium mt-4">Ideal para quem está começando o diário.</p>
+                                <p className="text-xs text-slate-400 font-normal mt-4">Ideal para quem está começando o diário.</p>
                             </div>
 
                             <div className="space-y-4 mb-10 flex-1">
@@ -136,12 +140,12 @@ export default function PricingPage() {
                                         <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
                                             <Check className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                                         </div>
-                                        <span className="text-sm font-medium text-slate-600 dark:text-slate-400">{feat}</span>
+                                        <span className="text-sm font-normal text-slate-600 dark:text-slate-400">{feat}</span>
                                     </div>
                                 ))}
                             </div>
 
-                            <Button variant="outline" className="w-full h-14 rounded-2xl font-bold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800" onClick={() => handleSubscribe('free')}>
+                            <Button variant="outline" className="w-full h-14 rounded-2xl font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800" onClick={() => handleSubscribe('free')}>
                                 Começar Gratuitamente
                             </Button>
                         </motion.div>
@@ -163,12 +167,12 @@ export default function PricingPage() {
                             </div>
 
                             <div className="mb-8 relative z-10">
-                                <h3 className="text-xl font-black text-white mb-2 uppercase tracking-tight">Pro</h3>
+                                <h3 className="text-xl font-semibold text-white mb-2 uppercase tracking-tight">Pro</h3>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-4xl font-black text-white tracking-tighter">R$ 97</span>
-                                    <span className="text-slate-400 text-sm font-bold">/mês</span>
+                                    <span className="text-4xl font-semibold text-white tracking-tighter">R$ 97</span>
+                                    <span className="text-slate-400 text-sm font-semibold">/mês</span>
                                 </div>
-                                <p className="text-xs text-slate-400 font-medium mt-4">Para traders que operam todos os dias.</p>
+                                <p className="text-xs text-slate-400 font-normal mt-4">Para traders que operam todos os dias.</p>
                             </div>
 
                             <div className="space-y-4 mb-10 flex-1 relative z-10">
@@ -177,12 +181,12 @@ export default function PricingPage() {
                                         <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
                                             <Check className="h-3 w-3 text-white" />
                                         </div>
-                                        <span className="text-sm font-bold text-slate-100">{feat}</span>
+                                        <span className="text-sm font-normal text-slate-100">{feat}</span>
                                     </div>
                                 ))}
                             </div>
 
-                            <Button className="w-full h-14 rounded-2xl font-black bg-blue-600 hover:bg-blue-500 text-white shadow-xl shadow-blue-600/30 relative z-10 text-lg uppercase tracking-tight" onClick={() => handleSubscribe('pro')}>
+                            <Button className="w-full h-14 rounded-2xl font-semibold bg-[#2b7de9] hover:bg-[#256bd1] text-white shadow-xl shadow-blue-500/30 relative z-10 text-lg uppercase tracking-tight" onClick={() => handleSubscribe('pro')}>
                                 Assinar Pro Agora <ArrowRight className="ml-2 h-5 w-5" />
                             </Button>
                         </motion.div>
@@ -195,14 +199,14 @@ export default function PricingPage() {
                             className="group relative bg-white dark:bg-slate-900/40 backdrop-blur-md rounded-[2.5rem] p-8 border border-slate-200 dark:border-slate-800 shadow-xl hover:shadow-2xl transition-all duration-500 flex flex-col"
                         >
                             <div className="mb-8">
-                                <h3 className="text-xl font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tight flex items-center gap-2">
+                                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2 uppercase tracking-tight flex items-center gap-2">
                                     Ouro
                                 </h3>
                                 <div className="flex items-baseline gap-1">
-                                    <span className="text-4xl font-black text-slate-900 dark:text-white tracking-tighter">R$ 197</span>
-                                    <span className="text-slate-500 text-sm font-bold">/mês</span>
+                                    <span className="text-4xl font-semibold text-slate-900 dark:text-white tracking-tighter">R$ 197</span>
+                                    <span className="text-slate-500 text-sm font-semibold">/mês</span>
                                 </div>
-                                <p className="text-xs text-slate-400 font-medium mt-4">Gestão profissional e acesso a sinais.</p>
+                                <p className="text-xs text-slate-400 font-normal mt-4">Gestão profissional e acesso a sinais.</p>
                             </div>
 
                             <div className="space-y-4 mb-10 flex-1">
@@ -211,7 +215,7 @@ export default function PricingPage() {
                                         <div className="w-5 h-5 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
                                             <Star className="h-3 w-3 text-amber-600 dark:text-amber-400 fill-amber-400" />
                                         </div>
-                                        <span className="text-sm font-medium text-slate-600 dark:text-slate-400 italic">
+                                        <span className="text-sm font-normal text-slate-600 dark:text-slate-400 italic">
                                             {feat}
                                         </span>
                                     </div>

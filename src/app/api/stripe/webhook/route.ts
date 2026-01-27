@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
-import { supabase } from '@/lib/supabase';
+import { createSupabaseAdminClient } from '@/lib/supabase-admin';
 import { headers } from 'next/headers';
 
 export async function POST(req: Request) {
@@ -22,6 +22,7 @@ export async function POST(req: Request) {
     }
 
     const session = event.data.object as any;
+    const supabase = createSupabaseAdminClient();
 
     // Handle subscription success
     if (event.type === 'checkout.session.completed') {

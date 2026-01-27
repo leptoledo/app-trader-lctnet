@@ -17,7 +17,9 @@ import { toast } from "sonner"
 import Link from "next/link"
 import { ImageUpload } from "@/components/image-upload"
 import { RiskRewardIndicator } from "@/components/risk-reward-indicator"
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { cn } from "@/lib/utils"
+import { calculatePnL } from "@/lib/pnl"
 
 export default function EditTradePage() {
     const router = useRouter()
@@ -29,6 +31,9 @@ export default function EditTradePage() {
     const [isShared, setIsShared] = useState(false)
     const [shareToken, setShareToken] = useState<string | null>(null)
     const [copying, setCopying] = useState(false)
+    const [publicName, setPublicName] = useState<string>("")
+    const [confirmShareOpen, setConfirmShareOpen] = useState(false)
+    const [shareConfirmLoading, setShareConfirmLoading] = useState(false)
 
     const form = useForm<TradeFormValues>({
         resolver: zodResolver(tradeSchema),
@@ -80,6 +85,7 @@ export default function EditTradePage() {
 
                 setIsShared(data.is_shared || false)
                 setShareToken(data.share_token || null)
+                setPublicName(data.public_name || "")
 
             } catch (error: any) {
                 toast.error("Erro ao carregar trade")
@@ -91,17 +97,17 @@ export default function EditTradePage() {
         loadTrade()
     }, [params.id, router, form])
 
-    const calculatePnL = (values: TradeFormValues) => {
+    const calculatePnLForTrade = (values: TradeFormValues) => {
         if (values.status === 'CLOSED' && values.exit_price && values.entry_price) {
-            let gross = 0;
-            if (values.direction === 'LONG') {
-                gross = (values.exit_price - values.entry_price) * values.quantity
-            } else {
-                gross = (values.entry_price - values.exit_price) * values.quantity
-            }
-
-            const net = gross - (values.fees || 0)
-            return { pnl_gross: gross, pnl_net: net }
+            const fees = values.fees || 0
+            return calculatePnL({
+                symbol: values.symbol,
+                direction: values.direction,
+                entryPrice: values.entry_price,
+                exitPrice: values.exit_price,
+                quantity: values.quantity,
+                fees
+            })
         }
         return { pnl_gross: null, pnl_net: null }
     }
@@ -116,7 +122,7 @@ export default function EditTradePage() {
                 ? values.setup_tags.split(',').map(t => t.trim()).filter(Boolean)
                 : []
 
-            const { pnl_gross, pnl_net } = calculatePnL(values)
+            const { pnl_gross, pnl_net } = calculatePnLForTrade(values)
 
             // Calculate R-Multiple if Closed
             let r_multiple = null
@@ -169,14 +175,63 @@ export default function EditTradePage() {
 
     const handleShare = async () => {
         try {
+            if (isShared) {
+                await confirmShare()
+                return
+            }
+
+            if (!isShared) {
+                const values = form.getValues()
+                if (values.status !== "CLOSED") {
+                    toast.error("Feche o trade antes de compartilhar.")
+                    return
+                }
+                if (!values.exit_price || !values.exit_date) {
+                    toast.error("Preencha preço e data de saída para compartilhar.")
+                    return
+                }
+            }
+
+            setConfirmShareOpen(true)
+        } catch (error: any) {
+            toast.error("Erro ao preparar compartilhamento: " + error.message)
+        }
+    }
+
+    const confirmShare = async () => {
+        setShareConfirmLoading(true)
+        try {
             const token = shareToken || Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user && !isShared) {
+                toast.error("Faça login para compartilhar.")
+                return
+            }
+            const rawName = user?.user_metadata?.username
+                || user?.user_metadata?.name
+                || user?.user_metadata?.full_name
+                || user?.email?.split("@")[0]
+                || "Trader"
+            const trimmedName = publicName.trim()
+            let profileName = ""
+            if (!trimmedName && user) {
+                const { data } = await supabase
+                    .from("profiles")
+                    .select("settings")
+                    .eq("id", user.id)
+                    .single()
+                const settings = (data?.settings as Record<string, unknown>) || {}
+                profileName = (settings.public_name as string) || ""
+            }
+            const finalName = (trimmedName || profileName || rawName).slice(0, 32)
 
             const { error } = await supabase
                 .from('trades')
                 .update({
                     is_shared: !isShared,
                     share_token: !isShared ? token : null,
-                    shared_at: !isShared ? new Date().toISOString() : null
+                    shared_at: !isShared ? new Date().toISOString() : null,
+                    public_name: !isShared ? finalName : null
                 })
                 .eq('id', params.id)
 
@@ -184,9 +239,13 @@ export default function EditTradePage() {
 
             setIsShared(!isShared)
             setShareToken(!isShared ? token : null)
+            setPublicName(!isShared ? finalName : "")
+            setConfirmShareOpen(false)
             toast.success(isShared ? "Trade não é mais público" : "Trade compartilhado com sucesso!")
         } catch (error: any) {
             toast.error("Erro ao compartilhar: " + error.message)
+        } finally {
+            setShareConfirmLoading(false)
         }
     }
 
@@ -213,8 +272,8 @@ export default function EditTradePage() {
 
     if (loadingConfig) {
         return (
-            <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#020617]">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <div className="flex h-screen items-center justify-center bg-[#f7f9fc] dark:bg-[#0b1220]">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
             </div>
         )
     }
@@ -222,7 +281,7 @@ export default function EditTradePage() {
     const tradeStatus = form.watch('status')
 
     return (
-        <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#020617] p-8 transition-colors duration-500">
+        <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
             <div className="mx-auto grid w-full max-w-2xl gap-8">
 
                 {/* Header with Navigation & Actions */}
@@ -232,8 +291,8 @@ export default function EditTradePage() {
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Editor</p>
-                            <h1 className="text-3xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">Gerenciar Trade</h1>
+                            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Editor</p>
+                            <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Gerenciar Trade</h1>
                         </div>
                     </div>
 
@@ -243,7 +302,7 @@ export default function EditTradePage() {
                                 variant="outline"
                                 size="sm"
                                 onClick={copyLink}
-                                className="h-10 rounded-xl border-emerald-200 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400 text-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 font-bold px-4 transition-all"
+                                className="h-10 rounded-xl border-emerald-200 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400 text-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 font-semibold px-4 transition-all"
                             >
                                 {copying ? <Check className="h-4 w-4 mr-2" /> : <LinkIcon className="h-4 w-4 mr-2" />}
                                 Link
@@ -254,16 +313,71 @@ export default function EditTradePage() {
                             size="sm"
                             onClick={handleShare}
                             className={cn(
-                                "h-10 rounded-xl font-bold px-4 transition-all",
+                                "h-10 rounded-xl font-semibold px-4 transition-all",
                                 isShared ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-lg shadow-emerald-500/20" : "border-slate-200 dark:border-slate-800"
                             )}
                         >
                             <Share2 className="h-4 w-4 mr-2" />
                             {isShared ? "Público" : "Compartilhar"}
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={handleDelete} className="h-10 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-bold">
+                        <Button variant="ghost" size="sm" onClick={handleDelete} className="h-10 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-semibold">
                             <Trash2 className="h-4 w-4" />
                         </Button>
+                    </div>
+                </div>
+
+                <Dialog open={confirmShareOpen} onOpenChange={setConfirmShareOpen}>
+                    <DialogContent className="rounded-2xl max-w-md">
+                        <DialogHeader>
+                            <DialogTitle>Compartilhar trade</DialogTitle>
+                            <DialogDescription>
+                                Confirme o nome público que aparecerá no link compartilhado.
+                            </DialogDescription>
+                        </DialogHeader>
+                        <div className="space-y-3">
+                            <label className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Nome Público</label>
+                            <Input
+                                value={publicName}
+                                onChange={(e) => setPublicName(e.target.value)}
+                                placeholder="Ex: TraderLCTNET"
+                                className="h-11 rounded-xl"
+                            />
+                            <p className="text-xs text-slate-400">Máx. 32 caracteres.</p>
+                        </div>
+                        <DialogFooter>
+                            <Button
+                                variant="outline"
+                                onClick={() => setConfirmShareOpen(false)}
+                                className="rounded-xl"
+                            >
+                                Cancelar
+                            </Button>
+                            <Button
+                                onClick={confirmShare}
+                                disabled={shareConfirmLoading}
+                                className="rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white"
+                            >
+                                {shareConfirmLoading ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
+                                Confirmar
+                            </Button>
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
+                <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-6 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 shadow-lg animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4">
+                        <div className="flex-1">
+                            <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Nome Público (Opcional)</label>
+                            <Input
+                                value={publicName}
+                                onChange={(e) => setPublicName(e.target.value)}
+                                placeholder="Ex: TraderLCTNET"
+                                className="mt-2 h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm"
+                            />
+                        </div>
+                        <div className="text-xs text-slate-400 font-medium max-w-xs">
+                            Este nome aparece na página pública do trade quando você compartilhar.
+                        </div>
                     </div>
                 </div>
 
@@ -280,21 +394,21 @@ export default function EditTradePage() {
                                         <FormItem className="space-y-3">
                                             <div className="flex items-center gap-2 ml-1">
                                                 <AlertCircle className="h-4 w-4 text-slate-400" />
-                                                <FormLabel className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Ciclo de Vida</FormLabel>
+                                                <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Ciclo de Vida</FormLabel>
                                             </div>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger className={cn(
-                                                        "h-14 rounded-2xl font-black text-sm transition-all",
+                                                        "h-14 rounded-2xl font-semibold text-sm transition-all",
                                                         field.value === 'CLOSED' ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800'
                                                     )}>
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-                                                    <SelectItem value="OPEN" className="font-bold py-3">EM ABERTO (RUNNING)</SelectItem>
-                                                    <SelectItem value="CLOSED" className="font-bold py-3 text-emerald-500">FECHADO (CLOSED)</SelectItem>
-                                                    <SelectItem value="PENDING" className="font-bold py-3 text-slate-400">PENDENTE (WAITING)</SelectItem>
+                                                    <SelectItem value="OPEN" className="font-semibold py-3">EM ABERTO (RUNNING)</SelectItem>
+                                                    <SelectItem value="CLOSED" className="font-semibold py-3 text-emerald-500">FECHADO (CLOSED)</SelectItem>
+                                                    <SelectItem value="PENDING" className="font-semibold py-3 text-slate-400">PENDENTE (WAITING)</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -309,9 +423,9 @@ export default function EditTradePage() {
                                     name="symbol"
                                     render={({ field }) => (
                                         <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo do Ativo</FormLabel>
+                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo do Ativo</FormLabel>
                                             <FormControl>
-                                                <Input {...field} className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-black text-sm uppercase focus:ring-blue-500" />
+                                                <Input {...field} className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -323,16 +437,16 @@ export default function EditTradePage() {
                                     name="direction"
                                     render={({ field }) => (
                                         <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</FormLabel>
+                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</FormLabel>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-bold text-sm">
+                                                    <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm">
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
                                                 <SelectContent className="rounded-2xl bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
-                                                    <SelectItem value="LONG" className="font-bold py-3 text-emerald-500">COMPRA (LONG)</SelectItem>
-                                                    <SelectItem value="SHORT" className="font-bold py-3 text-red-500">VENDA (SHORT)</SelectItem>
+                                                    <SelectItem value="LONG" className="font-semibold py-3 text-emerald-500">COMPRA (LONG)</SelectItem>
+                                                    <SelectItem value="SHORT" className="font-semibold py-3 text-red-500">VENDA (SHORT)</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -348,7 +462,7 @@ export default function EditTradePage() {
                                         <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
                                             <Target className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                                         </div>
-                                        <h3 className="font-heading font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-tight">Resultados de Encerramento</h3>
+                                        <h3 className="font-heading font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-tight">Resultados de Encerramento</h3>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <FormField
@@ -356,9 +470,9 @@ export default function EditTradePage() {
                                             name="exit_date"
                                             render={({ field }) => (
                                                 <FormItem className="space-y-3">
-                                                    <FormLabel className="text-[10px] font-bold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Data/Hora Saída</FormLabel>
+                                                    <FormLabel className="text-[10px] font-semibold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Data/Hora Saída</FormLabel>
                                                     <FormControl>
-                                                        <Input type="datetime-local" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-bold text-sm" />
+                                                        <Input type="datetime-local" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-semibold text-sm" />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -369,9 +483,9 @@ export default function EditTradePage() {
                                             name="exit_price"
                                             render={({ field }) => (
                                                 <FormItem className="space-y-3">
-                                                    <FormLabel className="text-[10px] font-bold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Preço de Saída</FormLabel>
+                                                    <FormLabel className="text-[10px] font-semibold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Preço de Saída</FormLabel>
                                                     <FormControl>
-                                                        <Input type="number" step="any" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-bold text-sm" />
+                                                        <Input type="number" step="any" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-semibold text-sm" />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -383,9 +497,9 @@ export default function EditTradePage() {
                                         name="fees"
                                         render={({ field }) => (
                                             <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-bold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Total de Taxas (Swap/Comm)</FormLabel>
+                                                <FormLabel className="text-[10px] font-semibold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Total de Taxas (Swap/Comm)</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-bold text-sm" />
+                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-semibold text-sm" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -402,9 +516,9 @@ export default function EditTradePage() {
                                         name="entry_price"
                                         render={({ field }) => (
                                             <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-1">Preço Entrada</FormLabel>
+                                                <FormLabel className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.2em] ml-1">Preço Entrada</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold text-sm font-mono" />
+                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm font-mono" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -415,9 +529,9 @@ export default function EditTradePage() {
                                         name="stop_loss"
                                         render={({ field }) => (
                                             <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-black text-red-400/70 uppercase tracking-[0.2em] ml-1">Stop Loss</FormLabel>
+                                                <FormLabel className="text-[10px] font-semibold text-red-400/70 uppercase tracking-[0.2em] ml-1">Stop Loss</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-red-500/20 bg-red-500/5 font-bold text-sm font-mono" />
+                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-red-500/20 bg-red-500/5 font-semibold text-sm font-mono" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -428,9 +542,9 @@ export default function EditTradePage() {
                                         name="take_profit"
                                         render={({ field }) => (
                                             <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-black text-emerald-400/70 uppercase tracking-[0.2em] ml-1">Take Profit</FormLabel>
+                                                <FormLabel className="text-[10px] font-semibold text-emerald-400/70 uppercase tracking-[0.2em] ml-1">Take Profit</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-emerald-500/20 bg-emerald-500/5 font-bold text-sm font-mono" />
+                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-emerald-500/20 bg-emerald-500/5 font-semibold text-sm font-mono" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -454,9 +568,9 @@ export default function EditTradePage() {
                                     name="quantity"
                                     render={({ field }) => (
                                         <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Volume Executado</FormLabel>
+                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Volume Executado</FormLabel>
                                             <FormControl>
-                                                <Input type="number" step="any" {...field} className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold text-sm" />
+                                                <Input type="number" step="any" {...field} className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -467,10 +581,10 @@ export default function EditTradePage() {
                                     name="account_id"
                                     render={({ field }) => (
                                         <FormItem className="space-y-3 opacity-60">
-                                            <FormLabel className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Conta (Read Only)</FormLabel>
+                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Conta (Read Only)</FormLabel>
                                             <Select onValueChange={field.onChange} value={field.value} disabled>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold text-sm">
+                                                    <SelectTrigger className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm">
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -492,12 +606,12 @@ export default function EditTradePage() {
                                     name="notes"
                                     render={({ field }) => (
                                         <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Diário & Revisão</FormLabel>
+                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Diário & Revisão</FormLabel>
                                             <FormControl>
                                                 <Textarea
                                                     {...field}
                                                     placeholder="Como foi seu estado emocional? Seguiu o plano? O que aprendeu?"
-                                                    className="min-h-[160px] rounded-[2rem] border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold text-sm focus:ring-blue-500 p-8 resize-none transition-all placeholder:font-normal"
+                                                    className="min-h-[160px] rounded-[2rem] border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 p-8 resize-none transition-all placeholder:font-normal"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -509,9 +623,9 @@ export default function EditTradePage() {
                                 <div className="space-y-4">
                                     <div className="flex items-center gap-2 ml-1">
                                         <TrendingUp className="h-4 w-4 text-slate-400" />
-                                        <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Evidências de Gráfico</label>
+                                        <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Evidências de Gráfico</label>
                                     </div>
-                                    <div className="bg-slate-50/50 dark:bg-slate-950/20 p-8 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
+                                    <div className="bg-white/90 dark:bg-slate-950/20 p-8 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
                                         <ImageUpload images={images} onImagesChange={setImages} maxImages={3} />
                                     </div>
                                 </div>
@@ -519,7 +633,7 @@ export default function EditTradePage() {
 
                             <Button
                                 type="submit"
-                                className="w-full h-16 rounded-[2rem] bg-blue-600 hover:bg-blue-700 text-white font-black text-lg shadow-2xl shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 disabled:opacity-50"
+                                className="w-full h-16 rounded-[2rem] bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-lg shadow-2xl shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 disabled:opacity-50"
                                 disabled={submitting}
                             >
                                 {submitting ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}

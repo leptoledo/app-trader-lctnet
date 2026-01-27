@@ -1,9 +1,13 @@
-import { Lexend, Outfit } from "next/font/google"
+import { Roboto } from "next/font/google"
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
+import { PwaRegister } from "@/components/pwa-register"
 
-const lexend = Lexend({ subsets: ["latin"], variable: "--font-lexend" })
-const outfit = Outfit({ subsets: ["latin"], variable: "--font-outfit" })
+const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-roboto",
+  weight: ["400", "500", "700", "900"]
+})
 
 export const metadata = {
   title: "TraderLCTNET | O Diário de Trade Profissional",
@@ -23,7 +27,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning className="scroll-smooth">
-      <body className={`${lexend.variable} ${outfit.variable} font-sans antialiased`} suppressHydrationWarning>
+      <body className={`${roboto.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -31,10 +35,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           {children}
+          <PwaRegister />
           <Toaster position="top-right" richColors />
         </ThemeProvider>
       </body>
     </html>
   );
 }
-

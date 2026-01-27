@@ -35,6 +35,10 @@ export interface Trade {
     setup_tags: string[]
     notes?: string
     images?: string[]
+    is_shared?: boolean
+    share_token?: string | null
+    shared_at?: string | null
+    public_name?: string | null
     r_multiple?: number | null
     created_at: string
 }

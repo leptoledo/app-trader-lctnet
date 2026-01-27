@@ -49,8 +49,8 @@ export default function AnalyticsPage() {
 
     if (loading) {
         return (
-            <div className="flex h-screen w-full items-center justify-center bg-slate-50 dark:bg-[#020617]">
-                <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
+            <div className="flex h-screen w-full items-center justify-center bg-[#f7f9fc] dark:bg-[#0b1220]">
+                <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
             </div>
         )
     }
@@ -61,7 +61,7 @@ export default function AnalyticsPage() {
     const rMultipleData = analyzeRMultiple(trades)
 
     return (
-        <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#020617] p-8 transition-colors duration-500">
+        <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
             <div className="max-w-7xl mx-auto w-full space-y-8">
 
                 {/* Header */}
@@ -71,8 +71,8 @@ export default function AnalyticsPage() {
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Análise Profunda</p>
-                            <h1 className="text-3xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">Analytics Avançado</h1>
+                            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Análise Profunda</p>
+                            <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Analytics Avançado</h1>
                         </div>
                     </div>
                 </div>
@@ -89,11 +89,11 @@ export default function AnalyticsPage() {
                                 <CardHeader className="p-8 pb-4">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 bg-blue-50 dark:bg-blue-500/10 rounded-xl flex items-center justify-center">
-                                            <TrendingUp className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                                            <TrendingUp className="h-5 w-5 text-blue-500 dark:text-blue-400" />
                                         </div>
                                         <div>
-                                            <CardTitle className="text-sm font-heading font-black uppercase tracking-widest text-slate-900 dark:text-white leading-none">Consistência Diária</CardTitle>
-                                            <CardDescription className="text-[10px] uppercase font-bold text-slate-400 mt-1">Análise dos melhores dias operados</CardDescription>
+                                            <CardTitle className="text-sm font-heading font-semibold uppercase tracking-widest text-slate-900 dark:text-white leading-none">Consistência Diária</CardTitle>
+                                            <CardDescription className="text-[10px] uppercase font-semibold text-slate-400 mt-1">Análise dos melhores dias operados</CardDescription>
                                         </div>
                                     </div>
                                 </CardHeader>
@@ -109,8 +109,8 @@ export default function AnalyticsPage() {
                                                             const data = payload[0].payload;
                                                             return (
                                                                 <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-xl shadow-2xl">
-                                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{data.day}</p>
-                                                                    <p className={cn("text-sm font-black", data.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
+                                                                    <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">{data.day}</p>
+                                                                    <p className={cn("text-sm font-semibold", data.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
                                                                         ${data.pnl.toLocaleString()}
                                                                     </p>
                                                                 </div>
@@ -137,8 +137,8 @@ export default function AnalyticsPage() {
                                             <Clock className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                                         </div>
                                         <div>
-                                            <CardTitle className="text-sm font-heading font-black uppercase tracking-widest text-slate-900 dark:text-white leading-none">Vantagem Horária</CardTitle>
-                                            <CardDescription className="text-[10px] uppercase font-bold text-slate-400 mt-1">Janelas de performance intradiária</CardDescription>
+                                            <CardTitle className="text-sm font-heading font-semibold uppercase tracking-widest text-slate-900 dark:text-white leading-none">Vantagem Horária</CardTitle>
+                                            <CardDescription className="text-[10px] uppercase font-semibold text-slate-400 mt-1">Janelas de performance intradiária</CardDescription>
                                         </div>
                                     </div>
                                 </CardHeader>
@@ -154,8 +154,8 @@ export default function AnalyticsPage() {
                                                             const data = payload[0].payload;
                                                             return (
                                                                 <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-xl shadow-2xl">
-                                                                    <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Hora: {data.hour}</p>
-                                                                    <p className={cn("text-sm font-black", data.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
+                                                                    <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Hora: {data.hour}</p>
+                                                                    <p className={cn("text-sm font-semibold", data.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
                                                                         ${data.pnl.toLocaleString()}
                                                                     </p>
                                                                 </div>
@@ -186,8 +186,8 @@ export default function AnalyticsPage() {
                                             <BarChart3 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                                         </div>
                                         <div>
-                                            <CardTitle className="text-xl font-heading font-black text-slate-900 dark:text-white uppercase tracking-tight">Qualidade do R-Múltiplo</CardTitle>
-                                            <CardDescription className="text-[10px] uppercase font-bold text-slate-400 mt-1">Curva de distribuição de Risco vs Retorno</CardDescription>
+                                            <CardTitle className="text-xl font-heading font-semibold text-slate-900 dark:text-white uppercase tracking-tight">Qualidade do R-Múltiplo</CardTitle>
+                                            <CardDescription className="text-[10px] uppercase font-semibold text-slate-400 mt-1">Curva de distribuição de Risco vs Retorno</CardDescription>
                                         </div>
                                     </div>
                                     <div className="w-10 h-10 bg-slate-50 dark:bg-slate-800 rounded-xl flex items-center justify-center">
@@ -208,8 +208,8 @@ export default function AnalyticsPage() {
                                                         const data = payload[0].payload;
                                                         return (
                                                             <div className="bg-white dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-4 rounded-[1.5rem] shadow-2xl">
-                                                                <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{data.label}</p>
-                                                                <p className="text-lg font-black text-purple-500">{data.count} Trades</p>
+                                                                <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">{data.label}</p>
+                                                                <p className="text-lg font-semibold text-purple-500">{data.count} Trades</p>
                                                             </div>
                                                         )
                                                     }
@@ -236,7 +236,7 @@ export default function AnalyticsPage() {
                                     <div className="w-10 h-10 bg-amber-50 dark:bg-amber-500/10 rounded-xl flex items-center justify-center">
                                         <DollarSign className="h-5 w-5 text-amber-600 dark:text-amber-400" />
                                     </div>
-                                    <CardTitle className="text-sm font-heading font-black uppercase tracking-widest text-slate-900 dark:text-white leading-none">Principais Ativos</CardTitle>
+                                    <CardTitle className="text-sm font-heading font-semibold uppercase tracking-widest text-slate-900 dark:text-white leading-none">Principais Ativos</CardTitle>
                                 </div>
                             </CardHeader>
                             <CardContent className="p-8 flex-1 overflow-y-auto space-y-4 custom-scrollbar">
@@ -245,29 +245,29 @@ export default function AnalyticsPage() {
                                         <div className="w-16 h-16 rounded-full border-4 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center">
                                             <BarChart3 className="h-6 w-6" />
                                         </div>
-                                        <p className="text-[10px] font-black uppercase tracking-widest text-slate-500">Dataset ausente</p>
+                                        <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">Dataset ausente</p>
                                     </div>
                                 ) : (
                                     symbolData.map((item, idx) => (
                                         <div key={idx} className="group flex items-center justify-between p-5 rounded-[2rem] bg-slate-50/50 dark:bg-slate-950/30 border border-slate-100 dark:border-slate-800 transition-all hover:bg-white dark:hover:bg-slate-800/50 hover:shadow-lg hover:-translate-y-0.5">
                                             <div className="flex items-center gap-4">
-                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-800 group-hover:bg-blue-600 transition-colors duration-500">
-                                                    <span className="text-[10px] font-black text-slate-400 group-hover:text-white">{idx + 1}</span>
+                                                <div className="w-10 h-10 bg-white dark:bg-slate-900 rounded-xl flex items-center justify-center shadow-sm border border-slate-100 dark:border-slate-800 group-hover:bg-[#2b7de9] transition-colors duration-500">
+                                                    <span className="text-[10px] font-semibold text-slate-400 group-hover:text-white">{idx + 1}</span>
                                                 </div>
                                                 <div className="flex flex-col">
-                                                    <span className="font-black text-sm text-slate-900 dark:text-white tracking-tight">{item.symbol}</span>
-                                                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{item.trades} execuções • {item.winRate.toFixed(1)}% WR</span>
+                                                    <span className="font-semibold text-sm text-slate-900 dark:text-white tracking-tight">{item.symbol}</span>
+                                                    <span className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">{item.trades} execuções • {item.winRate.toFixed(1)}% WR</span>
                                                 </div>
                                             </div>
                                             <div className="text-right">
                                                 <p className={cn(
-                                                    "font-black text-sm tracking-tight",
+                                                    "font-semibold text-sm tracking-tight",
                                                     item.pnl >= 0 ? "text-emerald-500" : "text-red-500"
                                                 )}>
                                                     {item.pnl >= 0 ? '+' : '-'}${Math.abs(item.pnl).toLocaleString('en-US', { minimumFractionDigits: 1 })}
                                                 </p>
                                                 <div className="flex items-center justify-end gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <span className="text-[9px] font-black text-blue-500 uppercase tracking-tighter">Ver Detalhes</span>
+                                                    <span className="text-[9px] font-semibold text-blue-500 uppercase tracking-tighter">Ver Detalhes</span>
                                                     <ChevronRight className="h-3 w-3 text-blue-500" />
                                                 </div>
                                             </div>
@@ -276,7 +276,7 @@ export default function AnalyticsPage() {
                                 )}
                             </CardContent>
                             <div className="p-8 mt-auto border-t border-slate-100 dark:border-slate-800/50">
-                                <Button className="w-full h-14 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-500/20 transition-all">
+                                <Button className="w-full h-14 rounded-2xl bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-500/20 transition-all">
                                     Baixar Dataset em PDF
                                 </Button>
                             </div>

@@ -21,7 +21,7 @@ export default function SharedTradePage() {
             try {
                 const { data, error } = await supabase
                     .from('trades')
-                    .select('*, users(username, avatar_url)')
+                    .select('*')
                     .eq('share_token', params.token)
                     .eq('is_shared', true)
                     .single()
@@ -60,6 +60,8 @@ export default function SharedTradePage() {
 
     const isWin = (trade.pnl_net || 0) >= 0
 
+    const username = trade.public_name || "Trader"
+
     return (
         <div className="min-h-screen bg-gray-50 py-12 px-4 md:px-8">
             <div className="max-w-4xl mx-auto space-y-8">
@@ -68,14 +70,14 @@ export default function SharedTradePage() {
                 <div className="bg-white p-8 rounded-3xl border shadow-sm flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-4 text-left w-full">
                         <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 text-2xl font-bold">
-                            {(trade as any).users?.username?.[0] || "?"}
+                            {username[0]}
                         </div>
                         <div>
                             <p className="text-xs text-emerald-600 font-bold uppercase tracking-widest mb-1">Shared Trade</p>
                             <h1 className="text-3xl font-black text-gray-900 leading-tight">
                                 {trade.symbol} <span className={cn("text-lg font-bold", trade.direction === "LONG" ? "text-emerald-500" : "text-amber-500")}>({trade.direction})</span>
                             </h1>
-                            <p className="text-sm text-gray-400">by @{(trade as any).users?.username || 'anonymous trader'}</p>
+                            <p className="text-sm text-gray-400">by @{username}</p>
                         </div>
                     </div>
                     <div className="bg-gray-900 text-white p-6 rounded-2xl min-w-[200px] text-center">

@@ -53,10 +53,10 @@ export default function AuthPage() {
     }
 
     return (
-        <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen">
+        <div className="w-full lg:grid lg:min-h-screen lg:grid-cols-2 xl:min-h-screen bg-[#f7f9fc] dark:bg-[#0b1220]">
 
             {/* --- LEFT SIDE (Form) --- */}
-            <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-white dark:bg-[#020617] transition-colors duration-500">
+            <div className="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 bg-[#f7f9fc] dark:bg-[#0b1220] transition-colors duration-500">
                 <div className="mx-auto w-full max-w-sm space-y-8">
 
                     {/* Header */}
@@ -70,10 +70,10 @@ export default function AuthPage() {
                             </span>
                         </Link>
 
-                        <h1 className="text-3xl font-heading font-bold tracking-tight text-slate-900 dark:text-white">
+                        <h1 className="text-3xl font-heading font-semibold tracking-tight text-slate-900 dark:text-white">
                             {view === 'login' ? 'Bem-vindo de volta' : 'Crie sua conta'}
                         </h1>
-                        <p className="text-sm text-muted-foreground max-w-xs">
+                        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-xs">
                             {view === 'login'
                                 ? 'Insira seus dados para acessar sua estação de trading.'
                                 : 'Comece a jornada para a consistência hoje.'}
@@ -85,20 +85,20 @@ export default function AuthPage() {
 
                         {view === 'signup' && (
                             <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                                <Label htmlFor="username">Nome de Usuário</Label>
+                                <Label htmlFor="username" className="text-slate-600 dark:text-slate-300 font-semibold">Nome de Usuário</Label>
                                 <Input
                                     id="username"
                                     placeholder="TraderPro"
                                     value={username}
                                     onChange={(e) => setUsername(e.target.value)}
                                     required
-                                    className="h-11 bg-slate-50 dark:bg-slate-900/50"
+                                    className="h-11 bg-white/90 dark:bg-slate-900/50 border-slate-200"
                                 />
                             </div>
                         )}
 
                         <div className="space-y-2">
-                            <Label htmlFor="email">Email</Label>
+                            <Label htmlFor="email" className="text-slate-600 dark:text-slate-300 font-semibold">Email</Label>
                             <Input
                                 id="email"
                                 type="email"
@@ -106,15 +106,15 @@ export default function AuthPage() {
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
-                                className="h-11 bg-slate-50 dark:bg-slate-900/50"
+                                className="h-11 bg-white/90 dark:bg-slate-900/50 border-slate-200"
                             />
                         </div>
 
                         <div className="space-y-2">
                             <div className="flex items-center justify-between">
-                                <Label htmlFor="password">Senha</Label>
+                                <Label htmlFor="password" className="text-slate-600 dark:text-slate-300 font-semibold">Senha</Label>
                                 {view === 'login' && (
-                                    <Link href="#" className="text-xs font-medium text-blue-600 hover:text-blue-500">
+                                    <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-500">
                                         Esqueceu a senha?
                                     </Link>
                                 )}
@@ -125,11 +125,11 @@ export default function AuthPage() {
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
-                                className="h-11 bg-slate-50 dark:bg-slate-900/50"
+                                className="h-11 bg-white/90 dark:bg-slate-900/50 border-slate-200"
                             />
                         </div>
 
-                        <Button className="w-full h-11 text-base font-bold bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20" type="submit" disabled={loading}>
+                        <Button className="w-full h-11 text-base font-semibold bg-[#2b7de9] hover:bg-[#256bd1] shadow-lg shadow-blue-500/20" type="submit" disabled={loading}>
                             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             {view === 'login' ? 'Entrar na Plataforma' : 'Criar Conta Gratuita'}
                         </Button>
@@ -140,15 +140,15 @@ export default function AuthPage() {
                                 <span className="w-full border-t border-slate-200 dark:border-slate-800" />
                             </div>
                             <div className="relative flex justify-center text-xs uppercase">
-                                <span className="bg-white dark:bg-[#020617] px-2 text-muted-foreground">Ou continue com</span>
+                                <span className="bg-[#f7f9fc] dark:bg-[#0b1220] px-2 text-slate-400">Ou continue com</span>
                             </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-4">
-                            <Button variant="outline" type="button" disabled={loading} className="h-11 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <Button variant="outline" type="button" disabled={loading} className="h-11 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 font-semibold">
                                 <Github className="mr-2 h-4 w-4" /> Github
                             </Button>
-                            <Button variant="outline" type="button" disabled={loading} className="h-11 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800">
+                            <Button variant="outline" type="button" disabled={loading} className="h-11 bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-600 font-semibold">
                                 <Mail className="mr-2 h-4 w-4" /> Google
                             </Button>
                         </div>
@@ -157,16 +157,16 @@ export default function AuthPage() {
                     {/* Toggle View */}
                     <div className="text-center text-sm">
                         {view === 'login' ? (
-                            <p className="text-muted-foreground">
+                            <p className="text-slate-500 dark:text-slate-400">
                                 Não tem uma conta?{" "}
-                                <button onClick={() => setView('signup')} className="font-bold text-blue-600 hover:text-blue-500 hover:underline transition-all">
+                                <button onClick={() => setView('signup')} className="font-semibold text-blue-600 hover:text-blue-500 hover:underline transition-all">
                                     Cadastre-se agora
                                 </button>
                             </p>
                         ) : (
-                            <p className="text-muted-foreground">
+                            <p className="text-slate-500 dark:text-slate-400">
                                 Já tem uma conta?{" "}
-                                <button onClick={() => setView('login')} className="font-bold text-blue-600 hover:text-blue-500 hover:underline transition-all">
+                                <button onClick={() => setView('login')} className="font-semibold text-blue-600 hover:text-blue-500 hover:underline transition-all">
                                     Faça login
                                 </button>
                             </p>
@@ -177,7 +177,7 @@ export default function AuthPage() {
             </div>
 
             {/* --- RIGHT SIDE (Image) --- */}
-            <div className="hidden lg:block relative bg-slate-900 overflow-hidden">
+            <div className="hidden lg:block relative bg-[#0b1220] overflow-hidden">
                 <div className="absolute inset-0 bg-blue-900/20 mix-blend-multiply z-10" />
                 <Image
                     src="/images/auth-side-panel.png"

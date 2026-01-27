@@ -35,6 +35,7 @@ interface SidebarProps {
         avatar?: string
         plan?: string
     }
+    mode?: "desktop" | "mobile"
 }
 
 const navigation = [
@@ -49,11 +50,12 @@ const navigation = [
     { name: "Importar", href: "/import", icon: Upload },
 ]
 
-export function Sidebar({ user }: SidebarProps) {
+export function Sidebar({ user, mode = "desktop" }: SidebarProps) {
     const pathname = usePathname()
     const router = useRouter()
     const [collapsed, setCollapsed] = useState(false)
     const [mounted, setMounted] = useState(false)
+    const isMobile = mode === "mobile"
 
     const handleLogout = async () => {
         try {
@@ -76,34 +78,36 @@ export function Sidebar({ user }: SidebarProps) {
     return (
         <div
             className={cn(
-                "flex flex-col h-screen bg-white dark:bg-[#020617] border-r border-slate-200 dark:border-slate-800 transition-all duration-300 relative z-20",
-                collapsed ? "w-20" : "w-72"
+                "flex flex-col h-full bg-white dark:bg-[#0b1220] border-r border-slate-200 dark:border-slate-800 transition-all duration-300 relative z-20",
+                isMobile ? "w-full" : collapsed ? "w-20" : "w-72"
             )}
         >
             {/* Logo */}
             <div className="flex items-center justify-between h-20 px-6 border-b border-slate-200 dark:border-slate-800">
-                {!collapsed && (
+                {(!collapsed || isMobile) && (
                     <Link href="/dashboard" className="flex items-center gap-2 group">
                         <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-blue-500/20 group-hover:scale-110 transition-transform">
                             <TrendingUp className="h-5 w-5 text-white" />
                         </div>
-                        <span className="text-xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">
-                            Trader<span className="text-blue-600">LCTNET</span>
+                        <span className="text-xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">
+                            Trader<span className="text-blue-500">LCTNET</span>
                         </span>
                     </Link>
                 )}
-                <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setCollapsed(!collapsed)}
-                    className={cn("h-8 w-8 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white", collapsed && "mx-auto")}
-                >
-                    {collapsed ? (
-                        <ChevronRight className="h-4 w-4" />
-                    ) : (
-                        <ChevronLeft className="h-4 w-4" />
-                    )}
-                </Button>
+                {!isMobile && (
+                    <Button
+                        variant="ghost"
+                        size="icon"
+                        onClick={() => setCollapsed(!collapsed)}
+                        className={cn("h-8 w-8 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white", collapsed && "mx-auto")}
+                    >
+                        {collapsed ? (
+                            <ChevronRight className="h-4 w-4" />
+                        ) : (
+                            <ChevronLeft className="h-4 w-4" />
+                        )}
+                    </Button>
+                )}
             </div>
 
             {/* Navigation */}
@@ -120,11 +124,11 @@ export function Sidebar({ user }: SidebarProps) {
                                     ? "bg-blue-50 text-blue-700 dark:bg-blue-500/10 dark:text-blue-400 shadow-sm"
                                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-200"
                             )}
-                            title={collapsed ? item.name : undefined}
+                            title={collapsed && !isMobile ? item.name : undefined}
                         >
                             {isActive && <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-blue-600 rounded-r-full" />}
                             <item.icon className={cn("h-5 w-5 flex-shrink-0 transition-colors", isActive ? "text-blue-600 dark:text-blue-400" : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500 dark:group-hover:text-slate-300")} />
-                            {!collapsed && <span>{item.name}</span>}
+                            {(!collapsed || isMobile) && <span>{item.name}</span>}
                         </Link>
                     )
                 })}
@@ -147,7 +151,7 @@ export function Sidebar({ user }: SidebarProps) {
 
             {/* User Profile */}
             <div className="border-t border-slate-200 dark:border-slate-800 p-4 bg-slate-50/50 dark:bg-slate-900/50">
-                {!collapsed ? (
+                {(!collapsed || isMobile) ? (
                     <div className="space-y-4">
                         <div className="flex items-center gap-3 mb-2">
                             <ModeToggle />
@@ -161,7 +165,7 @@ export function Sidebar({ user }: SidebarProps) {
                                 </AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
-                                <p className="text-sm font-bold text-slate-900 dark:text-white truncate">
+                                <p className="text-sm font-semibold text-slate-800 dark:text-white truncate">
                                     {user?.name || user?.email?.split("@")[0] || "Usuário"}
                                 </p>
                                 <div className="flex items-center gap-2">
@@ -214,4 +218,3 @@ export function Sidebar({ user }: SidebarProps) {
         </div>
     )
 }
-

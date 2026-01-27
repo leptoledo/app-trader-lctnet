@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export default function NotebookPage() {
     return (
-        <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#020617] p-8 transition-colors duration-500">
+        <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
             <div className="max-w-5xl mx-auto w-full space-y-10">
 
                 {/* Header Section */}
@@ -16,8 +16,8 @@ export default function NotebookPage() {
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-[10px] font-black text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Base de Conhecimento</p>
-                            <h1 className="text-3xl font-heading font-bold text-slate-900 dark:text-white tracking-tight">Notebook de Estratégias</h1>
+                            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Base de Conhecimento</p>
+                            <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Notebook de Estratégias</h1>
                         </div>
                     </div>
                 </div>
@@ -42,12 +42,12 @@ export default function NotebookPage() {
                             </div>
 
                             <div className="space-y-4">
-                                <h2 className="text-4xl md:text-5xl font-heading font-black text-slate-900 dark:text-white tracking-tighter uppercase leading-none">
-                                    Em <span className="text-blue-600 dark:text-blue-400">Desenvolvimento</span>
+                                <h2 className="text-4xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tighter uppercase leading-none">
+                                    Em <span className="text-blue-500 dark:text-blue-400">Desenvolvimento</span>
                                 </h2>
-                                <p className="text-slate-500 dark:text-slate-400 font-bold text-lg max-w-lg mx-auto leading-relaxed">
+                                <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg max-w-lg mx-auto leading-relaxed">
                                     O seu novo hub de estratégias está sendo codificado.
-                                    <span className="block mt-2 font-black text-slate-800 dark:text-slate-200">Previsão: Fase 2 Deployment.</span>
+                                    <span className="block mt-2 font-semibold text-slate-800 dark:text-slate-200">Previsão: Fase 2 Deployment.</span>
                                 </p>
                             </div>
 
@@ -57,15 +57,15 @@ export default function NotebookPage() {
                                     { icon: ShieldCheck, title: "Checklists", desc: "Validação antes de cada clique" },
                                     { icon: Sparkles, title: "Revisão por IA", desc: "Sua estratégia auditada por IA" }
                                 ].map((feature, i) => (
-                                    <div key={i} className="bg-slate-50/50 dark:bg-slate-950/40 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800/60 transition-all hover:border-blue-500/30 group/item">
+                                    <div key={i} className="bg-white/90 dark:bg-slate-950/40 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800/60 transition-all hover:border-blue-500/30 group/item">
                                         <feature.icon className="h-6 w-6 text-blue-500 mb-4 transition-transform group-hover/item:scale-110" />
-                                        <p className="text-xs font-black text-slate-900 dark:text-white uppercase mb-1 tracking-widest">{feature.title}</p>
-                                        <p className="text-[10px] text-slate-400 font-bold uppercase leading-relaxed">{feature.desc}</p>
+                                        <p className="text-xs font-semibold text-slate-900 dark:text-white uppercase mb-1 tracking-widest">{feature.title}</p>
+                                        <p className="text-[10px] text-slate-400 font-semibold uppercase leading-relaxed">{feature.desc}</p>
                                     </div>
                                 ))}
                             </div>
 
-                            <Button className="h-16 rounded-[2rem] bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-black uppercase text-xs tracking-[0.2em] px-12 transition-all hover:-translate-y-1 active:scale-95 shadow-xl" asChild>
+                            <Button className="h-16 rounded-[2rem] bg-slate-900 dark:bg-slate-800 hover:bg-slate-800 dark:hover:bg-slate-700 text-white font-semibold uppercase text-xs tracking-[0.2em] px-12 transition-all hover:-translate-y-1 active:scale-95 shadow-xl" asChild>
                                 <Link href="/">Voltar ao Dashboard</Link>
                             </Button>
                         </div>
