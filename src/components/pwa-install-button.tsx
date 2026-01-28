@@ -40,6 +40,7 @@ export function PwaInstallButton() {
   if (!deferredPrompt && !isIos) return null
 
   const handleInstall = async () => {
+    if (!deferredPrompt) return
     await deferredPrompt.prompt()
     await deferredPrompt.userChoice
     setDeferredPrompt(null)

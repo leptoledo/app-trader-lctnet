@@ -5,7 +5,7 @@ import { PLANS, SubscriptionPlan } from '@/config/plans';
 
 export async function POST(req: Request) {
     try {
-        const supabase = createSupabaseServerClient();
+        const supabase = await createSupabaseServerClient();
         const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {

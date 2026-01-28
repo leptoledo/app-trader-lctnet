@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
+import { useForm, type Resolver } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { tradeSchema, TradeFormValues } from "@/lib/validations"
 import { Button } from "@/components/ui/button"
@@ -36,7 +36,7 @@ export default function EditTradePage() {
     const [shareConfirmLoading, setShareConfirmLoading] = useState(false)
 
     const form = useForm<TradeFormValues>({
-        resolver: zodResolver(tradeSchema),
+        resolver: zodResolver(tradeSchema) as Resolver<TradeFormValues>,
         defaultValues: {
             symbol: "",
             direction: "LONG",

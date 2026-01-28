@@ -30,7 +30,7 @@ export function RiskChart({ trades }: RiskChartProps) {
         let r = t.r_multiple
 
         // Auto-calculate if missing but SL exists
-        if (r == null && t.stop_loss && t.entry_price && t.pnl_net !== undefined) {
+        if (r == null && t.stop_loss && t.entry_price && t.pnl_net != null) {
             const risk = Math.abs(t.entry_price - t.stop_loss)
             const reward = (t.pnl_net / t.quantity) // approx per unit
             // This is rough approximation if contract size unknown, using stored r_multiple is better usually

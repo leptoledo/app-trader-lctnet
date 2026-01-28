@@ -207,7 +207,7 @@ export default function TradesPage() {
         return normalized
     }
 
-    const getOutlierPercent = (trade: Trade, overridePrice?: number) => {
+    const getOutlierPercent = (trade: Trade, overridePrice?: number | null) => {
         if (outlierThreshold <= 0) return null
         const referencePrice = overridePrice ?? trade.exit_price
         if (!referencePrice || trade.entry_price <= 0) return null
@@ -1073,15 +1073,18 @@ export default function TradesPage() {
                         >
                             Cancelar
                         </Button>
+                        {(() => {
+                            const pnlPreview = getPnlPreview()
+                            return (
                         <Button
                             onClick={handleCloseTrade}
                             className={cn(
                                 "rounded-xl text-white",
-                                getPnlPreview() == null
+                                pnlPreview == null
                                     ? "bg-[#2b7de9] hover:bg-[#256bd1]"
-                                    : getPnlPreview() > 0
+                                    : pnlPreview > 0
                                         ? "bg-emerald-600 hover:bg-emerald-700"
-                                        : getPnlPreview() < 0
+                                        : pnlPreview < 0
                                             ? "bg-red-500 hover:bg-red-600"
                                             : "bg-slate-500 hover:bg-slate-600"
                             )}
@@ -1090,6 +1093,8 @@ export default function TradesPage() {
                             {closing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                             Fechar trade
                         </Button>
+                            )
+                        })()}
                     </DialogFooter>
                 </DialogContent>
             </Dialog>

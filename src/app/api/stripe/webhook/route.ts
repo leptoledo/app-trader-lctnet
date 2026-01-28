@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
-import Stripe from 'stripe';
-import { stripe } from '@/lib/stripe';
+import { getStripeClient } from '@/lib/stripe';
 import { createSupabaseAdminClient } from '@/lib/supabase-admin';
 import { headers } from 'next/headers';
 
@@ -12,6 +11,7 @@ export async function POST(req: Request) {
     let event;
 
     try {
+        const stripe = getStripeClient();
         event = stripe.webhooks.constructEvent(
             body,
             signature,
@@ -26,6 +26,7 @@ export async function POST(req: Request) {
 
     // Handle subscription success
     if (event.type === 'checkout.session.completed') {
+        const stripe = getStripeClient();
         const subId = session.subscription as string;
         const subscription = (await stripe.subscriptions.retrieve(subId)) as any;
         const userId = session.metadata.userId;

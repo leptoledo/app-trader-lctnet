@@ -1,15 +1,27 @@
 import Stripe from 'stripe';
 
-export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2023-10-16' as any,
-    appInfo: {
-        name: 'Trader Journal SaaS',
-        version: '1.0.0'
+let stripeClient: Stripe | null = null;
+
+export const getStripeClient = () => {
+    const apiKey = process.env.STRIPE_SECRET_KEY;
+    if (!apiKey) {
+        throw new Error('Missing STRIPE_SECRET_KEY');
     }
-});
+    if (!stripeClient) {
+        stripeClient = new Stripe(apiKey, {
+            apiVersion: '2023-10-16' as any,
+            appInfo: {
+                name: 'Trader Journal SaaS',
+                version: '1.0.0'
+            }
+        });
+    }
+    return stripeClient;
+};
 
 export async function createCheckoutSession(userId: string, userEmail: string, priceId: string) {
     try {
+    const stripe = getStripeClient();
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             customer_email: userEmail,

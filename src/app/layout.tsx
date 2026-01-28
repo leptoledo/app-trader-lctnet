@@ -13,6 +13,9 @@ export const metadata = {
   title: "TraderLCTNET | O Diário de Trade Profissional",
   description: "A plataforma nº 1 para traders de alta performance. Gerencie seus trades, analise estatísticas e domine o mercado.",
   manifest: "/manifest.json",
+}
+
+export const viewport = {
   themeColor: "#059669",
 }
 
