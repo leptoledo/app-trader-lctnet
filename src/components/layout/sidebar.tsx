@@ -24,7 +24,6 @@ import {
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { ModeToggle } from "@/components/mode-toggle"
 
 interface SidebarProps {
     user?: {
@@ -152,10 +151,7 @@ export function Sidebar({ user, mode = "desktop" }: SidebarProps) {
             <div className="border-t border-slate-200 dark:border-slate-800 p-4 bg-slate-50/50 dark:bg-slate-900/50">
                 {(!collapsed || isMobile) ? (
                     <div className="space-y-4">
-                        <div className="flex items-center gap-3 mb-2">
-                            <ModeToggle />
-                            <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Alternar Tema</span>
-                        </div>
+
                         <div className="flex items-center gap-3">
                             <Avatar className="h-10 w-10 border-2 border-white dark:border-slate-700 shadow-sm">
                                 <AvatarImage src={user?.avatar} />
@@ -197,7 +193,7 @@ export function Sidebar({ user, mode = "desktop" }: SidebarProps) {
                     </div>
                 ) : (
                     <div className="flex flex-col gap-4 items-center">
-                        <ModeToggle />
+
                         <Button variant="ghost" size="icon" asChild className="opacity-70 hover:opacity-100">
                             <Link href="/settings">
                                 <Settings className="h-5 w-5" />

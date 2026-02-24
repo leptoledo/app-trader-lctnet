@@ -982,11 +982,11 @@ export default function TradesPage() {
                             </div>
                         </div>
                         {closingTrade ? (
-                            <div className="rounded-lg border border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-600">
-                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <div className="rounded-xl border border-slate-200/70 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-900/40 p-5 text-sm">
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-4">
                                     <div className="flex items-center justify-between">
-                                        <span className="uppercase tracking-widest text-[10px] text-slate-400">PNL bruto</span>
-                                        <span className="font-mono font-semibold text-slate-700">
+                                        <span className="uppercase tracking-widest text-[10px] font-semibold text-slate-500 dark:text-slate-400">PNL Bruto</span>
+                                        <span className="font-mono font-bold text-slate-900 dark:text-white">
                                             {(() => {
                                                 const exit = Number(closeForm.exitPrice)
                                                 if (!closeForm.exitPrice || Number.isNaN(exit)) return "--"
@@ -1004,8 +1004,8 @@ export default function TradesPage() {
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="uppercase tracking-widest text-[10px] text-slate-400">Fees</span>
-                                        <span className="font-mono font-semibold text-slate-700">
+                                        <span className="uppercase tracking-widest text-[10px] font-semibold text-slate-500 dark:text-slate-400">Fees</span>
+                                        <span className="font-mono font-bold text-slate-900 dark:text-white">
                                             {(() => {
                                                 const commission = closeForm.commission === "" ? 0 : Number(closeForm.commission)
                                                 const swap = closeForm.swap === "" ? 0 : Number(closeForm.swap)
@@ -1016,8 +1016,8 @@ export default function TradesPage() {
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="uppercase tracking-widest text-[10px] text-slate-400">PNL líquido</span>
-                                        <span className="font-mono font-semibold">
+                                        <span className="uppercase tracking-widest text-[10px] font-semibold text-slate-500 dark:text-slate-400">PNL Líquido</span>
+                                        <span className="font-mono font-bold">
                                             {(() => {
                                                 const exit = Number(closeForm.exitPrice)
                                                 const commission = closeForm.commission === "" ? 0 : Number(closeForm.commission)
@@ -1033,14 +1033,14 @@ export default function TradesPage() {
                                                     fees
                                                 })
                                                 if (pnl_net == null) return "--"
-                                                const tone = pnl_net > 0 ? "text-emerald-600" : pnl_net < 0 ? "text-red-500" : "text-slate-600"
+                                                const tone = pnl_net > 0 ? "text-emerald-600 dark:text-emerald-400" : pnl_net < 0 ? "text-red-500 dark:text-red-400" : "text-slate-900 dark:text-white"
                                                 return <span className={tone}>{`${pnl_net >= 0 ? "+" : ""}${pnl_net.toFixed(2)}`}</span>
                                             })()}
                                         </span>
                                     </div>
                                     <div className="flex items-center justify-between">
-                                        <span className="uppercase tracking-widest text-[10px] text-slate-400">R-Múltiplo</span>
-                                        <span className="font-mono font-semibold text-slate-700">
+                                        <span className="uppercase tracking-widest text-[10px] font-semibold text-slate-500 dark:text-slate-400">R-Múltiplo</span>
+                                        <span className="font-mono font-bold text-slate-900 dark:text-white">
                                             {(() => {
                                                 if (!closingTrade.stop_loss) return "--"
                                                 const exit = Number(closeForm.exitPrice)
@@ -1111,14 +1111,14 @@ export default function TradesPage() {
                             Esta ação não pode ser desfeita. O trade será removido permanentemente.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="rounded-lg border border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-600">
-                        <div className="flex items-center justify-between">
-                            <span className="uppercase tracking-widest text-[10px] text-slate-400">Ativo</span>
-                            <span className="font-semibold text-slate-700">{deletingTrade?.symbol ?? "-"}</span>
+                    <div className="rounded-xl border border-slate-200/70 dark:border-slate-800/60 bg-slate-50/50 dark:bg-slate-900/40 p-5 text-sm">
+                        <div className="flex items-center justify-between mb-4">
+                            <span className="uppercase tracking-widest text-[10px] font-semibold text-slate-500 dark:text-slate-400">Ativo</span>
+                            <span className="font-bold text-slate-900 dark:text-white">{deletingTrade?.symbol ?? "-"}</span>
                         </div>
-                        <div className="mt-2 flex items-center justify-between">
-                            <span className="uppercase tracking-widest text-[10px] text-slate-400">Entrada</span>
-                            <span className="font-mono text-slate-700">{deletingTrade ? formatPrice(deletingTrade.entry_price, getPriceDecimals(deletingTrade.symbol)) : "-"}</span>
+                        <div className="flex items-center justify-between">
+                            <span className="uppercase tracking-widest text-[10px] font-semibold text-slate-500 dark:text-slate-400">Entrada</span>
+                            <span className="font-mono font-bold text-slate-900 dark:text-white">{deletingTrade ? formatPrice(deletingTrade.entry_price, getPriceDecimals(deletingTrade.symbol)) : "-"}</span>
                         </div>
                     </div>
                     {deletingTrade?.status === "CLOSED" ? (

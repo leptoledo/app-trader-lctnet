@@ -5,13 +5,14 @@ import { useSubscription } from "@/hooks/useSubscription"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Settings as SettingsIcon, CreditCard, Shield, User, Crown, ArrowLeft, Loader2, Sparkles, ChevronRight, Zap } from "lucide-react"
+import { ArrowLeft, Loader2, Sparkles, ChevronRight, Zap, Monitor, Settings as SettingsIcon, CreditCard, Shield, User, Crown } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
 import { supabase } from "@/lib/supabase"
 import { toast } from "sonner"
 import { PwaInstallButton } from "@/components/pwa-install-button"
+import { ModeToggle } from "@/components/mode-toggle"
 
 export default function SettingsPage() {
     const { plan, loading, isFree } = useSubscription()
@@ -154,6 +155,9 @@ export default function SettingsPage() {
                                 <ChevronRight className="h-4 w-4" />
                             </Button>
                             <Button variant="ghost" className="w-full justify-start h-12 rounded-xl font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all">
+                                <Monitor className="h-4 w-4 mr-3 text-slate-400" /> Aparência
+                            </Button>
+                            <Button variant="ghost" className="w-full justify-start h-12 rounded-xl font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all">
                                 <CreditCard className="h-4 w-4 mr-3 text-slate-400" /> Faturamento
                             </Button>
                             <Button variant="ghost" className="w-full justify-start h-12 rounded-xl font-bold text-[10px] uppercase tracking-widest text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white transition-all">
@@ -195,6 +199,28 @@ export default function SettingsPage() {
                                         {savingProfile ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : null}
                                         Salvar Perfil
                                     </Button>
+                                </div>
+                            </CardContent>
+                        </Card>
+
+                        {/* Appearance / Theme */}
+                        <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden">
+                            <CardHeader className="p-10 pb-6 border-b border-slate-100 dark:border-slate-800/50">
+                                <CardTitle className="text-2xl font-heading font-black text-slate-900 dark:text-white tracking-tight">
+                                    Aparência
+                                </CardTitle>
+                                <CardDescription className="text-slate-500 dark:text-slate-400 font-bold uppercase text-[10px] tracking-widest">
+                                    Ajuste o tema visual da plataforma.
+                                </CardDescription>
+                            </CardHeader>
+                            <CardContent className="p-10 space-y-6">
+                                <div className="space-y-3">
+                                    <label className="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Tema da Interface</label>
+                                    <div className="flex items-center gap-4 h-14 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 px-4 font-bold text-sm w-fit transition-all hover:bg-slate-100 dark:hover:bg-slate-900">
+                                        <ModeToggle />
+                                        <span className="text-slate-700 dark:text-slate-300 mr-2">Alternar Tema</span>
+                                    </div>
+                                    <p className="text-xs text-slate-400 font-medium">Você escolhe como prefere acompanhar seus resultados.</p>
                                 </div>
                             </CardContent>
                         </Card>
