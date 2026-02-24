@@ -19,9 +19,14 @@ export function PwaInstallButton() {
   useEffect(() => {
     const ua = navigator.userAgent || ""
     const ios = /iphone|ipad|ipod/i.test(ua)
-    const standalone = window.matchMedia("(display-mode: standalone)").matches || (navigator as any).standalone
-    setIsIos(ios)
-    setIsStandalone(standalone)
+    const nav = navigator as Navigator & { standalone?: boolean }
+    const standalone = window.matchMedia("(display-mode: standalone)").matches || nav.standalone
+
+    // Use refs for initial values to avoid cascading renders
+    const timer = setTimeout(() => {
+      setIsIos(ios)
+      setIsStandalone(standalone ?? false)
+    }, 0)
 
     const handler = (event: Event) => {
       event.preventDefault()
@@ -32,6 +37,7 @@ export function PwaInstallButton() {
     window.addEventListener("appinstalled", () => setDeferredPrompt(null))
 
     return () => {
+      clearTimeout(timer)
       window.removeEventListener("beforeinstallprompt", handler)
     }
   }, [])

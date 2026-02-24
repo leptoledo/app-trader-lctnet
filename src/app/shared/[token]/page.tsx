@@ -27,10 +27,12 @@ export default function SharedTradePage() {
                     .single()
 
                 if (error) throw error
-                setTrade(data as any)
+                setTrade(data as Trade)
 
                 // Track view
-                await supabase.rpc('increment_shared_view', { token: params.token })
+                if (params.token) {
+                    await supabase.rpc('increment_shared_view', { token: params.token })
+                }
             } catch (error) {
                 console.error("Erro ao carregar trade compartilhado:", error)
             } finally {
@@ -151,7 +153,7 @@ export default function SharedTradePage() {
                     <section className="bg-white p-8 rounded-3xl border shadow-sm">
                         <h2 className="text-lg font-bold text-gray-900 mb-4 underline decoration-emerald-500 decoration-4 underline-offset-8">Relatório do Diário</h2>
                         <p className="text-gray-700 leading-relaxed whitespace-pre-wrap italic">
-                            "{trade.notes}"
+                            &ldquo;{trade.notes}&rdquo;
                         </p>
                     </section>
                 )}

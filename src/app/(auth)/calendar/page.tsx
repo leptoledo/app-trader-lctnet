@@ -200,7 +200,7 @@ export default function CalendarPage() {
       </thead>
       <tbody>
         ${monthTrades
-            .map((trade) => `
+                .map((trade) => `
           <tr>
             <td>${trade.ticket_id ?? ""}</td>
             <td>${trade.symbol}</td>
@@ -216,7 +216,7 @@ export default function CalendarPage() {
             <td>${trade.status}</td>
           </tr>
         `)
-            .join("")}
+                .join("")}
       </tbody>
     </table>
   </body>
@@ -253,41 +253,41 @@ export default function CalendarPage() {
                         <CalendarIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Consistência</p>
-                        <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Calendário P&L</h1>
+                        <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Consistência</p>
+                        <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Calendário P&L</h1>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-3">
                     <div className="flex items-center gap-3 bg-white dark:bg-slate-900/50 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-xl">
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={goToPreviousMonth}
-                        className="h-10 w-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
-                    >
-                        <ChevronLeft className="h-5 w-5" />
-                    </Button>
-                    <span className="text-sm font-semibold min-w-[160px] text-center text-slate-900 dark:text-white font-heading px-4 border-x border-slate-100 dark:border-slate-800 uppercase tracking-widest transition-all">
-                        {MONTHS[month]} <span className="text-blue-500 dark:text-blue-400 ml-1">{year}</span>
-                    </span>
-                    <Button
-                        variant="ghost"
-                        size="icon"
-                        onClick={goToNextMonth}
-                        className="h-10 w-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
-                    >
-                        <ChevronRight className="h-5 w-5" />
-                    </Button>
-                    <div className="w-[1px] h-6 bg-slate-100 dark:bg-slate-800 mx-1" />
-                    <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={goToToday}
-                        className="h-10 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 font-semibold px-4 rounded-xl text-[10px] uppercase tracking-widest"
-                    >
-                        HOJE
-                    </Button>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={goToPreviousMonth}
+                            className="h-10 w-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+                        >
+                            <ChevronLeft className="h-5 w-5" />
+                        </Button>
+                        <span className="text-sm font-semibold min-w-[160px] text-center text-slate-900 dark:text-white font-heading px-4 border-x border-slate-100 dark:border-slate-800 uppercase tracking-widest transition-all">
+                            {MONTHS[month]} <span className="text-blue-500 dark:text-blue-400 ml-1">{year}</span>
+                        </span>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            onClick={goToNextMonth}
+                            className="h-10 w-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+                        >
+                            <ChevronRight className="h-5 w-5" />
+                        </Button>
+                        <div className="w-[1px] h-6 bg-slate-100 dark:bg-slate-800 mx-1" />
+                        <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={goToToday}
+                            className="h-10 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 font-semibold px-4 rounded-xl text-[10px] uppercase tracking-widest"
+                        >
+                            HOJE
+                        </Button>
                     </div>
                     <TooltipProvider>
                         <DropdownMenu>
@@ -432,8 +432,8 @@ export default function CalendarPage() {
                                         <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Resultado Mensal</p>
                                     </div>
                                     <div className={cn(
-                                        "text-3xl font-heading font-semibold tracking-tight",
-                                        totalPnL >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-500 dark:text-red-400"
+                                        "text-3xl md:text-4xl font-heading font-bold tracking-tighter",
+                                        totalPnL >= 0 ? "text-emerald-500" : "text-red-500"
                                     )}>
                                         {totalPnL >= 0 ? '+' : '-'}${Math.abs(totalPnL).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </div>
@@ -449,8 +449,8 @@ export default function CalendarPage() {
                                         </div>
                                         <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Sessões</p>
                                     </div>
-                                    <div className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">
-                                        {totalTrades} <span className="text-xs text-slate-400 font-semibold uppercase tracking-widest ml-1">Execuções</span>
+                                    <div className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">
+                                        {totalTrades} <span className="text-xs text-slate-400 font-bold uppercase tracking-widest ml-1">Execuções</span>
                                     </div>
                                 </Card>
 
@@ -461,8 +461,8 @@ export default function CalendarPage() {
                                         </div>
                                         <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Volume</p>
                                     </div>
-                                    <div className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">
-                                        {tradingDays} <span className="text-xs text-slate-400 font-semibold uppercase tracking-widest ml-1">Dias Ativos</span>
+                                    <div className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">
+                                        {tradingDays} <span className="text-xs text-slate-400 font-bold uppercase tracking-widest ml-1">Dias Ativos</span>
                                     </div>
                                 </Card>
 
@@ -472,8 +472,8 @@ export default function CalendarPage() {
                                             <Zap className="h-5 w-5" />
                                         </div>
                                         <div className="space-y-0.5">
-                                            <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Sequência</p>
-                                            <p className="text-xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">4 Dias Positivos</p>
+                                            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Sequência</p>
+                                            <p className="text-xl md:text-2xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">4 Dias Positivos</p>
                                         </div>
                                     </div>
                                 </Card>

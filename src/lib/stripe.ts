@@ -9,7 +9,8 @@ export const getStripeClient = () => {
     }
     if (!stripeClient) {
         stripeClient = new Stripe(apiKey, {
-            apiVersion: '2023-10-16' as any,
+            // @ts-expect-error - Stripe SDK may not have this version in types yet
+            apiVersion: '2023-10-16',
             appInfo: {
                 name: 'Trader Journal SaaS',
                 version: '1.0.0'
@@ -21,7 +22,7 @@ export const getStripeClient = () => {
 
 export async function createCheckoutSession(userId: string, userEmail: string, priceId: string) {
     try {
-    const stripe = getStripeClient();
+        const stripe = getStripeClient();
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             customer_email: userEmail,

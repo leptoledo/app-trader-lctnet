@@ -17,10 +17,10 @@ export function DateRangeFilter({ value, onChange, customFrom, customTo, onCusto
     return (
         <div className="flex items-center gap-2">
             <Select value={value} onValueChange={onChange}>
-                <SelectTrigger className="w-[180px] rounded-xl h-10 font-bold border-gray-200 bg-white">
-                    <SelectValue placeholder="Período" />
-                </SelectTrigger>
-                <SelectContent className="rounded-2xl border-gray-200 shadow-xl">
+            <SelectTrigger className="w-[180px] rounded-xl h-10 font-bold border-gray-200 bg-white">
+                <SelectValue placeholder="Período" />
+            </SelectTrigger>
+            <SelectContent className="rounded-xl border-gray-200 shadow-xl">
                     <SelectItem value="today" className="font-medium">Hoje</SelectItem>
                     <SelectItem value="week" className="font-medium">Esta Semana</SelectItem>
                     <SelectItem value="7d" className="font-medium">Últimos 7 dias</SelectItem>

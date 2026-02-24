@@ -1,7 +1,7 @@
 "use client"
 
 import { PLANS } from "@/config/plans"
-import { Check, ArrowRight, Star, Zap, ShieldCheck, Globe, Flame, TrendingUp, Facebook, Instagram, Twitter } from "lucide-react"
+import { Check, ArrowUpRight, Star, Zap, ShieldCheck, Globe, Flame, TrendingUp, Facebook, Instagram, Twitter } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -33,8 +33,9 @@ export default function PricingPage() {
             } else {
                 throw new Error("Erro ao criar sessão de pagamento")
             }
-        } catch (error: any) {
-            toast.error(error.message)
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err)
+            toast.error(message)
         } finally {
             toast.dismiss()
         }
@@ -75,7 +76,7 @@ export default function PricingPage() {
                             <div className="hidden md:block">
                                 <PwaInstallButton />
                             </div>
-                            <Button asChild className="rounded-xl bg-[#2b7de9] hover:bg-[#256bd1] px-6 h-11 text-sm font-semibold text-white shadow-lg shadow-blue-500/20 transition-all hover:-translate-y-0.5 active:scale-95">
+                            <Button asChild className="rounded-2xl bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                                 <Link href="/login">Começar Grátis</Link>
                             </Button>
                         </div>
@@ -102,21 +103,23 @@ export default function PricingPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.1 }}
-                            className="text-4xl md:text-6xl font-heading font-semibold tracking-tight text-slate-900 dark:text-white leading-tight"
+                            className="text-4xl md:text-5xl lg:text-7xl font-heading font-bold tracking-tighter text-slate-900 dark:text-white leading-[1.05]"
                         >
-                            Invista na sua <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">Consistência</span>
+                            Invista na sua <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400">Consistência</span>
                         </motion.h1>
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.2 }}
-                            className="text-lg text-slate-500 dark:text-slate-400 font-normal"
+                            className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl mx-auto font-medium"
                         >
-                            Escolha o plano ideal para o seu momento no mercado. <br className="hidden md:block" /> De iniciantes a traders profissionais institucionais.
+                            Escolha o plano ideal para o seu momento no mercado. <br className="hidden md:block" /> De iniciantes a traders institucionais.
                         </motion.p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch pt-8">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch pt-8 relative">
+                        {/* Interactive glow behind the cards */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5 blur-3xl -z-10 rounded-full" />
 
                         {/* Plan: FREE */}
                         <motion.div
@@ -145,7 +148,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <Button variant="outline" className="w-full h-14 rounded-2xl font-semibold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800" onClick={() => handleSubscribe('free')}>
+                            <Button variant="outline" className="w-full h-14 rounded-full font-bold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-1" onClick={() => handleSubscribe('free')}>
                                 Começar Gratuitamente
                             </Button>
                         </motion.div>
@@ -155,13 +158,14 @@ export default function PricingPage() {
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: 0.4 }}
-                            className="group relative bg-slate-900 dark:bg-blue-950/20 backdrop-blur-md rounded-[2.5rem] p-10 border-2 border-blue-600 shadow-2xl scale-105 z-10 flex flex-col overflow-hidden"
+                            className="group relative bg-slate-900 dark:bg-[#0A101F] backdrop-blur-3xl rounded-[2.5rem] p-10 border border-slate-800 shadow-2xl scale-105 z-10 flex flex-col overflow-hidden"
                         >
-                            {/* Accent Glow */}
-                            <div className="absolute top-0 right-0 p-32 bg-blue-600/10 rounded-full blur-3xl -mr-16 -mt-16" />
+                            {/* Premium Glow & Ring */}
+                            <div className="absolute inset-0 rounded-[2.5rem] ring-2 ring-blue-500/50 dark:ring-blue-400/30 ring-inset glow-effect pointer-events-none" />
+                            <div className="absolute top-0 right-0 p-32 bg-blue-600/15 dark:bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
 
                             <div className="absolute top-6 right-8">
-                                <div className="bg-blue-600 text-white text-[10px] font-black uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg shadow-blue-500/20 flex items-center gap-2">
+                                <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg shadow-blue-500/20 flex items-center gap-2">
                                     <Flame className="h-3 w-3" /> Mais Popular
                                 </div>
                             </div>
@@ -186,8 +190,8 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <Button className="w-full h-14 rounded-2xl font-semibold bg-[#2b7de9] hover:bg-[#256bd1] text-white shadow-xl shadow-blue-500/30 relative z-10 text-lg uppercase tracking-tight" onClick={() => handleSubscribe('pro')}>
-                                Assinar Pro Agora <ArrowRight className="ml-2 h-5 w-5" />
+                            <Button className="w-full h-14 rounded-full font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_-5px_rgba(37,99,235,0.5)] transition-all hover:-translate-y-1 relative z-10 text-sm uppercase tracking-widest group" onClick={() => handleSubscribe('pro')}>
+                                Assinar Pro <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </Button>
                         </motion.div>
 
@@ -222,7 +226,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <Button variant="ghost" className="w-full h-14 rounded-2xl font-black border-2 border-amber-500/30 hover:border-amber-500 dark:text-amber-500 text-amber-600 hover:text-white hover:bg-amber-600" onClick={() => handleSubscribe('gold')}>
+                            <Button variant="ghost" className="w-full h-14 rounded-full font-bold border-2 border-amber-500/30 hover:border-amber-500 dark:text-amber-500 text-amber-600 hover:text-white hover:bg-amber-600 transition-all hover:-translate-y-1 uppercase tracking-widest text-sm" onClick={() => handleSubscribe('gold')}>
                                 Upgrade para Ouro
                             </Button>
                         </motion.div>

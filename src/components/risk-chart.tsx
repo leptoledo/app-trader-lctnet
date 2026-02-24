@@ -1,7 +1,7 @@
 
 "use client"
 
-import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis, Tooltip, Cell, CartesianGrid } from "recharts"
+import { Bar, BarChart, ResponsiveContainer, XAxis, Tooltip, Cell, CartesianGrid } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Trade } from "@/types"
 
@@ -31,16 +31,15 @@ export function RiskChart({ trades }: RiskChartProps) {
 
         // Auto-calculate if missing but SL exists
         if (r == null && t.stop_loss && t.entry_price && t.pnl_net != null) {
-            const risk = Math.abs(t.entry_price - t.stop_loss)
-            const reward = (t.pnl_net / t.quantity) // approx per unit
+            const riskAmount = Math.abs(t.entry_price - t.stop_loss)
             // This is rough approximation if contract size unknown, using stored r_multiple is better usually
             // Fallback to simpler PnL based if risk is known in $ terms? 
             // For now rely on provided r_multiple or simple logic
-            if (risk !== 0) {
+            if (riskAmount !== 0) {
                 const diff = t.direction === 'LONG'
                     ? (t.exit_price! - t.entry_price)
                     : (t.entry_price - t.exit_price!)
-                r = diff / risk
+                r = diff / riskAmount
             }
         }
 

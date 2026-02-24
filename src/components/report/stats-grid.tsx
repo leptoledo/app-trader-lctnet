@@ -35,7 +35,7 @@ interface StatsGridProps {
     sharpeRatio?: number
 }
 
-export function StatsGrid({ winRate, profitFactor, maxDrawdown, totalTrades, avgHoldTime = "4h 57m", sharpeRatio = 0.06 }: StatsGridProps) {
+export function StatsGrid({ winRate, profitFactor, maxDrawdown, avgHoldTime = "4h 57m", sharpeRatio = 0.06 }: StatsGridProps) {
     return (
         <div className="grid grid-cols-2 gap-x-8 gap-y-2 p-4">
             <StatRow label="Fator de Lucro" value={profitFactor.toFixed(2)} />

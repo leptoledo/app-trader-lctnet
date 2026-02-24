@@ -4,7 +4,7 @@ import { Trade } from '@/types';
 export interface BrokerAdapter {
     id: string;
     name: string;
-    map: (row: any) => Partial<Trade>;
+    map: (row: Record<string, string>) => Partial<Trade>;
 }
 
 export const BROKER_ADAPTERS: BrokerAdapter[] = [
@@ -24,7 +24,7 @@ export const BROKER_ADAPTERS: BrokerAdapter[] = [
                 return null;
             };
 
-            const cleanNum = (val: any) => {
+            const cleanNum = (val: string | number | null | undefined): number => {
                 if (val === null || val === undefined || val === '') return 0;
                 let s = String(val).trim().replace(/[^0-9.,-]/g, '');
                 if (!s) return 0;
@@ -40,9 +40,9 @@ export const BROKER_ADAPTERS: BrokerAdapter[] = [
                 return parseFloat(s) || 0;
             };
 
-            const parseDateISO = (val: any): string => {
+            const parseDateISO = (val: string | null | undefined): string => {
                 if (!val) return new Date().toISOString();
-                let s = String(val).trim().replace(/\./g, '-');
+                const s = String(val).trim().replace(/\./g, '-');
                 const parts = s.split(/[\-\s\:]/);
 
                 if (parts.length >= 3) {
@@ -69,7 +69,7 @@ export const BROKER_ADAPTERS: BrokerAdapter[] = [
             const isSell = typeRaw.includes('sell') || typeRaw.includes('venda');
 
             // 🛡️ Ignora linhas que não são de execução (Saldo, Crédito, etc)
-            if (!isBuy && !isSell) return { symbol: 'SKIPPED' } as any;
+            if (!isBuy && !isSell) return { symbol: 'SKIPPED' } as Partial<Trade>;
 
             const direction = isBuy ? 'LONG' : 'SHORT';
 
@@ -109,7 +109,7 @@ export const BROKER_ADAPTERS: BrokerAdapter[] = [
         id: 'generic',
         name: 'Planilha Genérica (CSV)',
         map: (row) => {
-            const cleanNum = (val: any) => {
+            const cleanNum = (val: string | number | null | undefined): number => {
                 if (!val) return 0;
                 return parseFloat(String(val).replace(/[^0-9.-]/g, '').replace(',', '.')) || 0;
             };
@@ -220,7 +220,7 @@ export async function parseTradesCSV(file: File, adapterId: string): Promise<Par
                         const dataRows = rows.slice(headerRowIndex + 1);
                         const trades = dataRows
                             .map(row => {
-                                const obj: any = {};
+                                const obj: Record<string, string> = {};
                                 headers.forEach((h, i) => { if (h) obj[h] = row[i]; });
                                 return adapter.map(obj);
                             })
@@ -241,7 +241,7 @@ export async function parseTradesCSV(file: File, adapterId: string): Promise<Par
                         console.log(`[CSV Engine] Sucesso: ${trades.length} trades identificados.`);
                         resolve(trades);
                     },
-                    error: (err: any) => {
+                    error: (err: Error) => {
                         console.error("[CSV Engine] Erro no processamento:", err);
                         reject(err);
                     }

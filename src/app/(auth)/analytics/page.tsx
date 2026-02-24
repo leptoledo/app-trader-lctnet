@@ -3,20 +3,33 @@
 import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { Trade } from "@/types"
-import { Loader2, ArrowLeft, TrendingUp, Clock, DollarSign, BarChart3, ChevronRight, Sparkles, Filter } from "lucide-react"
+import { Loader2, ArrowLeft, TrendingUp, Clock, DollarSign, BarChart3, ChevronRight, Sparkles, Filter, Wallet } from "lucide-react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import Link from "next/link"
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, PieChart, Pie, Legend } from "recharts"
 import { analyzeByDayOfWeek, analyzeByHour, analyzeBySymbol, analyzeRMultiple } from "@/lib/advanced-analytics"
 import { cn } from "@/lib/utils"
+import { useAccounts } from "@/hooks/useAccounts"
 
 export default function AnalyticsPage() {
     const router = useRouter()
+    const { accounts } = useAccounts()
+    const [selectedAccountId, setSelectedAccountId] = useState<string>("")
     const [trades, setTrades] = useState<Trade[]>([])
     const [loading, setLoading] = useState(true)
+
+    // Set default selected account when accounts load
+    useEffect(() => {
+        if (accounts.length > 0 && !selectedAccountId) {
+            setSelectedAccountId(accounts[0].id)
+        }
+    }, [accounts, selectedAccountId])
+
+    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || accounts[0]
 
     useEffect(() => {
         async function fetchData() {
@@ -27,25 +40,32 @@ export default function AnalyticsPage() {
                     return
                 }
 
-                const { data, error } = await supabase
+                let query = supabase
                     .from('trades')
                     .select('*')
                     .order('entry_date', { ascending: false })
+
+                if (selectedAccountId) {
+                    query = query.eq('account_id', selectedAccountId)
+                }
+
+                const { data, error } = await query
 
                 if (error) throw error
 
                 const fetchedTrades = (data || []) as unknown as Trade[]
                 setTrades(fetchedTrades)
 
-            } catch (error: any) {
-                toast.error('Falha ao carregar analytics: ' + error.message)
+            } catch (err) {
+                const message = err instanceof Error ? err.message : String(err)
+                toast.error('Falha ao carregar analytics: ' + message)
             } finally {
                 setLoading(false)
             }
         }
 
         fetchData()
-    }, [router])
+    }, [selectedAccountId, router])
 
     if (loading) {
         return (
@@ -71,9 +91,28 @@ export default function AnalyticsPage() {
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Análise Profunda</p>
-                            <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Analytics Avançado</h1>
+                            <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Análise Profunda</p>
+                            <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Analytics Avançado</h1>
                         </div>
+                    </div>
+
+                    <div className="flex items-center bg-white dark:bg-slate-900/50 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800/60 shadow-sm">
+                        <div className="flex items-center px-4 gap-3 border-r border-slate-200 dark:border-slate-700 mr-2">
+                            <Wallet className="h-4 w-4 text-slate-400" />
+                            <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap hidden sm:inline">Conta Selecionada</span>
+                        </div>
+                        <Select value={selectedAccountId} onValueChange={setSelectedAccountId}>
+                            <SelectTrigger className="h-10 w-[180px] border-0 bg-transparent text-slate-900 dark:text-white font-medium focus:ring-0 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors">
+                                <SelectValue placeholder="Selecione..." />
+                            </SelectTrigger>
+                            <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 min-w-[200px]">
+                                {accounts.map(acc => (
+                                    <SelectItem key={acc.id} value={acc.id} className="cursor-pointer">
+                                        {acc.name}
+                                    </SelectItem>
+                                ))}
+                            </SelectContent>
+                        </Select>
                     </div>
                 </div>
 
@@ -103,7 +142,7 @@ export default function AnalyticsPage() {
                                             <BarChart data={dayOfWeekData}>
                                                 <XAxis dataKey="day" fontSize={10} axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontWeight: 700 }} />
                                                 <Tooltip
-                                                    cursor={{ fill: 'rgba(59, 130, 246, 0.05)' }}
+                                                    cursor={{ fill: "rgba(59, 130, 246, 0.05)" }}
                                                     content={({ active, payload }) => {
                                                         if (active && payload && payload.length) {
                                                             const data = payload[0].payload;
@@ -148,7 +187,7 @@ export default function AnalyticsPage() {
                                             <BarChart data={hourData}>
                                                 <XAxis dataKey="hour" fontSize={9} axisLine={false} tickLine={false} tick={{ fill: '#94a3b8', fontWeight: 700 }} />
                                                 <Tooltip
-                                                    cursor={{ fill: 'rgba(99, 102, 241, 0.05)' }}
+                                                    cursor={{ fill: "rgba(99, 102, 241, 0.05)" }}
                                                     content={({ active, payload }) => {
                                                         if (active && payload && payload.length) {
                                                             const data = payload[0].payload;
@@ -202,7 +241,7 @@ export default function AnalyticsPage() {
                                             <XAxis type="number" hide />
                                             <YAxis dataKey="label" type="category" axisLine={false} tickLine={false} width={100} fontSize={10} tick={{ fill: '#94a3b8', fontWeight: 800 }} />
                                             <Tooltip
-                                                cursor={{ fill: 'rgba(139, 92, 246, 0.05)' }}
+                                                cursor={{ fill: "rgba(139, 92, 246, 0.05)" }}
                                                 content={({ active, payload }) => {
                                                     if (active && payload && payload.length) {
                                                         const data = payload[0].payload;
@@ -264,7 +303,7 @@ export default function AnalyticsPage() {
                                                     "font-semibold text-sm tracking-tight",
                                                     item.pnl >= 0 ? "text-emerald-500" : "text-red-500"
                                                 )}>
-                                                    {item.pnl >= 0 ? '+' : '-'}${Math.abs(item.pnl).toLocaleString('en-US', { minimumFractionDigits: 1 })}
+                                                    {item.pnl >= 0 ? '+' : '-'}${Math.abs(item.pnl).toLocaleString("en-US", { minimumFractionDigits: 1 })}
                                                 </p>
                                                 <div className="flex items-center justify-end gap-1 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">
                                                     <span className="text-[9px] font-semibold text-blue-500 uppercase tracking-tighter">Ver Detalhes</span>
@@ -276,7 +315,7 @@ export default function AnalyticsPage() {
                                 )}
                             </CardContent>
                             <div className="p-8 mt-auto border-t border-slate-100 dark:border-slate-800/50">
-                                <Button className="w-full h-14 rounded-2xl bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-500/20 transition-all">
+                                <Button className="w-full rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white h-14 text-xs font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                                     Baixar Dataset em PDF
                                 </Button>
                             </div>

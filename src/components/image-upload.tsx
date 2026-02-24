@@ -1,8 +1,8 @@
 "use client"
 
 import { useState } from "react"
-import { Upload, X, Image as ImageIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { Upload, X } from "lucide-react"
+import Image from "next/image"
 
 interface ImageUploadProps {
     images: string[]
@@ -71,7 +71,7 @@ export function ImageUpload({ images, onImagesChange, maxImages = 3 }: ImageUplo
                 <div className="grid grid-cols-3 gap-2">
                     {images.map((img, idx) => (
                         <div key={idx} className="relative group aspect-square rounded-lg overflow-hidden border border-gray-200">
-                            <img src={img} alt={`Screenshot ${idx + 1}`} className="w-full h-full object-cover" />
+                            <Image src={img} alt={`Screenshot ${idx + 1}`} className="w-full h-full object-cover" fill sizes="(max-width: 768px) 33vw, 200px" />
                             <button
                                 type="button"
                                 onClick={() => removeImage(idx)}

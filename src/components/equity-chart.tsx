@@ -1,6 +1,6 @@
 "use client"
 
-import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Area, AreaChart } from "recharts"
+import { ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Area, AreaChart } from "recharts"
 
 interface EquityChartProps {
     data: { date: string; equity: number }[]
@@ -15,7 +15,6 @@ export function EquityChart({ data }: EquityChartProps) {
         )
     }
 
-    const isPositive = data[data.length - 1].equity >= 0
 
     return (
         <ResponsiveContainer width="100%" height="100%">
@@ -58,7 +57,7 @@ export function EquityChart({ data }: EquityChartProps) {
                         boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
                     }}
                     itemStyle={{ color: "#1f2937" }}
-                    formatter={(value: any) => [`$${parseFloat(value || 0).toFixed(2)}`, "Patrimônio"]}
+                    formatter={(value: number | undefined) => [`$${(value ?? 0).toFixed(2)}`, "Patrimônio"]}
                 />
                 <Area
                     type="monotone"

@@ -3,7 +3,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Trade } from "@/types"
-import { startOfMonth, endOfMonth, eachDayOfInterval, format, isSameDay, getDay } from "date-fns"
+import { startOfMonth, endOfMonth, eachDayOfInterval, format, getDay } from "date-fns"
 
 interface HeatmapProps {
     trades: Trade[]

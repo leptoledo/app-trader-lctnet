@@ -40,8 +40,9 @@ export function useAccounts() {
             } else {
                 setAccounts(data)
             }
-        } catch (error: any) {
-            toast.error('Error loading accounts: ' + error.message)
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'Unknown error'
+            toast.error('Error loading accounts: ' + message)
         } finally {
             setLoading(false)
         }

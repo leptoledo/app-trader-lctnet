@@ -1,12 +1,16 @@
-import { Roboto } from "next/font/google"
+import { Inter, Outfit } from "next/font/google"
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner"
 import { PwaRegister } from "@/components/pwa-register"
 
-const roboto = Roboto({
+const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-roboto",
-  weight: ["400", "500", "700", "900"]
+  variable: "--font-sans",
+})
+
+const outfit = Outfit({
+  subsets: ["latin"],
+  variable: "--font-heading",
 })
 
 export const metadata = {
@@ -30,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning className="scroll-smooth">
-      <body className={`${roboto.variable} font-sans antialiased`} suppressHydrationWarning>
+      <body className={`${inter.variable} ${outfit.variable} font-sans antialiased`} suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

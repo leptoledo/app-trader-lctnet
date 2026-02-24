@@ -22,8 +22,9 @@ export async function POST(req: Request) {
         const session = await createCheckoutSession(user.id, user.email!, plan.stripePriceId);
 
         return NextResponse.json({ url: session.url });
-    } catch (error: any) {
-        console.error('Checkout error:', error);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+    } catch (err) {
+        console.error('Checkout error:', err);
+        const message = err instanceof Error ? err.message : 'Erro interno do servidor';
+        return NextResponse.json({ error: message }, { status: 500 });
     }
 }

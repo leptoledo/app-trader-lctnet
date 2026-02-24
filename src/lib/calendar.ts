@@ -8,6 +8,13 @@ export interface DailyMetrics {
     losses: number
 }
 
+export function formatLocalDateKey(date: Date): string {
+    const year = date.getFullYear()
+    const month = String(date.getMonth() + 1).padStart(2, "0")
+    const day = String(date.getDate()).padStart(2, "0")
+    return `${year}-${month}-${day}`
+}
+
 export function calculateDailyMetrics(trades: Trade[]): DailyMetrics[] {
     const closedTrades = trades.filter(t => t.status === 'CLOSED' && t.exit_date)
 
@@ -15,7 +22,7 @@ export function calculateDailyMetrics(trades: Trade[]): DailyMetrics[] {
     const dailyMap = new Map<string, DailyMetrics>()
 
     closedTrades.forEach(trade => {
-        const date = new Date(trade.exit_date!).toISOString().split('T')[0]
+        const date = formatLocalDateKey(new Date(trade.exit_date!))
 
         const existing = dailyMap.get(date) || {
             date,

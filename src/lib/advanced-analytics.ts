@@ -4,7 +4,7 @@ export function analyzeByDayOfWeek(trades: Trade[]) {
     const closedTrades = trades.filter(t => t.status === 'CLOSED')
 
     const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
-    const dayData = days.map((day, index) => ({
+    const dayData = days.map((day) => ({
         day,
         pnl: 0,
         trades: 0

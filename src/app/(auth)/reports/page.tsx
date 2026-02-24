@@ -50,17 +50,20 @@ export default function ReportsPage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                const { data, error } = await supabase
+                let query = supabase
                     .from('trades')
                     .select('*')
                     .order('entry_date', { ascending: false })
 
+                if (selectedAccountId) {
+                    query = query.eq('account_id', selectedAccountId)
+                }
+
+                const { data, error } = await query
+
                 if (error) throw error
 
                 const fetchedTrades = (data || []) as unknown as Trade[]
-
-                // Optional: Filter metrics by account if desired in future steps.
-                // const accountTrades = fetchedTrades.filter(t => t.account_id === selectedAccountId)
 
                 setTrades(fetchedTrades)
                 setMetrics(calculateMetrics(fetchedTrades))
@@ -72,7 +75,7 @@ export default function ReportsPage() {
         }
 
         fetchData()
-    }, [selectedAccountId]) // Reload if account changes (custom logic can be added here)
+    }, [selectedAccountId])
 
     if (loading) {
         return (
@@ -118,8 +121,8 @@ export default function ReportsPage() {
                         <BarChart3 className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                     </div>
                     <div>
-                        <p className="text-xs font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-widest mb-1">Analytics</p>
-                        <h1 className="text-3xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">Relatórios Avançados</h1>
+                        <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Analytics</p>
+                        <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Relatórios Avançados</h1>
                     </div>
                 </div>
 
@@ -150,7 +153,7 @@ export default function ReportsPage() {
                                         )}
                                     </div>
                                     <div className="flex items-baseline gap-2">
-                                        <span className="text-4xl md:text-5xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">
+                                        <span className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">
                                             ${currentBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                         </span>
                                         <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">

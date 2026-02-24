@@ -19,9 +19,7 @@ import {
     ChevronLeft,
     ChevronRight,
     Upload,
-    Wallet,
-    Moon,
-    Sun
+    Wallet
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -64,8 +62,9 @@ export function Sidebar({ user, mode = "desktop" }: SidebarProps) {
             toast.success("Logout realizado com sucesso!")
             router.push('/login')
             router.refresh()
-        } catch (error: any) {
-            toast.error("Erro ao sair: " + error.message)
+        } catch (error) {
+            const message = error instanceof Error ? error.message : 'Unknown error'
+            toast.error("Erro ao sair: " + message)
         }
     }
 

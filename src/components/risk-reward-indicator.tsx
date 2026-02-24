@@ -5,7 +5,7 @@ interface RiskRewardIndicatorProps {
     direction: "LONG" | "SHORT"
 }
 
-export function RiskRewardIndicator({ entryPrice, stopLoss, takeProfit, direction }: RiskRewardIndicatorProps) {
+export function RiskRewardIndicator({ entryPrice, stopLoss, takeProfit, direction: _direction }: RiskRewardIndicatorProps) {
     if (!stopLoss && !takeProfit) return null
 
     const risk = stopLoss ? Math.abs(entryPrice - stopLoss) : 0

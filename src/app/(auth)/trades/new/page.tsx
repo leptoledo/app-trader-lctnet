@@ -28,11 +28,7 @@ export default function NewTradePage() {
             symbol: "",
             direction: "LONG",
             entry_date: new Date().toISOString().slice(0, 16),
-            quantity: 0,
-            entry_price: 0,
             ticket_id: "",
-            commission: 0,
-            swap: 0,
             setup_tags: "",
             notes: "",
             account_id: "",
@@ -94,17 +90,17 @@ export default function NewTradePage() {
 
                 {/* Header Section */}
                 <div className="flex items-center gap-5 animate-in fade-in slide-in-from-top-4 duration-700">
-                    <Button variant="ghost" size="icon" asChild className="rounded-2xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                    <Button variant="ghost" size="icon" asChild className="rounded-xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
                         <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                     </Button>
                     <div>
-                        <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Diário</p>
-                        <h1 className="text-4xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Nova Operação</h1>
+                        <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Diário</p>
+                        <h1 className="text-4xl md:text-5xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Nova Operação</h1>
                     </div>
                 </div>
 
                 {/* Form Card */}
-                <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl shadow-blue-500/5 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+                <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl shadow-blue-500/5 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
 
@@ -117,11 +113,11 @@ export default function NewTradePage() {
                                             <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Conta de Trading</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value} disabled={accountsLoading}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors">
+                                                    <SelectTrigger className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors">
                                                         <SelectValue placeholder="Selecione a conta" />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl">
+                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl">
                                                     {accounts.map(acc => (
                                                         <SelectItem key={acc.id} value={acc.id} className="font-semibold py-3">{acc.name} ({acc.currency})</SelectItem>
                                                     ))}
@@ -142,7 +138,7 @@ export default function NewTradePage() {
                                                 <Input
                                                     type="datetime-local"
                                                     {...field}
-                                                    className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors"
+                                                    className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -162,7 +158,7 @@ export default function NewTradePage() {
                                                 <Input
                                                     placeholder="ex: XAUUSD, BTCUSD"
                                                     {...field}
-                                                    className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500 hover:border-blue-500/50 transition-colors placeholder:font-normal"
+                                                    className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500 hover:border-blue-500/50 transition-colors placeholder:font-normal"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -178,11 +174,11 @@ export default function NewTradePage() {
                                             <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors">
+                                                    <SelectTrigger className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors">
                                                         <SelectValue placeholder="Selecione a direção" />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl">
+                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl">
                                                     <SelectItem value="LONG" className="font-semibold py-3 text-emerald-500">
                                                         <span className="flex items-center gap-2">
                                                             <TrendingUp className="h-4 w-4" /> COMPRA (LONG)
@@ -214,6 +210,11 @@ export default function NewTradePage() {
                                                     step="any"
                                                     placeholder="0.00"
                                                     {...field}
+                                                    value={field.value ?? ""}
+                                                    onChange={(event) => {
+                                                        const next = event.target.value
+                                                        field.onChange(next === "" ? undefined : next)
+                                                    }}
                                                     className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 font-mono"
                                                 />
                                             </FormControl>
@@ -282,7 +283,13 @@ export default function NewTradePage() {
                                                 <Input
                                                     type="number"
                                                     step="any"
+                                                    placeholder="0.00"
                                                     {...field}
+                                                    value={field.value ?? ""}
+                                                    onChange={(event) => {
+                                                        const next = event.target.value
+                                                        field.onChange(next === "" ? undefined : next)
+                                                    }}
                                                     className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500"
                                                 />
                                             </FormControl>
@@ -302,6 +309,11 @@ export default function NewTradePage() {
                                                     step="any"
                                                     placeholder="0.00"
                                                     {...field}
+                                                    value={field.value ?? ""}
+                                                    onChange={(event) => {
+                                                        const next = event.target.value
+                                                        field.onChange(next === "" ? undefined : next)
+                                                    }}
                                                     className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500"
                                                 />
                                             </FormControl>
@@ -356,7 +368,7 @@ export default function NewTradePage() {
                                             <FormControl>
                                                 <Textarea
                                                     placeholder="Descreva o motivo desta entrada..."
-                                                    className="min-h-[140px] rounded-[2rem] border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 p-6 resize-none transition-all placeholder:font-normal"
+                                                    className="min-h-[140px] rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 p-6 resize-none transition-all placeholder:font-normal"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -368,7 +380,7 @@ export default function NewTradePage() {
 
                             <Button
                                 type="submit"
-                                className="w-full h-16 rounded-[2rem] bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-lg shadow-2xl shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 disabled:opacity-50"
+                                className="w-full h-16 rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold text-xs uppercase tracking-[0.3em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-1 active:scale-95 border border-transparent dark:border-blue-500/30 disabled:opacity-50"
                                 disabled={submitting}
                             >
                                 {submitting ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}

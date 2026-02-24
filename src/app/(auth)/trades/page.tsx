@@ -107,8 +107,9 @@ export default function TradesPage() {
             if (error) throw error
 
             setTrades((data as unknown as Trade[]) || [])
-        } catch (error: any) {
-            toast.error("Erro ao carregar trades: " + error.message)
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err)
+            toast.error("Erro ao carregar trades: " + message)
         } finally {
             setLoading(false)
         }
@@ -284,8 +285,9 @@ export default function TradesPage() {
             setDeleteDialogOpen(false)
             setDeletingTrade(null)
             fetchTrades()
-        } catch (error: any) {
-            toast.error("Erro ao excluir trade: " + error.message)
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err)
+            toast.error("Erro ao excluir trade: " + message)
         } finally {
             setDeleting(false)
         }
@@ -351,8 +353,9 @@ export default function TradesPage() {
             if (data?.id) {
                 router.push(`/trades/${data.id}/edit`)
             }
-        } catch (error: any) {
-            toast.error("Erro ao duplicar trade: " + error.message)
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err)
+            toast.error("Erro ao duplicar trade: " + message)
         }
     }
 
@@ -424,8 +427,9 @@ export default function TradesPage() {
             setCloseDialogOpen(false)
             setClosingTrade(null)
             fetchTrades()
-        } catch (error: any) {
-            toast.error("Erro ao fechar trade: " + error.message)
+        } catch (err) {
+            const message = err instanceof Error ? err.message : String(err)
+            toast.error("Erro ao fechar trade: " + message)
         } finally {
             setClosing(false)
         }
@@ -442,19 +446,19 @@ export default function TradesPage() {
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-xs font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-widest mb-1">Histórico</p>
-                            <h1 className="text-3xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">Diário de Trades</h1>
+                            <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Histórico</p>
+                            <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Diário de Trades</h1>
                         </div>
                     </div>
-                    <Button asChild className="rounded-lg h-12 px-6 bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold shadow-lg shadow-blue-500/20 hover:shadow-blue-500/30 transition-all hover:-translate-y-0.5">
-                        <Link href="/trades/new" className="gap-2">
-                            <Plus className="h-5 w-5" /> Novo Trade
+                    <Button asChild className="rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30 flex-shrink-0">
+                        <Link href="/trades/new" className="flex items-center gap-2">
+                            <Plus className="h-4 w-4" /> Novo Trade
                         </Link>
                     </Button>
                 </div>
 
                 {/* Filters (Desktop) */}
-                <div className="hidden md:block bg-white/90 dark:bg-slate-900/50 backdrop-blur-sm p-3 rounded-[0.9rem] border border-slate-200/80 dark:border-slate-800 shadow-lg animate-in fade-in slide-in-from-top-6 duration-500 delay-75">
+                <div className="hidden md:block bg-white/90 dark:bg-slate-900/50 backdrop-blur-xl p-4 rounded-[2rem] border border-slate-200/80 dark:border-slate-800 shadow-xl animate-in fade-in slide-in-from-top-6 duration-500 delay-75">
                     <div className="flex flex-col md:flex-row gap-2 items-end">
                         <div className="w-full md:w-1/4 space-y-1.5">
                             <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo</label>
@@ -508,14 +512,14 @@ export default function TradesPage() {
                                 <TooltipProvider>
                                     <Tooltip>
                                         <TooltipTrigger asChild>
-                                        <Button
-                                            variant="outline"
-                                            size="icon"
-                                            onClick={clearFilters}
-                                            className="h-10 w-10 rounded-lg border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500"
-                                        >
-                                            <X className="h-5 w-5" />
-                                        </Button>
+                                            <Button
+                                                variant="outline"
+                                                size="icon"
+                                                onClick={clearFilters}
+                                                className="h-10 w-10 rounded-lg border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500"
+                                            >
+                                                <X className="h-5 w-5" />
+                                            </Button>
                                         </TooltipTrigger>
                                         <TooltipContent>Limpar filtros</TooltipContent>
                                     </Tooltip>
@@ -589,8 +593,8 @@ export default function TradesPage() {
                 </div>
 
                 {/* Table */}
-                <div className="bg-white dark:bg-slate-900/50 backdrop-blur-sm rounded-[1.25rem] border border-slate-200 dark:border-slate-800 shadow-xl overflow-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
-                    <Table>
+                <div className="bg-white dark:bg-slate-900/50 backdrop-blur-xl rounded-[2rem] border border-slate-200 dark:border-slate-800 shadow-2xl overflow-x-auto overflow-y-hidden animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+                    <Table className="min-w-[1200px]">
                         <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
                             <TableRow className="hover:bg-transparent">
                                 <TableHead className="w-[100px] text-xs font-semibold text-slate-400 uppercase tracking-wider py-6 pl-8">Ticket</TableHead>
@@ -1076,23 +1080,23 @@ export default function TradesPage() {
                         {(() => {
                             const pnlPreview = getPnlPreview()
                             return (
-                        <Button
-                            onClick={handleCloseTrade}
-                            className={cn(
-                                "rounded-xl text-white",
-                                pnlPreview == null
-                                    ? "bg-[#2b7de9] hover:bg-[#256bd1]"
-                                    : pnlPreview > 0
-                                        ? "bg-emerald-600 hover:bg-emerald-700"
-                                        : pnlPreview < 0
-                                            ? "bg-red-500 hover:bg-red-600"
-                                            : "bg-slate-500 hover:bg-slate-600"
-                            )}
-                            disabled={closing || closeDateInvalid()}
-                        >
-                            {closing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                            Fechar trade
-                        </Button>
+                                <Button
+                                    onClick={handleCloseTrade}
+                                    className={cn(
+                                        "rounded-xl text-white",
+                                        pnlPreview == null
+                                            ? "bg-[#2b7de9] hover:bg-[#256bd1]"
+                                            : pnlPreview > 0
+                                                ? "bg-emerald-600 hover:bg-emerald-700"
+                                                : pnlPreview < 0
+                                                    ? "bg-red-500 hover:bg-red-600"
+                                                    : "bg-slate-500 hover:bg-slate-600"
+                                    )}
+                                    disabled={closing || closeDateInvalid()}
+                                >
+                                    {closing ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                                    Fechar trade
+                                </Button>
                             )
                         })()}
                     </DialogFooter>

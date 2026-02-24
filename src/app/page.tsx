@@ -3,7 +3,7 @@
 import { useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { motion, useScroll, useTransform, useSpring, useMotionValue, useMotionTemplate } from "framer-motion"
+import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -18,41 +18,15 @@ import {
   ShieldCheck,
   Zap,
   LineChart,
-  Activity,
   Facebook,
   Instagram,
   Twitter
 } from "lucide-react"
 
-// --- ANIMATION VARIANTS ---
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2
-    }
-  }
-}
-
-const itemVariants = {
-  hidden: { y: 20, opacity: 0 },
-  visible: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", stiffness: 100 }
-  }
-}
-
-const fadeInUp = {
-  initial: { opacity: 0, y: 30 },
-  animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-}
 
 export default function LandingPage() {
   const { scrollYProgress } = useScroll()
-  const heroRef = useRef(null)
+  const heroRef = useRef<HTMLElement>(null)
 
   // Parallax for dashboard
   const y = useTransform(scrollYProgress, [0, 0.5], [0, -50])
@@ -100,7 +74,7 @@ export default function LandingPage() {
               <div className="hidden md:block">
                 <PwaInstallButton />
               </div>
-              <Button asChild className="rounded-xl bg-[#bae2fe] hover:bg-[#a9d8ff] px-6 h-11 text-sm font-bold text-slate-900 shadow-lg focus:ring-4 focus:ring-[#bae2fe]/40 transition-all hover:-translate-y-0.5 active:scale-95 active:translate-y-0">
+              <Button asChild className="rounded-2xl bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                 <Link href="/login">Começar Grátis</Link>
               </Button>
             </div>
@@ -108,9 +82,9 @@ export default function LandingPage() {
         </div>
       </motion.header>
 
-      
 
-        <main>
+
+      <main>
 
         {/* HERO */}
         <section ref={heroRef} className="relative pt-28 pb-20 lg:pt-36 lg:pb-28 bg-[#f7f9fc] dark:bg-[#0b1220]">
@@ -126,44 +100,47 @@ export default function LandingPage() {
                   initial={{ opacity: 0, y: 24 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-5xl md:text-6xl lg:text-7xl font-heading font-semibold tracking-tight text-slate-900 dark:text-white leading-[1.05]"
+                  className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold tracking-tighter text-slate-900 dark:text-white leading-[1.05]"
                 >
-                  Seu diário de trade com clareza, disciplina e resultados.
+                  Seu diário de trade com <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400">clareza</span>,
+                  <br className="hidden lg:block" /> disciplina e resultados.
                 </motion.h1>
 
                 <motion.p
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl font-normal leading-relaxed"
+                  className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl font-medium leading-relaxed"
                 >
-                  Registre suas operações, descubra padrões de comportamento e evolua com relatórios acionáveis. Uma plataforma feita para traders sérios.
+                  Registre suas operações, descubra padrões de comportamento e evolua com relatórios acionáveis. Uma plataforma premium feita para traders sérios.
                 </motion.p>
 
                 <motion.div
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col sm:flex-row items-center gap-4"
+                  className="flex flex-col sm:flex-row items-center gap-4 pt-4"
                 >
-                  <Button asChild className="w-full sm:w-auto rounded-2xl bg-[#2b7de9] hover:bg-[#256bd1] text-white px-9 h-14 text-base font-semibold shadow-xl shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 ring-offset-2 focus:ring-2 ring-blue-300 group">
-                    <Link href="/login" className="flex items-center justify-center gap-3">
+                  <Button asChild className="w-full sm:w-auto rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-8 h-14 text-sm uppercase tracking-widest font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:-translate-y-1 active:scale-95 group">
+                    <Link href="/login" className="flex items-center justify-center gap-2">
                       Criar Conta Gratuita
-                      <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                   </Button>
-                  <Button variant="outline" className="w-full sm:w-auto rounded-2xl border-slate-200 dark:border-slate-700 px-9 h-14 text-base font-semibold text-slate-500 dark:text-slate-300 hover:bg-white dark:hover:bg-slate-800 transition-all bg-white/95 dark:bg-white/5">
+                  <Button variant="outline" className="w-full sm:w-auto rounded-full border-slate-200 dark:border-slate-800 px-8 h-14 text-sm uppercase tracking-widest font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all hover:-translate-y-1 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
                     Ver Live Demo
                   </Button>
                 </motion.div>
 
-                <div className="grid sm:grid-cols-2 gap-4 pt-4">
+                <div className="grid sm:grid-cols-2 gap-x-4 gap-y-6 pt-8 border-t border-slate-200/50 dark:border-slate-800/50">
                   {heroPoints.map((point, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div className="mt-1 h-2 w-2 rounded-full bg-[#2b7de9] shadow-[0_0_10px_rgba(43,125,233,0.45)]" />
+                    <div key={i} className="flex items-start gap-4">
+                      <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20">
+                        <div className="h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+                      </div>
                       <div>
-                        <p className="text-sm font-semibold text-slate-900 dark:text-white">{point.title}</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400">{point.desc}</p>
+                        <p className="text-sm font-bold tracking-tight text-slate-900 dark:text-white uppercase">{point.title}</p>
+                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-0.5">{point.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -171,26 +148,23 @@ export default function LandingPage() {
               </div>
 
               <div className="lg:col-span-6">
-                <motion.div style={{ y, opacity }} className="relative">
-                  <div className="absolute -inset-6 bg-gradient-to-br from-blue-500/12 to-cyan-400/12 rounded-[2.5rem] blur-2xl" />
-                  <div className="relative bg-white rounded-[2rem] border border-slate-200 shadow-2xl overflow-hidden">
-                    <div className="h-10 w-full bg-[#f1f5f9] flex items-center justify-start gap-2 px-6 border-b border-slate-200">
-                      <div className="flex gap-2">
-                        <div className="h-3 w-3 rounded-full bg-[#ef4444]" />
-                        <div className="h-3 w-3 rounded-full bg-[#f59e0b]" />
-                        <div className="h-3 w-3 rounded-full bg-[#10b981]" />
-                      </div>
-                      <div className="ml-4 h-5 w-64 bg-slate-200 rounded-md opacity-70" />
-                    </div>
-                    <div className="aspect-[16/9] relative">
+                <motion.div
+                  style={{ y, opacity }}
+                  animate={{ y: [0, -15, 0] }}
+                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                  className="relative drop-shadow-2xl"
+                >
+                  <div className="absolute -inset-10 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-blue-500/20 rounded-[3rem] blur-3xl opacity-50 dark:opacity-80 mix-blend-screen" />
+                  <div className="relative rounded-[2rem] border border-white/20 dark:border-slate-700/50 shadow-2xl overflow-hidden bg-slate-900/5 backdrop-blur-3xl transform perspective-[1000px] rotate-y-[-5deg] rotate-x-[5deg]">
+                    <div className="aspect-[4/3] relative">
                       <Image
-                        src="/images/dashboard-preview.png"
+                        src="/hero-dashboard.png"
                         alt="TraderLCTNET Professional Dashboard"
                         fill
                         className="object-cover"
                         priority
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
                     </div>
                   </div>
                 </motion.div>
@@ -318,13 +292,13 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
               <div>
-              <h2 className="text-3xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Education Hub</h2>
-              <p className="text-slate-500 dark:text-slate-400 font-normal mt-4 max-w-md">Artigos técnicos aprofundados para refinar seu edge no mercado.</p>
+                <h2 className="text-3xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Education Hub</h2>
+                <p className="text-slate-500 dark:text-slate-400 font-normal mt-4 max-w-md">Artigos técnicos aprofundados para refinar seu edge no mercado.</p>
+              </div>
+              <Button variant="ghost" className="text-[#2b7de9] font-bold hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm px-8 rounded-full border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                Ver todos os artigos <ArrowUpRight className="ml-2 h-4 w-4" />
+              </Button>
             </div>
-            <Button variant="ghost" className="text-[#2b7de9] font-bold hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm px-8 rounded-full border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
-              Ver todos os artigos <ArrowUpRight className="ml-2 h-4 w-4" />
-            </Button>
-          </div>
 
             <div className="grid md:grid-cols-3 gap-8">
               {blogPosts.map((post, i) => (
@@ -361,8 +335,8 @@ export default function LandingPage() {
               Experimente gratuitamente e descubra sua vantagem operacional com clareza e disciplina.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="rounded-xl bg-[#2b7de9] hover:bg-[#256bd1] text-white px-12 h-16 text-lg font-semibold transition-all shadow-[0_0_30px_-5px_rgba(43,125,233,0.5)] hover:shadow-[0_0_40px_-5px_rgba(43,125,233,0.7)]">
-                <Link href="/login">Criar Conta Grátis</Link>
+              <Button asChild className="rounded-full bg-white hover:bg-slate-100 text-slate-900 px-10 h-14 text-sm font-bold uppercase tracking-widest transition-all shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_-5px_rgba(255,255,255,0.5)] hover:-translate-y-1">
+                <Link href="/login">Criar Conta Grátis <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </div>
           </div>
