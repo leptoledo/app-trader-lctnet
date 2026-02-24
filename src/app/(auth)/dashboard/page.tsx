@@ -4,8 +4,7 @@ import { useEffect, useMemo, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { calculateMetrics } from "@/lib/analytics"
 import { Trade } from "@/types"
-import { Loader2, ArrowRight, TrendingUp, Plus, ChevronRight, Sparkles, Target, Activity, Filter } from "lucide-react"
-import { motion } from "framer-motion"
+import { Loader2, ArrowRight, TrendingUp, Plus, ChevronRight, Target, Activity } from "lucide-react"
 import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 
@@ -156,24 +155,21 @@ export default function Dashboard() {
   return (
     <div className="min-h-screen bg-[#f7f9fc] dark:bg-[#0b1220] flex flex-col font-sans pb-12 transition-colors duration-500">
 
-      {/* World-Class Dashboard Header */}
-      <div className="bg-white/90 dark:bg-[#0b1220]/80 backdrop-blur-xl border-b border-slate-200/70 dark:border-slate-800/60 px-8 py-5 flex flex-col md:flex-row justify-between items-center sticky top-0 z-50 transition-all duration-500 shadow-sm gap-4">
-        <div className="flex items-center gap-6 w-full md:w-auto">
-          <div className="flex flex-col">
-            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.4em] mb-1">Visão Global</p>
-            <h1 className="text-3xl font-heading font-semibold text-slate-800 dark:text-white tracking-tight">Dashboard</h1>
-          </div>
+      {/* Clean Dashboard Header */}
+      <div className="bg-white dark:bg-[#0b1220] border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-col md:flex-row justify-between items-center sticky top-0 z-40 gap-4 shrink-0">
+        <div className="flex items-center gap-4 w-full md:w-auto">
+          <h1 className="text-xl font-medium text-slate-900 dark:text-white">Dashboard Overview</h1>
 
-          <div className="h-10 w-[1px] bg-slate-100 dark:bg-slate-800 hidden lg:block" />
+          <div className="h-6 w-[1px] bg-slate-200 dark:bg-slate-800 hidden lg:block" />
 
           <Select value={selectedAccountId} onValueChange={setSelectedAccountId}>
-            <SelectTrigger className="w-full md:w-[220px] h-11 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/50 text-slate-800 dark:text-slate-100 shadow-sm font-semibold text-[10px] tracking-widest uppercase focus:ring-blue-400 transition-all group">
+            <SelectTrigger className="w-full md:w-[200px] h-9 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-sm text-sm focus:ring-emerald-500 transition-colors">
               <SelectValue placeholder="Contas" />
             </SelectTrigger>
-            <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950">
-              <SelectItem value="all" className="font-semibold text-[10px] uppercase tracking-widest cursor-pointer py-3">Todas as Contas</SelectItem>
+            <SelectContent className="rounded-md border-slate-200 dark:border-slate-800 shadow-lg bg-white dark:bg-slate-900">
+              <SelectItem value="all" className="text-sm cursor-pointer py-2">Todas as Contas</SelectItem>
               {accounts.map(acc => (
-                <SelectItem key={acc.id} value={acc.id} className="font-semibold text-[10px] uppercase tracking-widest cursor-pointer py-3">
+                <SelectItem key={acc.id} value={acc.id} className="text-sm cursor-pointer py-2">
                   {acc.name} ({acc.currency})
                 </SelectItem>
               ))}
@@ -198,7 +194,7 @@ export default function Dashboard() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button asChild className="rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30 flex-shrink-0">
+                <Button asChild className="rounded-md bg-emerald-600 hover:bg-emerald-700 text-white h-9 px-4 text-sm font-medium shadow-sm transition-colors border border-transparent flex-shrink-0">
                   <Link href="/trades/new" className="flex items-center gap-2">
                     <Plus className="h-4 w-4" /> Novo Trade
                   </Link>
@@ -210,24 +206,17 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="max-w-[1600px] mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 sm:py-12 space-y-10 sm:space-y-12">
+      <div className="max-w-[1600px] mx-auto w-full px-6 py-8 space-y-8">
 
         {/* 1. PERFORMANCE RIBBON */}
-        <section className="animate-in fade-in slide-in-from-top-6 duration-700">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 sm:mb-8">
-            <div className="space-y-1">
-              <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em]" suppressHydrationWarning>
-                {dateRange === "week"
-                  ? "Consistência Semanal • Esta Semana"
-                  : `Consistência Diária • ${calendarBaseDate.toLocaleDateString("pt-BR", { month: "long", year: "numeric" })}`}
-              </p>
-              <div className="flex items-center gap-2">
-                <h2 className="text-xl font-semibold font-heading text-slate-800 dark:text-white tracking-tight uppercase">Performance Mensal</h2>
-                <InfoTooltip text="Resumo diário do mês atual" />
-              </div>
-            </div>
-            <Button variant="ghost" size="sm" asChild className="h-10 rounded-xl font-semibold text-[10px] uppercase tracking-widest text-slate-500 hover:text-blue-500 transition-colors w-full sm:w-auto">
-              <Link href="/calendar">Ver Calendário Criativo <ArrowRight className="ml-2 h-4 w-4" /></Link>
+        <section className="animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+              Consistência Semanal
+              <InfoTooltip text="Resumo diário" />
+            </h2>
+            <Button variant="ghost" size="sm" asChild className="h-8 rounded-md font-medium text-xs text-slate-500 hover:text-emerald-600 transition-colors">
+              <Link href="/calendar">Ver Calendário <ArrowRight className="ml-1.5 h-3.5 w-3.5" /></Link>
             </Button>
           </div>
 
@@ -241,111 +230,95 @@ export default function Dashboard() {
                 <div
                   key={idx}
                   className={cn(
-                    "relative border-2 rounded-xl p-4 sm:p-5 transition-all duration-500 cursor-pointer group hover:-translate-y-2 hover:shadow-2xl flex flex-col justify-between overflow-hidden h-28 sm:h-32",
-                    "bg-white dark:bg-slate-900/40 backdrop-blur-md",
-                    "border-slate-100 dark:border-slate-800/60",
-                    isToday ? "ring-2 ring-blue-500/30 border-blue-500/30 dark:bg-blue-500/[0.03]" : ""
+                    "relative rounded-md p-4 transition-colors cursor-pointer flex flex-col justify-between h-24 sm:h-28",
+                    "bg-white dark:bg-[#0b1220]",
+                    "border border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 shadow-sm",
+                    isToday ? "border-emerald-500/50 dark:border-emerald-500/50 ring-1 ring-emerald-500/10" : ""
                   )}
                 >
-                  <div className="flex justify-between items-start relative z-10">
+                  <div className="flex justify-between items-start">
                     <div className="flex flex-col">
-                      <span className={cn("text-[9px] font-semibold uppercase tracking-widest", isToday ? "text-blue-600 dark:text-blue-400" : "text-slate-400")} suppressHydrationWarning>
+                      <span className={cn("text-xs font-medium uppercase", isToday ? "text-emerald-600 dark:text-emerald-400" : "text-slate-500")} suppressHydrationWarning>
                         {date.toLocaleDateString('pt-BR', { weekday: 'short' })}
                       </span>
-                      <span className={cn("text-2xl font-semibold font-heading", isToday ? "text-blue-600 dark:text-blue-400" : "text-slate-900 dark:text-white")} suppressHydrationWarning>
+                      <span className={cn("text-lg font-medium", isToday ? "text-emerald-600 dark:text-emerald-400" : "text-slate-900 dark:text-white")} suppressHydrationWarning>
                         {date.getDate()}
                       </span>
                     </div>
                     {dayM && (
                       <div className={cn(
-                        "w-2.5 h-2.5 rounded-lg shadow-lg animate-pulse",
-                        dayM.pnl >= 0 ? "bg-emerald-500 shadow-emerald-500/20" : "bg-red-500 shadow-red-500/20"
+                        "w-2 h-2 rounded-full",
+                        dayM.pnl >= 0 ? "bg-emerald-500" : "bg-red-500"
                       )} />
                     )}
                   </div>
 
-                  <div className={cn("text-base font-bold font-heading tracking-tight mt-auto relative z-10",
-                    dayM ? (dayM.pnl >= 0 ? "text-emerald-500" : "text-red-500") : "text-slate-300 dark:text-slate-800"
+                  <div className={cn("text-sm font-medium tracking-tight mt-auto z-10",
+                    dayM ? (dayM.pnl >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-slate-900 dark:text-white") : "text-slate-400"
                   )}>
                     {dayM ? `${dayM.pnl >= 0 ? '+' : '-'}$${Math.abs(dayM.pnl).toLocaleString()}` : "$0.00"}
                   </div>
-
-                  {/* Highlight Glow for active cells */}
-                  {dayM && (
-                    <div className={cn(
-                      "absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity",
-                      dayM.pnl >= 0 ? "bg-emerald-500" : "bg-red-500"
-                    )} />
-                  )}
                 </div>
               )
             })}
           </div>
         </section>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
           {/* LEFT COLUMN: ACTIVITY & EQUITY */}
-          <div className="lg:col-span-9 lg:sticky lg:top-32 space-y-10 sm:space-y-12 animate-in fade-in slide-in-from-left-8 duration-700 delay-100">
+          <div className="lg:col-span-8 lg:sticky lg:top-24 space-y-8 animate-in fade-in slide-in-from-left-4 duration-500">
             <section>
-              <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6 sm:mb-8 px-1 sm:px-2">
-                <div className="space-y-1">
-                  <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Crescimento</p>
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-xl font-bold font-heading text-slate-900 dark:text-white tracking-tight uppercase">CURVA DE PATRIMÔNIO</h2>
-                    <InfoTooltip text="Evolução acumulada do resultado" />
-                  </div>
-                </div>
-                <div className="flex flex-wrap bg-white dark:bg-slate-900 p-1.5 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm gap-2">
+              <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+                  Curva de Patrimônio
+                  <InfoTooltip text="Evolução acumulada do resultado" />
+                </h2>
+                <div className="flex bg-slate-100 dark:bg-slate-900 p-0.5 rounded-md border border-slate-200 dark:border-slate-800">
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setEquityView("balance")}
                     className={cn(
-                      "h-9 text-[9px] font-semibold uppercase tracking-widest rounded-lg px-4 sm:px-5 transition-all",
+                      "h-7 text-xs font-medium rounded px-3 transition-colors",
                       equityView === "balance"
-                        ? "bg-slate-900 dark:bg-blue-600 text-white shadow-lg shadow-blue-500/20"
-                        : "text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                        ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm"
+                        : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                     )}
                   >
-                    SALDO
+                    Saldo
                   </Button>
                   <Button
                     variant="ghost"
                     size="sm"
                     onClick={() => setEquityView("drawdown")}
                     className={cn(
-                      "h-9 text-[9px] font-semibold uppercase tracking-widest rounded-lg px-4 sm:px-5 transition-all",
+                      "h-7 text-xs font-medium rounded px-3 transition-colors",
                       equityView === "drawdown"
-                        ? "bg-slate-900 dark:bg-blue-600 text-white shadow-lg shadow-blue-500/20"
-                        : "text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-white"
+                        ? "bg-white dark:bg-slate-800 text-slate-900 dark:text-white shadow-sm"
+                        : "text-slate-500 hover:text-slate-900 dark:hover:text-white"
                     )}
                   >
-                    DRAWDOWN
+                    Drawdown
                   </Button>
                 </div>
               </div>
-              <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-2xl h-[520px] relative overflow-hidden group">
-                {/* Decorative Accent */}
-                <div className="absolute top-0 right-0 p-40 bg-blue-500/[0.03] rounded-lg blur-[80px] -mr-20 -mt-20 pointer-events-none transition-colors duration-1000 group-hover:bg-blue-500/10" />
+              <div className="bg-white dark:bg-[#0b1220] p-6 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm h-[400px]">
                 <EquityChart data={equityChartData} />
               </div>
             </section>
 
             <section>
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8 px-1 sm:px-2">
-                <div className="space-y-1">
-                  <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Atividade Recente</p>
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-xl font-bold font-heading text-slate-900 dark:text-white tracking-tight uppercase">Últimas Execuções</h2>
-                    <InfoTooltip text="Últimos trades registrados" />
-                  </div>
-                </div>
-                <Button variant="ghost" size="sm" asChild className="h-10 rounded-xl font-semibold text-[10px] uppercase tracking-widest text-slate-500 hover:text-blue-600 w-full sm:w-auto">
-                  <Link href="/trades">Ver Diário <ChevronRight className="ml-1 h-4 w-4" /></Link>
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+                  Últimos Trades
+                  <InfoTooltip text="Últimos registros inseridos" />
+                </h2>
+                <Button variant="ghost" size="sm" asChild className="h-8 rounded-md font-medium text-xs text-slate-500 hover:text-emerald-600 transition-colors w-full sm:w-auto">
+                  <Link href="/trades">Ver Diário <ChevronRight className="ml-1 h-3.5 w-3.5" /></Link>
                 </Button>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                 {recentTrades.map((t, i) => (
                   <SharedTradeCard
                     key={i}
@@ -361,122 +334,82 @@ export default function Dashboard() {
           </div>
 
           {/* RIGHT COLUMN: ELITE PERFORMANCE ANALYTICS */}
-          <div className="lg:col-span-3 space-y-10 sm:space-y-12 animate-in fade-in slide-in-from-right-8 duration-700 delay-200">
+          <div className="lg:col-span-4 space-y-8 animate-in fade-in slide-in-from-right-4 duration-500">
             <section>
-              <div className="flex flex-col mb-6 sm:mb-8 px-1 sm:px-2">
-                <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.4em] mb-1">Índice de Eficiência</p>
-                <div className="flex items-center gap-2">
-                  <h2 className="text-xl font-semibold font-heading text-slate-900 dark:text-white tracking-tight uppercase">Performance Elite</h2>
+              <div className="flex flex-col mb-4">
+                <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+                  Estatísticas Principais
                   <InfoTooltip text="Indicadores de consistência e risco" />
-                </div>
+                </h2>
               </div>
-              <div className="grid gap-8">
+              <div className="grid gap-6">
                 {/* Profit Factor Card - High Impact */}
-                <Card className="rounded-xl border-none shadow-2xl bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden group">
-                  {/* Luxury Background Effects */}
-                  <div className="absolute top-0 right-0 p-32 bg-blue-600/20 rounded-lg blur-[50px] -mr-16 -mt-16 group-hover:bg-blue-600/30 transition-all duration-1000" />
-                  <div className="absolute bottom-0 left-0 p-24 bg-purple-600/10 rounded-lg blur-[40px] -ml-16 -mb-16 pointer-events-none" />
-
-                  <CardHeader className="pb-4 relative z-10 p-10 pt-12 overflow-hidden">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-2 h-2 rounded-lg bg-blue-500 animate-pulse" />
-                      <CardTitle className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.3em] truncate">FATOR DE LUCRO GLOBAL</CardTitle>
-                    </div>
-                    <div className="text-6xl xl:text-8xl font-heading font-bold tracking-tighter text-white leading-none">
+                <Card className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#0b1220] relative overflow-hidden">
+                  <CardHeader className="pb-4 p-6 overflow-hidden">
+                    <CardTitle className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest truncate">FATOR DE LUCRO</CardTitle>
+                    <div className="text-4xl lg:text-5xl font-semibold tracking-tighter text-slate-900 dark:text-white leading-none mt-2">
                       {metrics.profitFactor.toFixed(2)}
                     </div>
                   </CardHeader>
-                  <CardContent className="relative z-10 px-10 pb-12 pt-0 space-y-8 overflow-hidden">
-                    <div className="space-y-4">
-                      <div className="h-2.5 w-full bg-white/5 rounded-lg overflow-hidden backdrop-blur-md border border-white/5">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${Math.min(metrics.profitFactor * 30, 100)}%` }}
-                          transition={{ duration: 1.5, ease: "easeOut" }}
-                          className="bg-gradient-to-r from-blue-500 to-indigo-400 h-full shadow-[0_0_20px_rgba(59,130,246,0.6)] rounded-lg"
+                  <CardContent className="px-6 pb-6 pt-0 space-y-6">
+                    <div className="space-y-3">
+                      <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
+                        <div
+                          style={{ width: `${Math.min(metrics.profitFactor * 30, 100)}%` }}
+                          className="bg-emerald-500 h-full rounded-full transition-all duration-1000"
                         />
                       </div>
-                      <div className="flex justify-between items-center text-[10px] font-semibold uppercase tracking-widest px-1 gap-3">
-                        <span className="text-slate-500 tracking-tighter whitespace-nowrap">Mín: 1.0</span>
-                        <span className="text-blue-400 tracking-tighter truncate">Meta Ideal: &gt; 2.50</span>
+                      <div className="flex justify-between items-center text-[10px] font-medium text-slate-500 gap-3">
+                        <span>Mín: 1.0</span>
+                        <span>Meta Ideal: &gt; 2.50</span>
                       </div>
-                    </div>
-
-                    <div className="pt-4 flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
-                        <Sparkles className="h-5 w-5 text-blue-400" />
-                      </div>
-                      <p className="text-xs font-semibold text-slate-400 leading-relaxed break-words">
-                        Matematicamente robusto. Seu modelo apresenta uma vantagem estatística <span className="text-white font-semibold">considerável</span>.
-                      </p>
                     </div>
                   </CardContent>
                 </Card>
 
                 {/* Secondary Metrics */}
-                <div className="grid grid-cols-1 gap-6">
-                  <Card className="rounded-[2rem] border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 p-8 group hover:-translate-y-1 transition-all overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-24 bg-emerald-500/5 rounded-lg blur-[40px] -mr-12 -mt-12 pointer-events-none" />
-                    <div className="flex items-center justify-between mb-4 relative z-10">
-                      <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-bold tracking-[0.2em]">Taxa de Acerto</p>
-                      <Target className="h-4 w-4 text-emerald-500 opacity-80" />
+                <div className="grid grid-cols-2 lg:grid-cols-1 gap-6">
+                  <Card className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#0b1220] p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-xs text-slate-500 uppercase font-semibold tracking-widest">Taxa de Acerto</p>
+                      <Target className="h-4 w-4 text-emerald-500" />
                     </div>
-                    <div className="text-4xl lg:text-5xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter break-words relative z-10">{metrics.winRate.toFixed(1)}%</div>
-                    <div className="mt-5 h-2 w-full bg-slate-100 dark:bg-slate-950 rounded-lg overflow-hidden relative z-10">
-                      <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full rounded-lg transition-all duration-1000 shadow-[0_0_15px_rgba(16,185,129,0.5)]" style={{ width: `${metrics.winRate}%` }}></div>
-                    </div>
+                    <div className="text-3xl font-semibold text-slate-900 dark:text-white tracking-tight">{metrics.winRate.toFixed(1)}%</div>
                   </Card>
-                  <Card className="rounded-[2rem] border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 p-8 group hover:-translate-y-1 transition-all overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-24 bg-blue-500/5 rounded-lg blur-[40px] -mr-12 -mt-12 pointer-events-none" />
-                    <div className="flex items-center justify-between mb-4 relative z-10">
-                      <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-bold tracking-[0.2em]">Volume Total</p>
-                      <Activity className="h-4 w-4 text-blue-500 opacity-80" />
+
+                  <Card className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#0b1220] p-6">
+                    <div className="flex items-center justify-between mb-3">
+                      <p className="text-xs text-slate-500 uppercase font-semibold tracking-widest">Volume Total</p>
+                      <Activity className="h-4 w-4 text-blue-500" />
                     </div>
-                    <div className="text-4xl lg:text-5xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter break-words relative z-10">{metrics.totalTrades}</div>
-                    <div className="mt-5 text-[10px] font-semibold text-emerald-500 flex items-center gap-2 uppercase tracking-tight">
-                      <TrendingUp className="h-3.5 w-3.5" /> <span>+12.4% no mês</span>
-                    </div>
+                    <div className="text-3xl font-semibold text-slate-900 dark:text-white tracking-tight">{metrics.totalTrades}</div>
                   </Card>
                 </div>
               </div>
             </section>
 
             {/* Hourly Analytics Section */}
-            <section className="animate-in fade-in slide-in-from-bottom-12 duration-1000 delay-300">
-              <div className="flex items-center justify-between mb-8 px-2">
-                <div className="space-y-1">
-                  <p className="text-[10px] font-semibold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em]">Delta Temporal</p>
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-xl font-semibold font-heading text-slate-900 dark:text-white tracking-tight uppercase">Vantagem Horária</h2>
-                    <InfoTooltip text="Faixas de horário com melhor resultado" />
-                  </div>
-                </div>
-                <div className="p-2 bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
-                  <Filter className="h-4 w-4 text-slate-400" />
-                </div>
+            <section className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
+                  Top Horários
+                  <InfoTooltip text="Faixas de horário com melhor resultado" />
+                </h2>
               </div>
-              <Card className="rounded-[2rem] border-slate-200/60 dark:border-slate-800/60 shadow-2xl overflow-hidden bg-white dark:bg-slate-900/40 backdrop-blur-md">
-                <CardContent className="p-4 space-y-3">
+              <Card className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#0b1220]">
+                <CardContent className="p-0">
                   {hourlyData.slice(0, 3).map((h, i) => (
-                    <div key={i} className="flex items-center justify-between p-5 rounded-xl hover:bg-white dark:hover:bg-slate-800/60 transition-all duration-300 group hover:shadow-lg hover:-translate-y-0.5">
-                      <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-900 flex items-center justify-center font-mono text-xs font-semibold text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent transition-all border border-slate-100 dark:border-slate-800">
+                    <div key={i} className={cn("flex flex-col gap-2 p-5 transition-colors", i !== 0 && "border-t border-slate-100 dark:border-slate-800")}>
+                      <div className="flex items-center justify-between">
+                        <div className="font-mono text-xs font-semibold text-slate-500">
                           {h.hour}
                         </div>
-                        <div className="flex flex-col">
-                          <p className="text-[10px] font-semibold text-slate-900 dark:text-white tracking-widest uppercase mb-1">Delta de Tempo</p>
-                          <div className="h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
-                            <div className={cn("h-full rounded-lg transition-all duration-1000", h.pnl >= 0 ? "bg-emerald-500" : "bg-red-500")} style={{ width: `${Math.min(Math.abs(h.pnl) / 500 * 100, 100)}%` }}></div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right space-y-0.5">
-                        <div className={cn("text-xl font-heading font-bold tracking-tighter", h.pnl >= 0 ? "text-emerald-500" : "text-red-500")}>
+                        <div className={cn("text-lg font-semibold tracking-tight", h.pnl >= 0 ? "text-emerald-600 dark:text-emerald-500" : "text-red-500")}>
                           {h.pnl >= 0 ? '+' : '-'}${Math.abs(h.pnl).toLocaleString()}
                         </div>
-                        <div className="text-[9px] text-slate-400 font-semibold uppercase tracking-widest opacity-50">
-                          RESULTADO LÍQUIDO
-                        </div>
+                      </div>
+                      <div className="h-1.5 w-full bg-slate-100 dark:bg-slate-900 rounded-full overflow-hidden">
+                        <div className={cn("h-full rounded-full", h.pnl >= 0 ? "bg-emerald-500" : "bg-red-500")} style={{ width: `${Math.min(Math.abs(h.pnl) / 500 * 100, 100)}%` }}></div>
                       </div>
                     </div>
                   ))}
