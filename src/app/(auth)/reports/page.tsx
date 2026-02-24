@@ -80,7 +80,7 @@ export default function ReportsPage() {
     if (loading) {
         return (
             <div className="flex h-screen items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-emerald-600"></div>
             </div>
         )
     }
@@ -117,7 +117,7 @@ export default function ReportsPage() {
         <div className="p-8 pb-12 bg-[#f7f9fc] dark:bg-[#0b1220] min-h-screen transition-colors duration-500">
             <div className="max-w-7xl mx-auto space-y-8">
                 <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
                         <BarChart3 className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                     </div>
                     <div>
@@ -128,7 +128,7 @@ export default function ReportsPage() {
 
                 <div className="animate-in fade-in slide-in-from-top-6 duration-500 delay-75">
                     <Card className="rounded-[2rem] border border-slate-200/70 dark:border-slate-800 shadow-lg bg-white dark:bg-slate-900/40 relative overflow-hidden">
-                        <div className="absolute top-0 right-0 p-32 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                        <div className="absolute top-0 right-0 p-32 bg-blue-500/5 rounded-lg blur-3xl -mr-16 -mt-16 pointer-events-none" />
                         <CardContent className="p-8 flex flex-col md:flex-row items-center justify-between relative z-10 gap-6">
                             <div className="flex items-center gap-6">
                                 <div className="w-16 h-16 rounded-3xl bg-blue-50 flex items-center justify-center border border-blue-100 shadow-inner">
@@ -156,8 +156,8 @@ export default function ReportsPage() {
                                         <span className="text-4xl md:text-5xl lg:text-6xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">
                                             ${currentBalance.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
                                         </span>
-                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-500 bg-blue-50 px-2.5 py-1 rounded-full border border-blue-100">
-                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-500 animate-pulse" />
+                                        <span className="flex items-center gap-1.5 text-xs font-semibold text-blue-500 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">
+                                            <div className="w-1.5 h-1.5 rounded-lg bg-blue-500 animate-pulse" />
                                             {selectedAccount?.currency || 'USD'}
                                         </span>
                                     </div>
@@ -392,9 +392,9 @@ export default function ReportsPage() {
                         <CardContent className="p-8">
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {symbolData.slice(0, 10).map((item, idx) => (
-                                    <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                                    <div key={idx} className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800">
                                         <div className="flex items-center gap-4">
-                                            <div className="w-8 h-8 rounded-full bg-white dark:bg-slate-700 flex items-center justify-center text-xs font-semibold text-slate-400">#{idx + 1}</div>
+                                            <div className="w-8 h-8 rounded-lg bg-white dark:bg-slate-700 flex items-center justify-center text-xs font-semibold text-slate-400">#{idx + 1}</div>
                                             <div className="flex flex-col">
                                                 <span className="font-semibold font-heading text-slate-800 dark:text-white">{item.symbol}</span>
                                                 <span className="text-xs text-slate-400 font-medium">

@@ -136,7 +136,7 @@ export default function AccountsPage() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
                             <Landmark className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                         </div>
                         <div>
@@ -166,7 +166,7 @@ export default function AccountsPage() {
                     <div className="animate-in fade-in zoom-in-95 slide-in-from-top-4 duration-500">
                         <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden relative">
                             {/* Card Accent */}
-                            <div className="absolute top-0 right-0 p-32 bg-blue-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                            <div className="absolute top-0 right-0 p-32 bg-blue-500/5 rounded-lg blur-3xl -mr-16 -mt-16 pointer-events-none" />
 
                             <CardHeader className="p-10 pb-6 border-b border-slate-100 dark:border-slate-800/50 relative z-10">
                                 <div className="flex items-center gap-3">
@@ -190,7 +190,7 @@ export default function AccountsPage() {
                                                     placeholder="Ex: MT5 Forex Real"
                                                     value={name}
                                                     onChange={(e) => setName(e.target.value)}
-                                                    className="h-14 pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 transition-all"
+                                                    className="h-14 pl-12 rounded-lg border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 transition-all"
                                                 />
                                             </div>
                                         </div>
@@ -199,10 +199,10 @@ export default function AccountsPage() {
                                             <div className="relative group">
                                                 <Globe className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 pointer-events-none z-10" />
                                                 <Select value={currency} onValueChange={setCurrency}>
-                                                    <SelectTrigger className="h-14 pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 transition-all text-slate-900 dark:text-white">
+                                                    <SelectTrigger className="h-14 pl-12 rounded-lg border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 transition-all text-slate-900 dark:text-white">
                                                         <SelectValue />
                                                     </SelectTrigger>
-                                                    <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                                    <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
                                                         <SelectItem value="USD" className="font-semibold py-3 text-sm">Dólar (USD)</SelectItem>
                                                         <SelectItem value="BRL" className="font-semibold py-3 text-sm">Real (BRL)</SelectItem>
                                                         <SelectItem value="EUR" className="font-semibold py-3 text-sm">Euro (EUR)</SelectItem>
@@ -218,7 +218,7 @@ export default function AccountsPage() {
                                                     type="number"
                                                     value={balance}
                                                     onChange={(e) => setBalance(e.target.value)}
-                                                    className="h-14 pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 transition-all font-mono"
+                                                    className="h-14 pl-12 rounded-lg border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 transition-all font-mono"
                                                 />
                                             </div>
                                         </div>
@@ -277,11 +277,11 @@ export default function AccountsPage() {
                                 <div className="opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-2 group-hover:translate-x-0">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="w-12 h-12 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800">
+                                            <Button variant="ghost" size="icon" className="w-12 h-12 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800">
                                                 <MoreVertical className="h-6 w-6" />
                                             </Button>
                                         </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end" className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950 p-3 min-w-[200px]">
+                                        <DropdownMenuContent align="end" className="rounded-lg border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950 p-3 min-w-[200px]">
                                             <DropdownMenuItem onClick={() => startEditing(acc)} className="rounded-xl font-semibold uppercase text-[10px] tracking-widest cursor-pointer py-3 px-4 focus:bg-slate-50 dark:focus:bg-slate-900 mb-1">
                                                 <Pencil className="h-4 w-4 mr-3 text-blue-500" /> Editar Definições
                                             </DropdownMenuItem>
@@ -298,8 +298,8 @@ export default function AccountsPage() {
                                     <ShieldCheck className="h-3 w-3 text-emerald-500" />
                                     <span>Sinc: OK</span>
                                 </div>
-                                <span className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-full border border-emerald-100 dark:border-emerald-500/20">
-                                    <div className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                <span className="flex items-center gap-2 text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-3 py-1.5 rounded-lg border border-emerald-100 dark:border-emerald-500/20">
+                                    <div className="w-1.5 h-1.5 rounded-lg bg-emerald-500 animate-pulse" />
                                     Monitorada
                                 </span>
                             </div>
@@ -311,7 +311,7 @@ export default function AccountsPage() {
                 <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
                     <DialogContent className="rounded-[3rem] p-10 max-w-md border-none shadow-2xl bg-white dark:bg-slate-950">
                         <DialogHeader className="space-y-8">
-                            <div className="w-24 h-24 bg-red-100 dark:bg-red-500/10 rounded-full flex items-center justify-center text-red-600 mx-auto mb-2 ring-8 ring-red-50 dark:ring-red-500/[0.03]">
+                            <div className="w-24 h-24 bg-red-100 dark:bg-red-500/10 rounded-lg flex items-center justify-center text-red-600 mx-auto mb-2 ring-8 ring-red-50 dark:ring-red-500/[0.03]">
                                 <Trash2 className="h-12 w-12" />
                             </div>
                             <div className="space-y-3">
@@ -326,14 +326,14 @@ export default function AccountsPage() {
                             <Button
                                 variant="ghost"
                                 onClick={() => setIsDeleteDialogOpen(false)}
-                                className="flex-1 h-14 rounded-2xl font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 uppercase tracking-widest text-xs"
+                                className="flex-1 h-14 rounded-lg font-semibold text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 uppercase tracking-widest text-xs"
                             >
                                 CANCELAR
                             </Button>
                             <Button
                                 onClick={handleDeleteAccount}
                                 disabled={submitting}
-                                className="flex-1 h-14 rounded-2xl bg-red-600 hover:bg-red-700 text-white font-semibold tracking-widest uppercase text-xs shadow-xl shadow-red-500/20"
+                                className="flex-1 h-14 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold tracking-widest uppercase text-xs shadow-xl shadow-red-500/20"
                             >
                                 {submitting ? <Loader2 className="h-5 w-5 animate-spin" /> : "CONFIRMAR EXCLUSÃO"}
                             </Button>

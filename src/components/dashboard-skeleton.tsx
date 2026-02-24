@@ -15,7 +15,7 @@ export function DashboardSkeleton() {
             {/* Monthly Ribbon Skeleton */}
             <div className="flex gap-2 overflow-x-auto pb-4 no-scrollbar">
                 {[...Array(14)].map((_, i) => (
-                    <Skeleton key={i} className="h-24 min-w-[100px] rounded-2xl flex-shrink-0" />
+                    <Skeleton key={i} className="h-24 min-w-[100px] rounded-lg flex-shrink-0" />
                 ))}
             </div>
 

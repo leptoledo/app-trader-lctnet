@@ -71,7 +71,7 @@ export default function SharedTradePage() {
                 {/* Public Header */}
                 <div className="bg-white p-8 rounded-3xl border shadow-sm flex flex-col md:flex-row justify-between items-center gap-6">
                     <div className="flex items-center gap-4 text-left w-full">
-                        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-700 text-2xl font-bold">
+                        <div className="w-16 h-16 bg-emerald-100 rounded-lg flex items-center justify-center text-emerald-700 text-2xl font-bold">
                             {username[0]}
                         </div>
                         <div>
@@ -82,7 +82,7 @@ export default function SharedTradePage() {
                             <p className="text-sm text-gray-400">by @{username}</p>
                         </div>
                     </div>
-                    <div className="bg-gray-900 text-white p-6 rounded-2xl min-w-[200px] text-center">
+                    <div className="bg-gray-900 text-white p-6 rounded-lg min-w-[200px] text-center">
                         <p className="text-[10px] uppercase font-bold opacity-60 mb-1">Net PnL</p>
                         <div className={cn("text-3xl font-black", isWin ? "text-emerald-400" : "text-red-400")}>
                             {isWin ? '+' : ''}${trade.pnl_net?.toFixed(2)}
@@ -92,7 +92,7 @@ export default function SharedTradePage() {
 
                 {/* Trade Details Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <Card className="rounded-2xl border-none shadow-sm h-full">
+                    <Card className="rounded-lg border-none shadow-sm h-full">
                         <CardHeader className="pb-2">
                             <CardTitle className="text-xs text-gray-400 uppercase font-bold flex items-center gap-2">
                                 <Calendar className="h-3 w-3" /> Entry Details
@@ -106,7 +106,7 @@ export default function SharedTradePage() {
                         </CardContent>
                     </Card>
 
-                    <Card className="rounded-2xl border-none shadow-sm h-full">
+                    <Card className="rounded-lg border-none shadow-sm h-full">
                         <CardHeader className="pb-2">
                             <CardTitle className="text-xs text-gray-400 uppercase font-bold flex items-center gap-2">
                                 <ExternalLink className="h-3 w-3" /> Exit Details
@@ -120,7 +120,7 @@ export default function SharedTradePage() {
                         </CardContent>
                     </Card>
 
-                    <Card className="rounded-2xl border-none shadow-sm h-full">
+                    <Card className="rounded-lg border-none shadow-sm h-full">
                         <CardHeader className="pb-2">
                             <CardTitle className="text-xs text-gray-400 uppercase font-bold flex items-center gap-2">
                                 <Tag className="h-3 w-3" /> Setup
@@ -141,7 +141,7 @@ export default function SharedTradePage() {
                         <div className="grid grid-cols-1 gap-6">
                             {trade.images.map((img, i) => (
                                 <div key={i} className="bg-white p-2 rounded-3xl border shadow-sm overflow-hidden">
-                                    <img src={img} alt={`Trade analysis ${i + 1}`} className="w-full h-auto rounded-2xl" />
+                                    <img src={img} alt={`Trade analysis ${i + 1}`} className="w-full h-auto rounded-lg" />
                                 </div>
                             ))}
                         </div>
@@ -161,7 +161,7 @@ export default function SharedTradePage() {
                 {/* Call to Action */}
                 <div className="text-center pt-8">
                     <p className="text-sm text-gray-400 mb-4">Wanna journal your trades like this?</p>
-                    <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-full px-8 py-6 h-auto text-lg font-bold shadow-lg shadow-emerald-200">
+                    <Button className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg px-8 py-6 h-auto text-lg font-bold shadow-lg shadow-emerald-200">
                         Join TraderJournal Today
                     </Button>
                 </div>

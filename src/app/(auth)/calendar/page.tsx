@@ -235,7 +235,7 @@ export default function CalendarPage() {
     if (loading) {
         return (
             <div className="flex h-screen items-center justify-center bg-[#f7f9fc] dark:bg-[#0b1220]">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
         )
     }
@@ -249,7 +249,7 @@ export default function CalendarPage() {
             {/* Header Section */}
             <div className="flex-none flex flex-col md:flex-row items-center justify-between mb-8 animate-in fade-in slide-in-from-top-4 duration-500 gap-6">
                 <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
                         <CalendarIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                     </div>
                     <div>
@@ -259,7 +259,7 @@ export default function CalendarPage() {
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-3 bg-white dark:bg-slate-900/50 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/60 dark:border-slate-800/60 shadow-xl">
+                    <div className="flex items-center gap-3 bg-white dark:bg-slate-900/50 backdrop-blur-md p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-800/60 shadow-xl">
                         <Button
                             variant="ghost"
                             size="icon"
@@ -295,7 +295,7 @@ export default function CalendarPage() {
                                 <Button
                                     variant="outline"
                                     size="icon"
-                                    className="h-11 w-11 rounded-2xl border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-900/50 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white shadow-xl"
+                                    className="h-11 w-11 rounded-lg border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-900/50 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white shadow-xl"
                                     aria-label="Mais opções"
                                 >
                                     <MoreHorizontal className="h-5 w-5" />
@@ -370,7 +370,7 @@ export default function CalendarPage() {
                                         </span>
                                         {hasActivity && isCurrent && (
                                             <div className={cn(
-                                                "w-2 h-2 rounded-full shadow-sm animate-pulse",
+                                                "w-2 h-2 rounded-lg shadow-sm animate-pulse",
                                                 metrics.pnl >= 0 ? "bg-emerald-500" : "bg-red-500 shadow-red-500/20"
                                             )} />
                                         )}
@@ -391,9 +391,9 @@ export default function CalendarPage() {
                                                 </span>
                                             </div>
 
-                                            <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
+                                            <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
                                                 <div
-                                                    className={cn("h-full rounded-full transition-all duration-1000", metrics.pnl >= 0 ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]")}
+                                                    className={cn("h-full rounded-lg transition-all duration-1000", metrics.pnl >= 0 ? "bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.5)]" : "bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.5)]")}
                                                     style={{ width: '100%' }}
                                                 />
                                             </div>

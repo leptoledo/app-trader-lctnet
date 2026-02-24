@@ -12,7 +12,7 @@ export default function NotebookPage() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <Button variant="ghost" size="icon" asChild className="rounded-2xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                        <Button variant="ghost" size="icon" asChild className="rounded-lg h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
@@ -27,8 +27,8 @@ export default function NotebookPage() {
                     <div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl p-16 rounded-[4rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl relative overflow-hidden group">
 
                         {/* Interactive Background Glows */}
-                        <div className="absolute top-0 right-0 p-40 bg-blue-500/10 rounded-full blur-3xl -mr-20 -mt-20 group-hover:bg-blue-500/20 transition-all duration-1000 pointer-events-none" />
-                        <div className="absolute bottom-0 left-0 p-32 bg-emerald-500/10 rounded-full blur-3xl -ml-16 -mb-16 pointer-events-none" />
+                        <div className="absolute top-0 right-0 p-40 bg-blue-500/10 rounded-lg blur-3xl -mr-20 -mt-20 group-hover:bg-blue-500/20 transition-all duration-1000 pointer-events-none" />
+                        <div className="absolute bottom-0 left-0 p-32 bg-emerald-500/10 rounded-lg blur-3xl -ml-16 -mb-16 pointer-events-none" />
 
                         <div className="relative z-10 text-center space-y-10">
 
@@ -36,7 +36,7 @@ export default function NotebookPage() {
                                 <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-[2rem] flex items-center justify-center text-white mx-auto shadow-2xl shadow-blue-500/30 transform rotate-3 group-hover:rotate-0 transition-all duration-700">
                                     <NotebookIcon className="h-10 w-10 fill-white/10" />
                                 </div>
-                                <div className="absolute -top-2 -right-2 bg-amber-500 text-white rounded-full p-1.5 shadow-lg animate-bounce">
+                                <div className="absolute -top-2 -right-2 bg-amber-500 text-white rounded-lg p-1.5 shadow-lg animate-bounce">
                                     <Construction className="h-4 w-4" />
                                 </div>
                             </div>

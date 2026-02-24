@@ -38,7 +38,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     if (loading || subLoading) {
         return (
             <div className="flex h-screen items-center justify-center">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-emerald-600"></div>
             </div>
         )
     }

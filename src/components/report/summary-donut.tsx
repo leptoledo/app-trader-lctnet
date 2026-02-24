@@ -60,7 +60,7 @@ export function SummaryDonut({ grossProfit, grossLoss, netPnl }: SummaryDonutPro
             <div className="flex w-full justify-between px-4 mt-2 text-sm">
                 <div className="flex flex-col items-start">
                     <span className="flex items-center gap-1 text-red-600 font-bold">
-                        <span className="w-2 h-2 rounded-full bg-red-500"></span>
+                        <span className="w-2 h-2 rounded-lg bg-red-500"></span>
                         -${lossAbs.toFixed(2)}
                     </span>
                     <span className="text-[10px] text-gray-500 uppercase ml-3">Perda Bruta</span>
@@ -68,7 +68,7 @@ export function SummaryDonut({ grossProfit, grossLoss, netPnl }: SummaryDonutPro
                 <div className="flex flex-col items-end">
                     <span className="flex items-center gap-1 text-green-600 font-bold">
                         +${grossProfit.toFixed(2)}
-                        <span className="w-2 h-2 rounded-full bg-green-500"></span>
+                        <span className="w-2 h-2 rounded-lg bg-green-500"></span>
                     </span>
                     <span className="text-[10px] text-gray-500 uppercase mr-3">Lucro Bruto</span>
                 </div>

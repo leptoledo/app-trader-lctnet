@@ -74,7 +74,7 @@ export default function LandingPage() {
               <div className="hidden md:block">
                 <PwaInstallButton />
               </div>
-              <Button asChild className="rounded-2xl bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
+              <Button asChild className="rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                 <Link href="/login">Começar Grátis</Link>
               </Button>
             </div>
@@ -92,7 +92,7 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
             <div className="grid lg:grid-cols-12 gap-12 items-center">
               <div className="lg:col-span-6 space-y-8">
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 rounded-full border border-slate-200/70 dark:border-slate-800 text-[11px] font-bold uppercase tracking-widest shadow-sm">
+                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 rounded-lg border border-slate-200/70 dark:border-slate-800 text-[11px] font-bold uppercase tracking-widest shadow-sm">
                   Plataforma de journaling profissional
                 </div>
 
@@ -121,13 +121,13 @@ export default function LandingPage() {
                   transition={{ duration: 0.8, delay: 0.3 }}
                   className="flex flex-col sm:flex-row items-center gap-4 pt-4"
                 >
-                  <Button asChild className="w-full sm:w-auto rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-8 h-14 text-sm uppercase tracking-widest font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:-translate-y-1 active:scale-95 group">
+                  <Button asChild className="w-full sm:w-auto rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-8 h-14 text-sm uppercase tracking-widest font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:-translate-y-1 active:scale-95 group">
                     <Link href="/login" className="flex items-center justify-center gap-2">
                       Criar Conta Gratuita
                       <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                     </Link>
                   </Button>
-                  <Button variant="outline" className="w-full sm:w-auto rounded-full border-slate-200 dark:border-slate-800 px-8 h-14 text-sm uppercase tracking-widest font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all hover:-translate-y-1 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
+                  <Button variant="outline" className="w-full sm:w-auto rounded-lg border-slate-200 dark:border-slate-800 px-8 h-14 text-sm uppercase tracking-widest font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all hover:-translate-y-1 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
                     Ver Live Demo
                   </Button>
                 </motion.div>
@@ -135,8 +135,8 @@ export default function LandingPage() {
                 <div className="grid sm:grid-cols-2 gap-x-4 gap-y-6 pt-8 border-t border-slate-200/50 dark:border-slate-800/50">
                   {heroPoints.map((point, i) => (
                     <div key={i} className="flex items-start gap-4">
-                      <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-blue-50 dark:bg-blue-900/20">
-                        <div className="h-2 w-2 rounded-full bg-blue-600 dark:bg-blue-400" />
+                      <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20">
+                        <div className="h-2 w-2 rounded-lg bg-blue-600 dark:bg-blue-400" />
                       </div>
                       <div>
                         <p className="text-sm font-bold tracking-tight text-slate-900 dark:text-white uppercase">{point.title}</p>
@@ -181,10 +181,10 @@ export default function LandingPage() {
                 <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Confiado por profissionais</p>
                 <h3 className="text-2xl md:text-3xl font-heading font-bold text-slate-900 dark:text-white mt-3">Infra que aguenta sua rotina de alta frequência.</h3>
                 <div className="mt-6 flex gap-4">
-                  <div className="px-4 py-3 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-sm font-semibold text-slate-500">
+                  <div className="px-4 py-3 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-sm font-semibold text-slate-500">
                     <span className="text-slate-900 dark:text-white">99.9%</span> uptime
                   </div>
-                  <div className="px-4 py-3 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-sm font-semibold text-slate-500">
+                  <div className="px-4 py-3 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-sm font-semibold text-slate-500">
                     <span className="text-slate-900 dark:text-white">200ms</span> p95
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function LandingPage() {
               <div className="lg:col-span-8">
                 <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
                   {brokers.map((broker) => (
-                    <div key={broker} className="h-14 rounded-2xl bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 px-3 whitespace-nowrap">
+                    <div key={broker} className="h-14 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 px-3 whitespace-nowrap">
                       {broker}
                     </div>
                   ))}
@@ -206,7 +206,7 @@ export default function LandingPage() {
         <section id="recursos" className="py-28 bg-white dark:bg-[#020617]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-[#2b7de9] font-bold tracking-wider text-sm uppercase bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-full">Recursos Premium</span>
+              <span className="text-[#2b7de9] font-bold tracking-wider text-sm uppercase bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-lg">Recursos Premium</span>
               <h2 className="mt-6 text-4xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Tudo o que você precisa para profissionalizar sua rotina</h2>
               <p className="mt-4 text-slate-500 dark:text-slate-400 font-normal">Ferramentas pensadas para criar consistência e controle operacional.</p>
             </div>
@@ -214,8 +214,8 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {benefits.map((b, i) => (
                 <div key={i} className="group p-8 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 p-32 bg-gradient-to-br ${b.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-full blur-3xl -mr-16 -mt-16`} />
-                  <div className="h-14 w-14 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-2xl flex items-center justify-center text-slate-900 dark:text-white mb-8 transition-transform group-hover:scale-110 group-hover:rotate-3 shadow-sm">
+                  <div className={`absolute top-0 right-0 p-32 bg-gradient-to-br ${b.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-lg blur-3xl -mr-16 -mt-16`} />
+                  <div className="h-14 w-14 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg flex items-center justify-center text-slate-900 dark:text-white mb-8 transition-transform group-hover:scale-110 group-hover:rotate-3 shadow-sm">
                     {b.icon}
                   </div>
                   <h4 className="text-xl font-semibold font-heading text-slate-900 dark:text-white mb-4">{b.title}</h4>
@@ -237,7 +237,7 @@ export default function LandingPage() {
                 <div className="space-y-4">
                   {workflowSteps.map((step) => (
                     <div key={step.title} className="flex gap-4 items-start">
-                      <div className="h-10 w-10 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#2b7de9] font-semibold">{step.num}</div>
+                      <div className="h-10 w-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#2b7de9] font-semibold">{step.num}</div>
                       <div>
                         <h5 className="font-semibold text-slate-900 dark:text-white">{step.title}</h5>
                         <p className="text-slate-500 dark:text-slate-400 text-sm font-normal">{step.desc}</p>
@@ -276,7 +276,7 @@ export default function LandingPage() {
                 <p className="text-slate-500 dark:text-slate-400 font-normal">Dashboards e análises por sessão, símbolo e horário para transformar intuição em processo.</p>
                 <div className="grid sm:grid-cols-2 gap-4">
                   {insightPoints.map((point) => (
-                    <div key={point.title} className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+                    <div key={point.title} className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
                       <h5 className="font-semibold text-slate-900 dark:text-white text-sm">{point.title}</h5>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{point.desc}</p>
                     </div>
@@ -295,7 +295,7 @@ export default function LandingPage() {
                 <h2 className="text-3xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Education Hub</h2>
                 <p className="text-slate-500 dark:text-slate-400 font-normal mt-4 max-w-md">Artigos técnicos aprofundados para refinar seu edge no mercado.</p>
               </div>
-              <Button variant="ghost" className="text-[#2b7de9] font-bold hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm px-8 rounded-full border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+              <Button variant="ghost" className="text-[#2b7de9] font-bold hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm px-8 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
                 Ver todos os artigos <ArrowUpRight className="ml-2 h-4 w-4" />
               </Button>
             </div>
@@ -303,9 +303,9 @@ export default function LandingPage() {
             <div className="grid md:grid-cols-3 gap-8">
               {blogPosts.map((post, i) => (
                 <div key={i} className="group cursor-pointer flex flex-col h-full bg-white dark:bg-slate-900/50 rounded-3xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
-                  <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800 rounded-2xl overflow-hidden mb-6">
+                  <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden mb-6">
                     <Image src={post.img} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider text-slate-900 border border-white/50">
+                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-900 border border-white/50">
                       {post.tag}
                     </div>
                   </div>
@@ -335,7 +335,7 @@ export default function LandingPage() {
               Experimente gratuitamente e descubra sua vantagem operacional com clareza e disciplina.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="rounded-full bg-white hover:bg-slate-100 text-slate-900 px-10 h-14 text-sm font-bold uppercase tracking-widest transition-all shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_-5px_rgba(255,255,255,0.5)] hover:-translate-y-1">
+              <Button asChild className="rounded-lg bg-white hover:bg-slate-100 text-slate-900 px-10 h-14 text-sm font-bold uppercase tracking-widest transition-all shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_-5px_rgba(255,255,255,0.5)] hover:-translate-y-1">
                 <Link href="/login">Criar Conta Grátis <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
               </Button>
             </div>
@@ -382,13 +382,13 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
             <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">© 2026 Leptoledo Capital. Todos os direitos reservados.</p>
             <div className="flex gap-6">
-              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
+              <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
                 <Facebook className="h-4 w-4" />
               </div>
-              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
+              <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
                 <Instagram className="h-4 w-4" />
               </div>
-              <div className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
+              <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
                 <Twitter className="h-4 w-4" />
               </div>
             </div>

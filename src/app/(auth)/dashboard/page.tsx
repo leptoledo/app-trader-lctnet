@@ -170,7 +170,7 @@ export default function Dashboard() {
             <SelectTrigger className="w-full md:w-[220px] h-11 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/50 text-slate-800 dark:text-slate-100 shadow-sm font-semibold text-[10px] tracking-widest uppercase focus:ring-blue-400 transition-all group">
               <SelectValue placeholder="Contas" />
             </SelectTrigger>
-            <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950">
+            <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 shadow-2xl bg-white dark:bg-slate-950">
               <SelectItem value="all" className="font-semibold text-[10px] uppercase tracking-widest cursor-pointer py-3">Todas as Contas</SelectItem>
               {accounts.map(acc => (
                 <SelectItem key={acc.id} value={acc.id} className="font-semibold text-[10px] uppercase tracking-widest cursor-pointer py-3">
@@ -198,7 +198,7 @@ export default function Dashboard() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button asChild className="rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30 flex-shrink-0">
+                <Button asChild className="rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30 flex-shrink-0">
                   <Link href="/trades/new" className="flex items-center gap-2">
                     <Plus className="h-4 w-4" /> Novo Trade
                   </Link>
@@ -258,7 +258,7 @@ export default function Dashboard() {
                     </div>
                     {dayM && (
                       <div className={cn(
-                        "w-2.5 h-2.5 rounded-full shadow-lg animate-pulse",
+                        "w-2.5 h-2.5 rounded-lg shadow-lg animate-pulse",
                         dayM.pnl >= 0 ? "bg-emerald-500 shadow-emerald-500/20" : "bg-red-500 shadow-red-500/20"
                       )} />
                     )}
@@ -327,7 +327,7 @@ export default function Dashboard() {
               </div>
               <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-xl border border-slate-200/60 dark:border-slate-800/60 shadow-2xl h-[520px] relative overflow-hidden group">
                 {/* Decorative Accent */}
-                <div className="absolute top-0 right-0 p-40 bg-blue-500/[0.03] rounded-full blur-[80px] -mr-20 -mt-20 pointer-events-none transition-colors duration-1000 group-hover:bg-blue-500/10" />
+                <div className="absolute top-0 right-0 p-40 bg-blue-500/[0.03] rounded-lg blur-[80px] -mr-20 -mt-20 pointer-events-none transition-colors duration-1000 group-hover:bg-blue-500/10" />
                 <EquityChart data={equityChartData} />
               </div>
             </section>
@@ -374,12 +374,12 @@ export default function Dashboard() {
                 {/* Profit Factor Card - High Impact */}
                 <Card className="rounded-xl border-none shadow-2xl bg-slate-900 dark:bg-slate-950 text-white relative overflow-hidden group">
                   {/* Luxury Background Effects */}
-                  <div className="absolute top-0 right-0 p-32 bg-blue-600/20 rounded-full blur-[50px] -mr-16 -mt-16 group-hover:bg-blue-600/30 transition-all duration-1000" />
-                  <div className="absolute bottom-0 left-0 p-24 bg-purple-600/10 rounded-full blur-[40px] -ml-16 -mb-16 pointer-events-none" />
+                  <div className="absolute top-0 right-0 p-32 bg-blue-600/20 rounded-lg blur-[50px] -mr-16 -mt-16 group-hover:bg-blue-600/30 transition-all duration-1000" />
+                  <div className="absolute bottom-0 left-0 p-24 bg-purple-600/10 rounded-lg blur-[40px] -ml-16 -mb-16 pointer-events-none" />
 
                   <CardHeader className="pb-4 relative z-10 p-10 pt-12 overflow-hidden">
                     <div className="flex items-center gap-3 mb-2">
-                      <div className="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                      <div className="w-2 h-2 rounded-lg bg-blue-500 animate-pulse" />
                       <CardTitle className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.3em] truncate">FATOR DE LUCRO GLOBAL</CardTitle>
                     </div>
                     <div className="text-6xl xl:text-8xl font-heading font-bold tracking-tighter text-white leading-none">
@@ -388,12 +388,12 @@ export default function Dashboard() {
                   </CardHeader>
                   <CardContent className="relative z-10 px-10 pb-12 pt-0 space-y-8 overflow-hidden">
                     <div className="space-y-4">
-                      <div className="h-2.5 w-full bg-white/5 rounded-full overflow-hidden backdrop-blur-md border border-white/5">
+                      <div className="h-2.5 w-full bg-white/5 rounded-lg overflow-hidden backdrop-blur-md border border-white/5">
                         <motion.div
                           initial={{ width: 0 }}
                           whileInView={{ width: `${Math.min(metrics.profitFactor * 30, 100)}%` }}
                           transition={{ duration: 1.5, ease: "easeOut" }}
-                          className="bg-gradient-to-r from-blue-500 to-indigo-400 h-full shadow-[0_0_20px_rgba(59,130,246,0.6)] rounded-full"
+                          className="bg-gradient-to-r from-blue-500 to-indigo-400 h-full shadow-[0_0_20px_rgba(59,130,246,0.6)] rounded-lg"
                         />
                       </div>
                       <div className="flex justify-between items-center text-[10px] font-semibold uppercase tracking-widest px-1 gap-3">
@@ -403,7 +403,7 @@ export default function Dashboard() {
                     </div>
 
                     <div className="pt-4 flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
+                      <div className="w-12 h-12 rounded-lg bg-white/5 flex items-center justify-center border border-white/10 group-hover:scale-110 transition-transform">
                         <Sparkles className="h-5 w-5 text-blue-400" />
                       </div>
                       <p className="text-xs font-semibold text-slate-400 leading-relaxed break-words">
@@ -416,18 +416,18 @@ export default function Dashboard() {
                 {/* Secondary Metrics */}
                 <div className="grid grid-cols-1 gap-6">
                   <Card className="rounded-[2rem] border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 p-8 group hover:-translate-y-1 transition-all overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-24 bg-emerald-500/5 rounded-full blur-[40px] -mr-12 -mt-12 pointer-events-none" />
+                    <div className="absolute top-0 right-0 p-24 bg-emerald-500/5 rounded-lg blur-[40px] -mr-12 -mt-12 pointer-events-none" />
                     <div className="flex items-center justify-between mb-4 relative z-10">
                       <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-bold tracking-[0.2em]">Taxa de Acerto</p>
                       <Target className="h-4 w-4 text-emerald-500 opacity-80" />
                     </div>
                     <div className="text-4xl lg:text-5xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter break-words relative z-10">{metrics.winRate.toFixed(1)}%</div>
-                    <div className="mt-5 h-2 w-full bg-slate-100 dark:bg-slate-950 rounded-full overflow-hidden relative z-10">
-                      <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full rounded-full transition-all duration-1000 shadow-[0_0_15px_rgba(16,185,129,0.5)]" style={{ width: `${metrics.winRate}%` }}></div>
+                    <div className="mt-5 h-2 w-full bg-slate-100 dark:bg-slate-950 rounded-lg overflow-hidden relative z-10">
+                      <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 h-full rounded-lg transition-all duration-1000 shadow-[0_0_15px_rgba(16,185,129,0.5)]" style={{ width: `${metrics.winRate}%` }}></div>
                     </div>
                   </Card>
                   <Card className="rounded-[2rem] border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 p-8 group hover:-translate-y-1 transition-all overflow-hidden relative">
-                    <div className="absolute top-0 right-0 p-24 bg-blue-500/5 rounded-full blur-[40px] -mr-12 -mt-12 pointer-events-none" />
+                    <div className="absolute top-0 right-0 p-24 bg-blue-500/5 rounded-lg blur-[40px] -mr-12 -mt-12 pointer-events-none" />
                     <div className="flex items-center justify-between mb-4 relative z-10">
                       <p className="text-[9px] text-slate-400 dark:text-slate-500 uppercase font-bold tracking-[0.2em]">Volume Total</p>
                       <Activity className="h-4 w-4 text-blue-500 opacity-80" />
@@ -460,13 +460,13 @@ export default function Dashboard() {
                   {hourlyData.slice(0, 3).map((h, i) => (
                     <div key={i} className="flex items-center justify-between p-5 rounded-xl hover:bg-white dark:hover:bg-slate-800/60 transition-all duration-300 group hover:shadow-lg hover:-translate-y-0.5">
                       <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-slate-900 flex items-center justify-center font-mono text-xs font-semibold text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent transition-all border border-slate-100 dark:border-slate-800">
+                        <div className="w-12 h-12 rounded-lg bg-slate-50 dark:bg-slate-900 flex items-center justify-center font-mono text-xs font-semibold text-slate-400 group-hover:bg-blue-600 group-hover:text-white group-hover:border-transparent transition-all border border-slate-100 dark:border-slate-800">
                           {h.hour}
                         </div>
                         <div className="flex flex-col">
                           <p className="text-[10px] font-semibold text-slate-900 dark:text-white tracking-widest uppercase mb-1">Delta de Tempo</p>
-                          <div className="h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                            <div className={cn("h-full rounded-full transition-all duration-1000", h.pnl >= 0 ? "bg-emerald-500" : "bg-red-500")} style={{ width: `${Math.min(Math.abs(h.pnl) / 500 * 100, 100)}%` }}></div>
+                          <div className="h-1.5 w-24 bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
+                            <div className={cn("h-full rounded-lg transition-all duration-1000", h.pnl >= 0 ? "bg-emerald-500" : "bg-red-500")} style={{ width: `${Math.min(Math.abs(h.pnl) / 500 * 100, 100)}%` }}></div>
                           </div>
                         </div>
                       </div>

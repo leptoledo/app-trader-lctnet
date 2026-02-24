@@ -19,7 +19,7 @@ function StatRow({ label, value, subValue, color }: StatRowProps) {
                     </span>
                 )}
             </div>
-            <div className="h-1 w-full bg-gray-100 mt-1 rounded-full overflow-hidden">
+            <div className="h-1 w-full bg-gray-100 mt-1 rounded-lg overflow-hidden">
                 <div className="h-full bg-gray-300 w-0" style={{ width: '40%' }}></div>
             </div>
         </div>

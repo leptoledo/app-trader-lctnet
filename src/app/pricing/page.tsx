@@ -76,7 +76,7 @@ export default function PricingPage() {
                             <div className="hidden md:block">
                                 <PwaInstallButton />
                             </div>
-                            <Button asChild className="rounded-2xl bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
+                            <Button asChild className="rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                                 <Link href="/login">Começar Grátis</Link>
                             </Button>
                         </div>
@@ -87,15 +87,15 @@ export default function PricingPage() {
             <main className="relative">
                 {/* Background Decor */}
                 <div className="absolute inset-0 bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:20px_20px] opacity-40 pointer-events-none" />
-                <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-full blur-[120px] pointer-events-none" />
-                <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-full blur-[120px] pointer-events-none" />
+                <div className="absolute top-0 right-1/4 w-[600px] h-[600px] bg-blue-500/10 rounded-lg blur-[120px] pointer-events-none" />
+                <div className="absolute bottom-0 left-1/4 w-[600px] h-[600px] bg-indigo-500/10 rounded-lg blur-[120px] pointer-events-none" />
 
                 <div className="max-w-7xl mx-auto px-4 pt-24 pb-32 relative z-10">
                     <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-semibold uppercase tracking-widest border border-blue-100 dark:border-blue-900/50"
+                            className="inline-flex items-center gap-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 rounded-lg text-[10px] font-semibold uppercase tracking-widest border border-blue-100 dark:border-blue-900/50"
                         >
                             <Globe className="h-3 w-3" /> Planos Flexíveis
                         </motion.div>
@@ -119,7 +119,7 @@ export default function PricingPage() {
 
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch pt-8 relative">
                         {/* Interactive glow behind the cards */}
-                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5 blur-3xl -z-10 rounded-full" />
+                        <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5 blur-3xl -z-10 rounded-lg" />
 
                         {/* Plan: FREE */}
                         <motion.div
@@ -140,7 +140,7 @@ export default function PricingPage() {
                             <div className="space-y-4 mb-10 flex-1">
                                 {PLANS.free.features.map((feat, i) => (
                                     <div key={i} className="flex items-center gap-3">
-                                        <div className="w-5 h-5 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
+                                        <div className="w-5 h-5 rounded-lg bg-slate-100 dark:bg-slate-800 flex items-center justify-center flex-shrink-0">
                                             <Check className="h-3 w-3 text-slate-400 dark:text-slate-500" />
                                         </div>
                                         <span className="text-sm font-normal text-slate-600 dark:text-slate-400">{feat}</span>
@@ -148,7 +148,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <Button variant="outline" className="w-full h-14 rounded-full font-bold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-1" onClick={() => handleSubscribe('free')}>
+                            <Button variant="outline" className="w-full h-14 rounded-lg font-bold border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 transition-all hover:-translate-y-1" onClick={() => handleSubscribe('free')}>
                                 Começar Gratuitamente
                             </Button>
                         </motion.div>
@@ -162,10 +162,10 @@ export default function PricingPage() {
                         >
                             {/* Premium Glow & Ring */}
                             <div className="absolute inset-0 rounded-[2.5rem] ring-2 ring-blue-500/50 dark:ring-blue-400/30 ring-inset glow-effect pointer-events-none" />
-                            <div className="absolute top-0 right-0 p-32 bg-blue-600/15 dark:bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
+                            <div className="absolute top-0 right-0 p-32 bg-blue-600/15 dark:bg-blue-500/10 rounded-lg blur-3xl -mr-16 -mt-16 pointer-events-none" />
 
                             <div className="absolute top-6 right-8">
-                                <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-full shadow-lg shadow-blue-500/20 flex items-center gap-2">
+                                <div className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-[10px] font-bold uppercase tracking-[0.2em] px-4 py-1.5 rounded-lg shadow-lg shadow-blue-500/20 flex items-center gap-2">
                                     <Flame className="h-3 w-3" /> Mais Popular
                                 </div>
                             </div>
@@ -182,7 +182,7 @@ export default function PricingPage() {
                             <div className="space-y-4 mb-10 flex-1 relative z-10">
                                 {PLANS.pro.features.map((feat, i) => (
                                     <div key={i} className="flex items-center gap-3">
-                                        <div className="w-5 h-5 rounded-full bg-blue-600 flex items-center justify-center flex-shrink-0">
+                                        <div className="w-5 h-5 rounded-lg bg-blue-600 flex items-center justify-center flex-shrink-0">
                                             <Check className="h-3 w-3 text-white" />
                                         </div>
                                         <span className="text-sm font-normal text-slate-100">{feat}</span>
@@ -190,7 +190,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <Button className="w-full h-14 rounded-full font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_-5px_rgba(37,99,235,0.5)] transition-all hover:-translate-y-1 relative z-10 text-sm uppercase tracking-widest group" onClick={() => handleSubscribe('pro')}>
+                            <Button className="w-full h-14 rounded-lg font-bold bg-blue-600 hover:bg-blue-500 text-white shadow-[0_0_20px_-5px_rgba(37,99,235,0.5)] transition-all hover:-translate-y-1 relative z-10 text-sm uppercase tracking-widest group" onClick={() => handleSubscribe('pro')}>
                                 Assinar Pro <ArrowUpRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
                             </Button>
                         </motion.div>
@@ -216,7 +216,7 @@ export default function PricingPage() {
                             <div className="space-y-4 mb-10 flex-1">
                                 {PLANS.gold.features.map((feat, i) => (
                                     <div key={i} className="flex items-center gap-3">
-                                        <div className="w-5 h-5 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
+                                        <div className="w-5 h-5 rounded-lg bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center flex-shrink-0">
                                             <Star className="h-3 w-3 text-amber-600 dark:text-amber-400 fill-amber-400" />
                                         </div>
                                         <span className="text-sm font-normal text-slate-600 dark:text-slate-400 italic">
@@ -226,7 +226,7 @@ export default function PricingPage() {
                                 ))}
                             </div>
 
-                            <Button variant="ghost" className="w-full h-14 rounded-full font-bold border-2 border-amber-500/30 hover:border-amber-500 dark:text-amber-500 text-amber-600 hover:text-white hover:bg-amber-600 transition-all hover:-translate-y-1 uppercase tracking-widest text-sm" onClick={() => handleSubscribe('gold')}>
+                            <Button variant="ghost" className="w-full h-14 rounded-lg font-bold border-2 border-amber-500/30 hover:border-amber-500 dark:text-amber-500 text-amber-600 hover:text-white hover:bg-amber-600 transition-all hover:-translate-y-1 uppercase tracking-widest text-sm" onClick={() => handleSubscribe('gold')}>
                                 Upgrade para Ouro
                             </Button>
                         </motion.div>
@@ -316,13 +316,13 @@ export default function PricingPage() {
                     <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
                         <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">© 2026 Leptoledo Capital. Todos os direitos reservados.</p>
                         <div className="flex gap-6">
-                            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
+                            <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
                                 <Facebook className="h-4 w-4" />
                             </div>
-                            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
+                            <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
                                 <Instagram className="h-4 w-4" />
                             </div>
-                            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
+                            <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
                                 <Twitter className="h-4 w-4" />
                             </div>
                         </div>

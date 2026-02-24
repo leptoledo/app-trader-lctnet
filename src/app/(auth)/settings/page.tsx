@@ -133,7 +133,7 @@ export default function SettingsPage() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
+                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
                             <SettingsIcon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
@@ -242,7 +242,7 @@ export default function SettingsPage() {
                         <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden relative group">
 
                             {/* Decorative Background Accent */}
-                            <div className="absolute top-0 right-0 p-32 bg-blue-500/[0.03] rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-blue-500/10 transition-all duration-1000" />
+                            <div className="absolute top-0 right-0 p-32 bg-blue-500/[0.03] rounded-lg blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-blue-500/10 transition-all duration-1000" />
 
                             <CardHeader className="p-10 pb-6 border-b border-slate-100 dark:border-slate-800/50 relative z-10">
                                 <div className="flex justify-between items-center">
@@ -266,7 +266,7 @@ export default function SettingsPage() {
 
                                 <div className="bg-slate-50/50 dark:bg-slate-950/30 p-8 rounded-[2rem] border border-slate-100 dark:border-slate-800 flex flex-col md:flex-row items-center justify-between gap-6 transition-all group-hover:border-blue-500/20">
                                     <div className="flex items-center gap-6">
-                                        <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
+                                        <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-lg flex items-center justify-center text-white shadow-xl shadow-blue-500/20">
                                             <Crown className="h-8 w-8 fill-white/10" />
                                         </div>
                                         <div>
@@ -277,7 +277,7 @@ export default function SettingsPage() {
                                         </div>
                                     </div>
                                     {isFree && (
-                                        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 rounded-2xl h-14 px-8 font-black uppercase tracking-tighter text-xs shadow-xl shadow-blue-500/20 w-fit" asChild>
+                                        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 rounded-lg h-14 px-8 font-black uppercase tracking-tighter text-xs shadow-xl shadow-blue-500/20 w-fit" asChild>
                                             <Link href="/pricing" className="flex items-center gap-2">
                                                 <Zap className="h-4 w-4" /> Evoluir Plano
                                             </Link>
@@ -292,7 +292,7 @@ export default function SettingsPage() {
                                     </div>
 
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                        <div className="space-y-4 bg-slate-50/30 dark:bg-white/[0.02] p-6 rounded-2xl border border-slate-100 dark:border-slate-800/40">
+                                        <div className="space-y-4 bg-slate-50/30 dark:bg-white/[0.02] p-6 rounded-lg border border-slate-100 dark:border-slate-800/40">
                                             <div className="flex justify-between items-end">
                                                 <div className="space-y-0.5">
                                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Trades / Mês</p>
@@ -301,12 +301,12 @@ export default function SettingsPage() {
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                                <div className="bg-blue-600 h-full w-[12%] rounded-full shadow-sm"></div>
+                                            <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
+                                                <div className="bg-blue-600 h-full w-[12%] rounded-lg shadow-sm"></div>
                                             </div>
                                         </div>
 
-                                        <div className="space-y-4 bg-slate-50/30 dark:bg-white/[0.02] p-6 rounded-2xl border border-slate-100 dark:border-slate-800/40">
+                                        <div className="space-y-4 bg-slate-50/30 dark:bg-white/[0.02] p-6 rounded-lg border border-slate-100 dark:border-slate-800/40">
                                             <div className="flex justify-between items-end">
                                                 <div className="space-y-0.5">
                                                     <p className="text-[10px] font-black text-slate-400 uppercase tracking-widest">Contas Conectadas</p>
@@ -315,8 +315,8 @@ export default function SettingsPage() {
                                                     </p>
                                                 </div>
                                             </div>
-                                            <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-full overflow-hidden">
-                                                <div className="bg-emerald-500 h-full w-[100%] rounded-full shadow-sm"></div>
+                                            <div className="h-2 w-full bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden">
+                                                <div className="bg-emerald-500 h-full w-[100%] rounded-lg shadow-sm"></div>
                                             </div>
                                         </div>
                                     </div>

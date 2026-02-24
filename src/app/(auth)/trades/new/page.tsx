@@ -380,7 +380,7 @@ export default function NewTradePage() {
 
                             <Button
                                 type="submit"
-                                className="w-full h-16 rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold text-xs uppercase tracking-[0.3em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-1 active:scale-95 border border-transparent dark:border-blue-500/30 disabled:opacity-50"
+                                className="w-full h-16 rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold text-xs uppercase tracking-[0.3em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-1 active:scale-95 border border-transparent dark:border-blue-500/30 disabled:opacity-50"
                                 disabled={submitting}
                             >
                                 {submitting ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}

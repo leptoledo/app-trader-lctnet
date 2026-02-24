@@ -78,7 +78,7 @@ export default function CommunityPage() {
                 {/* Community Header */}
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
                             <Users className="h-6 w-6 text-blue-500 dark:text-blue-400" />
                         </div>
                         <div>
@@ -92,7 +92,7 @@ export default function CommunityPage() {
                             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400 group-focus-within:text-blue-500 transition-colors" />
                             <Input placeholder="Buscar por símbolo..." className="h-12 pl-12 rounded-xl bg-white dark:bg-slate-900/50 border-slate-200 dark:border-slate-800 focus:ring-blue-500 font-medium text-xs shadow-sm" />
                         </div>
-                        <Button className="h-12 w-full sm:w-auto px-8 rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold uppercase text-[10px] tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
+                        <Button className="h-12 w-full sm:w-auto px-8 rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold uppercase text-[10px] tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                             Convidar Amigos
                         </Button>
                     </div>
@@ -145,7 +145,7 @@ export default function CommunityPage() {
 
                                 <div className="mt-4 flex items-center justify-between px-6">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-800 border-2 border-white dark:border-slate-950 shadow-sm flex items-center justify-center overflow-hidden">
+                                        <div className="w-8 h-8 rounded-lg bg-slate-200 dark:bg-slate-800 border-2 border-white dark:border-slate-950 shadow-sm flex items-center justify-center overflow-hidden">
                                             <User className="h-4 w-4 text-slate-400" />
                                         </div>
                                         <div className="flex flex-col">
@@ -175,12 +175,12 @@ export default function CommunityPage() {
                         ))
                     ) : (
                         <Card className="col-span-full py-24 rounded-[3rem] bg-white/50 dark:bg-slate-900/20 border border-dashed border-slate-200 dark:border-slate-800 text-center animate-in fade-in zoom-in-95 duration-700">
-                            <div className="w-24 h-24 bg-slate-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-8 shadow-inner">
+                            <div className="w-24 h-24 bg-slate-50 dark:bg-slate-800 rounded-lg flex items-center justify-center mx-auto mb-8 shadow-inner">
                                 <Users className="h-10 w-10 text-slate-200 dark:text-slate-700" />
                             </div>
                             <h3 className="text-2xl font-heading font-semibold text-slate-900 dark:text-white uppercase tracking-tight mb-2">Comunidade Silenciosa</h3>
                             <p className="text-slate-500 dark:text-slate-400 font-semibold mb-8 max-w-sm mx-auto leading-relaxed">Seja o pioneiro e compartilhe sua primeira análise vencedora com o mundo hoje!</p>
-                            <Button className="h-14 px-10 rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold uppercase text-[10px] tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
+                            <Button className="h-14 px-10 rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold uppercase text-[10px] tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                                 Compartilhar Meu Primeiro Trade
                             </Button>
                         </Card>

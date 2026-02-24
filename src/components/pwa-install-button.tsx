@@ -73,7 +73,7 @@ export function PwaInstallButton() {
       )}
 
       <Dialog open={showIosHelp} onOpenChange={setShowIosHelp}>
-        <DialogContent className="rounded-2xl max-w-md">
+        <DialogContent className="rounded-lg max-w-md">
           <DialogHeader>
             <DialogTitle>Instalar no iPhone/iPad</DialogTitle>
             <DialogDescription>

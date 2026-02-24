@@ -98,8 +98,8 @@ export default function ImportPage() {
                     <div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl p-16 rounded-[3rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl relative overflow-hidden group">
 
                         {/* Decorative Background Glows */}
-                        <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-full blur-3xl -mr-16 -mt-16 group-hover:bg-blue-500/20 transition-all duration-1000" />
-                        <div className="absolute bottom-0 left-0 p-24 bg-emerald-500/10 rounded-full blur-3xl -ml-12 -mb-12" />
+                        <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-lg blur-3xl -mr-16 -mt-16 group-hover:bg-blue-500/20 transition-all duration-1000" />
+                        <div className="absolute bottom-0 left-0 p-24 bg-emerald-500/10 rounded-lg blur-3xl -ml-12 -mb-12" />
 
                         <div className="relative z-10 space-y-8">
                             <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl flex items-center justify-center text-white mx-auto shadow-2xl shadow-blue-500/30 transform group-hover:rotate-6 transition-transform duration-500">
@@ -117,12 +117,12 @@ export default function ImportPage() {
                             </p>
 
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                                <Button size="lg" className="bg-[#2b7de9] hover:bg-[#256bd1] rounded-2xl h-16 px-12 font-semibold uppercase tracking-tighter text-lg shadow-xl shadow-blue-500/20 w-full sm:w-auto" asChild>
+                                <Button size="lg" className="bg-[#2b7de9] hover:bg-[#256bd1] rounded-lg h-16 px-12 font-semibold uppercase tracking-tighter text-lg shadow-xl shadow-blue-500/20 w-full sm:w-auto" asChild>
                                     <Link href="/pricing" className="flex items-center gap-2">
                                         <Sparkles className="h-5 w-5" /> Fazer Upgrade Hoje
                                     </Link>
                                 </Button>
-                                <Button variant="ghost" className="rounded-2xl h-16 px-8 font-semibold text-slate-400 hover:text-slate-900 dark:hover:text-white dark:hover:bg-slate-800/50 w-full sm:w-auto" asChild>
+                                <Button variant="ghost" className="rounded-lg h-16 px-8 font-semibold text-slate-400 hover:text-slate-900 dark:hover:text-white dark:hover:bg-slate-800/50 w-full sm:w-auto" asChild>
                                     <Link href="/trades">Voltar para Trades</Link>
                                 </Button>
                             </div>
@@ -133,7 +133,7 @@ export default function ImportPage() {
                                     { icon: ShieldCheck, title: "100% Seguro", desc: "Seus dados criptografados" },
                                     { icon: Sparkles, title: "Insights Pro", desc: "Análise avançada após carga" }
                                 ].map((feature, i) => (
-                                    <div key={i} className="bg-slate-50/50 dark:bg-slate-950/30 p-4 rounded-2xl border border-slate-100 dark:border-slate-800/50">
+                                    <div key={i} className="bg-slate-50/50 dark:bg-slate-950/30 p-4 rounded-lg border border-slate-100 dark:border-slate-800/50">
                                         <feature.icon className="h-5 w-5 text-blue-500 mb-2" />
                                         <p className="text-xs font-semibold text-slate-900 dark:text-white uppercase mb-1">{feature.title}</p>
                                         <p className="text-[10px] text-slate-400 font-semibold uppercase">{feature.desc}</p>
@@ -154,7 +154,7 @@ export default function ImportPage() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <Button variant="ghost" size="icon" asChild className="rounded-2xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                        <Button variant="ghost" size="icon" asChild className="rounded-lg h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
                             <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
@@ -175,10 +175,10 @@ export default function ImportPage() {
                                 <div className="space-y-4">
                                     <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">1. Fonte de Dados</label>
                                     <Select value={selectedAdapter} onValueChange={onAdapterChange}>
-                                        <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm transition-all focus:ring-blue-500">
+                                        <SelectTrigger className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm transition-all focus:ring-blue-500">
                                             <SelectValue placeholder="Selecione o formato" />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                        <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
                                             {BROKER_ADAPTERS.map(adapter => (
                                                 <SelectItem key={adapter.id} value={adapter.id} className="font-semibold py-3">{adapter.name}</SelectItem>
                                             ))}
@@ -189,10 +189,10 @@ export default function ImportPage() {
                                 <div className="space-y-4">
                                     <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">2. Conta de Destino</label>
                                     <Select value={selectedAccount} onValueChange={setSelectedAccount}>
-                                        <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm transition-all focus:ring-blue-500">
+                                        <SelectTrigger className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm transition-all focus:ring-blue-500">
                                             <SelectValue placeholder="Escolha a conta" />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                        <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
                                             {accounts.map(acc => (
                                                 <SelectItem key={acc.id} value={acc.id} className="font-semibold py-3">{acc.name} ({acc.currency})</SelectItem>
                                             ))}
@@ -255,14 +255,14 @@ export default function ImportPage() {
                         <Card className="rounded-[2.5rem] border-none shadow-2xl bg-slate-900 dark:bg-slate-950 dark:border dark:border-slate-800/80 text-white h-[660px] flex flex-col overflow-hidden relative">
 
                             {/* Card Accent */}
-                            <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none" />
+                            <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-lg blur-3xl -mr-20 -mt-20 pointer-events-none" />
 
                             <div className="p-10 flex-1 flex flex-col relative z-10 space-y-8 h-full">
                                 <div className="flex items-center justify-between">
                                     <h2 className="text-xl font-heading font-semibold uppercase tracking-tight">Prévia dos Dados</h2>
                                     <div className="flex items-center gap-2">
                                         <div className={cn(
-                                            "w-2 h-2 rounded-full",
+                                            "w-2 h-2 rounded-lg",
                                             previewCount > 0 ? "bg-emerald-500 animate-pulse" : "bg-slate-700"
                                         )} />
                                         <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Live Validator</span>
@@ -277,7 +277,7 @@ export default function ImportPage() {
                                                 <p className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.2em] mb-1">Total Detectado</p>
                                                 <p className="text-4xl font-heading font-semibold tracking-tighter">{previewCount} trades</p>
                                             </div>
-                                            <div className="w-12 h-12 bg-emerald-500/20 rounded-2xl flex items-center justify-center">
+                                            <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
                                                 <Sparkles className="h-6 w-6 text-emerald-400" />
                                             </div>
                                         </div>
@@ -290,7 +290,7 @@ export default function ImportPage() {
 
                                             <div className="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
                                                 {previewTrades.slice(0, 5).map((t, i) => (
-                                                    <div key={i} className="bg-white/[0.03] border border-white/5 p-4 rounded-2xl flex justify-between items-center transition-all hover:bg-white/[0.06]">
+                                                    <div key={i} className="bg-white/[0.03] border border-white/5 p-4 rounded-lg flex justify-between items-center transition-all hover:bg-white/[0.06]">
                                                         <div className="flex items-center gap-4">
                                                             <div className={cn(
                                                                 "w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-[10px]",
@@ -317,7 +317,7 @@ export default function ImportPage() {
                                             </div>
                                         </div>
 
-                                        <div className="bg-blue-500/10 rounded-2xl p-4 border border-blue-500/20 flex items-start gap-3">
+                                        <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20 flex items-start gap-3">
                                             <AlertCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
                                             <p className="text-[10px] text-blue-400/80 font-semibold leading-relaxed uppercase tracking-wider">
                                                 Validação pronta. Ao processar, todos os trades serão vinculedos à conta <span className="text-blue-300 underline font-semibold">{accounts.find(a => a.id === selectedAccount)?.name || 'selecionada'}</span>.
@@ -326,7 +326,7 @@ export default function ImportPage() {
                                     </div>
                                 ) : (
                                     <div className="flex-1 flex flex-col items-center justify-center space-y-4 opacity-30">
-                                        <div className="w-20 h-20 rounded-full border-4 border-dashed border-slate-700 flex items-center justify-center">
+                                        <div className="w-20 h-20 rounded-lg border-4 border-dashed border-slate-700 flex items-center justify-center">
                                             <FileType className="h-8 w-8 text-slate-700" />
                                         </div>
                                         <p className="text-xs font-semibold text-slate-600 uppercase tracking-widest">Aguardando arquivo...</p>

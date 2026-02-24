@@ -87,7 +87,7 @@ export default function AnalyticsPage() {
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <Button variant="ghost" size="icon" asChild className="rounded-2xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                        <Button variant="ghost" size="icon" asChild className="rounded-lg h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
@@ -96,7 +96,7 @@ export default function AnalyticsPage() {
                         </div>
                     </div>
 
-                    <div className="flex items-center bg-white dark:bg-slate-900/50 p-1.5 rounded-2xl border border-slate-200 dark:border-slate-800/60 shadow-sm">
+                    <div className="flex items-center bg-white dark:bg-slate-900/50 p-1.5 rounded-lg border border-slate-200 dark:border-slate-800/60 shadow-sm">
                         <div className="flex items-center px-4 gap-3 border-r border-slate-200 dark:border-slate-700 mr-2">
                             <Wallet className="h-4 w-4 text-slate-400" />
                             <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 whitespace-nowrap hidden sm:inline">Conta Selecionada</span>
@@ -217,11 +217,11 @@ export default function AnalyticsPage() {
 
                         {/* R-Multiple Distribution (Large Chart) */}
                         <Card className="rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-xl bg-white dark:bg-slate-900/40 backdrop-blur-md overflow-hidden relative group">
-                            <div className="absolute top-0 right-0 p-32 bg-indigo-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-indigo-500/10 transition-all duration-1000" />
+                            <div className="absolute top-0 right-0 p-32 bg-indigo-500/5 rounded-lg blur-3xl -mr-16 -mt-16 pointer-events-none group-hover:bg-indigo-500/10 transition-all duration-1000" />
                             <CardHeader className="p-10 pb-4">
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-12 h-12 bg-purple-50 dark:bg-purple-500/10 rounded-2xl flex items-center justify-center">
+                                        <div className="w-12 h-12 bg-purple-50 dark:bg-purple-500/10 rounded-lg flex items-center justify-center">
                                             <BarChart3 className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                                         </div>
                                         <div>
@@ -281,7 +281,7 @@ export default function AnalyticsPage() {
                             <CardContent className="p-8 flex-1 overflow-y-auto space-y-4 custom-scrollbar">
                                 {symbolData.length === 0 ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center space-y-4 opacity-30 py-20">
-                                        <div className="w-16 h-16 rounded-full border-4 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center">
+                                        <div className="w-16 h-16 rounded-lg border-4 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center">
                                             <BarChart3 className="h-6 w-6" />
                                         </div>
                                         <p className="text-[10px] font-semibold uppercase tracking-widest text-slate-500">Dataset ausente</p>
@@ -315,7 +315,7 @@ export default function AnalyticsPage() {
                                 )}
                             </CardContent>
                             <div className="p-8 mt-auto border-t border-slate-100 dark:border-slate-800/50">
-                                <Button className="w-full rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white h-14 text-xs font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
+                                <Button className="w-full rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white h-14 text-xs font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
                                     Baixar Dataset em PDF
                                 </Button>
                             </div>

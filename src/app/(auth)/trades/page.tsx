@@ -450,7 +450,7 @@ export default function TradesPage() {
                             <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Diário de Trades</h1>
                         </div>
                     </div>
-                    <Button asChild className="rounded-full bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30 flex-shrink-0">
+                    <Button asChild className="rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-[10px] font-bold uppercase tracking-[0.2em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30 flex-shrink-0">
                         <Link href="/trades/new" className="flex items-center gap-2">
                             <Plus className="h-4 w-4" /> Novo Trade
                         </Link>
@@ -659,7 +659,7 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell>
                                             <span className={cn(
-                                                "text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider border",
+                                                "text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider border",
                                                 trade.direction === 'LONG'
                                                     ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
                                                     : "bg-red-500/10 text-red-600 border-red-500/20"
@@ -724,8 +724,8 @@ export default function TradesPage() {
                                                                 <TooltipTrigger asChild>
                                                                     <span className="inline-flex items-center gap-2 cursor-help">
                                                                         {`${livePnL >= 0 ? "+" : ""}${livePnL.toFixed(2)}`}
-                                                                        <span className="inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-600 uppercase">
-                                                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                                                        <span className="inline-flex items-center gap-1 rounded-lg bg-emerald-500/10 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-600 uppercase">
+                                                                            <span className="h-1.5 w-1.5 rounded-lg bg-emerald-500 animate-pulse" />
                                                                             Live
                                                                         </span>
                                                                     </span>
@@ -742,7 +742,7 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell className="text-center pr-6">
                                             <span className={cn(
-                                                "text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider",
+                                                "text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider",
                                                 trade.status === 'OPEN' ? "bg-blue-500/10 text-blue-500 border border-blue-500/20" :
                                                     trade.status === 'CLOSED' ? "bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700" :
                                                         "bg-orange-500/10 text-orange-500 border border-orange-500/20"
@@ -754,7 +754,7 @@ export default function TradesPage() {
                                             {(() => {
                                                 if (outlierThreshold <= 0) {
                                                     return (
-                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
                                                             Off
                                                         </span>
                                                     )
@@ -769,7 +769,7 @@ export default function TradesPage() {
                                                 const pct = getOutlierPercent(trade, referencePrice)
                                                 if (pct == null) {
                                                     return (
-                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
                                                             --
                                                         </span>
                                                     )
@@ -782,15 +782,15 @@ export default function TradesPage() {
                                                         <Tooltip>
                                                             <TooltipTrigger asChild>
                                                                 <span className={cn(
-                                                                    "text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider border cursor-help",
+                                                                    "text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider border cursor-help",
                                                                     isOutlier
                                                                         ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
                                                                         : "bg-blue-500/10 text-blue-500 border-blue-500/20"
                                                                 )}>
                                                                     {pct.toFixed(precision)}%
                                                                     {hasLive ? (
-                                                                        <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-emerald-500/10 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-600">
-                                                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                                                                        <span className="ml-1 inline-flex items-center gap-1 rounded-lg bg-emerald-500/10 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-600">
+                                                                            <span className="h-1.5 w-1.5 rounded-lg bg-emerald-500 animate-pulse" />
                                                                             Live
                                                                         </span>
                                                                     ) : null}
@@ -809,7 +809,7 @@ export default function TradesPage() {
                                                 (() => {
                                                     const r = getLiveRMultiple(trade)
                                                     if (r == null) return (
-                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
                                                             --
                                                         </span>
                                                     )
@@ -818,7 +818,7 @@ export default function TradesPage() {
                                                         <TooltipProvider>
                                                             <Tooltip>
                                                                 <TooltipTrigger asChild>
-                                                                    <span className="text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200 cursor-help">
+                                                                    <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200 cursor-help">
                                                                         {r.toFixed(2)}R
                                                                     </span>
                                                                 </TooltipTrigger>
@@ -845,7 +845,7 @@ export default function TradesPage() {
                                                 <TooltipProvider>
                                                     <Tooltip>
                                                         <TooltipTrigger asChild>
-                                                            <span className="text-[10px] font-semibold px-2 py-1 rounded-full uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200 cursor-help">
+                                                            <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200 cursor-help">
                                                                 {trade.r_multiple != null ? `${trade.r_multiple.toFixed(2)}R` : "--"}
                                                             </span>
                                                         </TooltipTrigger>
@@ -982,7 +982,7 @@ export default function TradesPage() {
                             </div>
                         </div>
                         {closingTrade ? (
-                            <div className="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-600">
+                            <div className="rounded-lg border border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-600">
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                     <div className="flex items-center justify-between">
                                         <span className="uppercase tracking-widest text-[10px] text-slate-400">PNL bruto</span>
@@ -1111,7 +1111,7 @@ export default function TradesPage() {
                             Esta ação não pode ser desfeita. O trade será removido permanentemente.
                         </DialogDescription>
                     </DialogHeader>
-                    <div className="rounded-2xl border border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-600">
+                    <div className="rounded-lg border border-slate-200/70 bg-slate-50/70 p-4 text-xs text-slate-600">
                         <div className="flex items-center justify-between">
                             <span className="uppercase tracking-widest text-[10px] text-slate-400">Ativo</span>
                             <span className="font-semibold text-slate-700">{deletingTrade?.symbol ?? "-"}</span>

@@ -287,7 +287,7 @@ export default function EditTradePage() {
                 {/* Header with Navigation & Actions */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <Button variant="ghost" size="icon" asChild className="rounded-2xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                        <Button variant="ghost" size="icon" asChild className="rounded-lg h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
@@ -327,7 +327,7 @@ export default function EditTradePage() {
                 </div>
 
                 <Dialog open={confirmShareOpen} onOpenChange={setConfirmShareOpen}>
-                    <DialogContent className="rounded-2xl max-w-md">
+                    <DialogContent className="rounded-lg max-w-md">
                         <DialogHeader>
                             <DialogTitle>Compartilhar trade</DialogTitle>
                             <DialogDescription>
@@ -399,13 +399,13 @@ export default function EditTradePage() {
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger className={cn(
-                                                        "h-14 rounded-2xl font-semibold text-sm transition-all",
+                                                        "h-14 rounded-lg font-semibold text-sm transition-all",
                                                         field.value === 'CLOSED' ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800'
                                                     )}>
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="rounded-2xl border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                                <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
                                                     <SelectItem value="OPEN" className="font-semibold py-3">EM ABERTO (RUNNING)</SelectItem>
                                                     <SelectItem value="CLOSED" className="font-semibold py-3 text-emerald-500">FECHADO (CLOSED)</SelectItem>
                                                     <SelectItem value="PENDING" className="font-semibold py-3 text-slate-400">PENDENTE (WAITING)</SelectItem>
@@ -425,7 +425,7 @@ export default function EditTradePage() {
                                         <FormItem className="space-y-3">
                                             <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo do Ativo</FormLabel>
                                             <FormControl>
-                                                <Input {...field} className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500" />
+                                                <Input {...field} className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -440,11 +440,11 @@ export default function EditTradePage() {
                                             <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</FormLabel>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm">
+                                                    <SelectTrigger className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm">
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="rounded-2xl bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+                                                <SelectContent className="rounded-lg bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
                                                     <SelectItem value="LONG" className="font-semibold py-3 text-emerald-500">COMPRA (LONG)</SelectItem>
                                                     <SelectItem value="SHORT" className="font-semibold py-3 text-red-500">VENDA (SHORT)</SelectItem>
                                                 </SelectContent>

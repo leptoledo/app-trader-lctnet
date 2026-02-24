@@ -99,7 +99,7 @@ export default function JournalPage() {
     if (loading) {
         return (
             <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#020617]">
-                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
         )
     }
@@ -111,7 +111,7 @@ export default function JournalPage() {
                 {/* Header Section */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-5">
-                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-2xl flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
                             <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
@@ -171,7 +171,7 @@ export default function JournalPage() {
                                             value={title}
                                             onChange={(e) => setTitle(e.target.value)}
                                             placeholder="Ex: Pós-Sessão NY: Controle Emocional"
-                                            className="h-14 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold focus:ring-blue-500"
+                                            className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold focus:ring-blue-500"
                                         />
                                     </div>
 
@@ -194,7 +194,7 @@ export default function JournalPage() {
                                                     value={tags}
                                                     onChange={(e) => setTags(e.target.value)}
                                                     placeholder="Separado por vírgula..."
-                                                    className="h-14 pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold focus:ring-blue-500 placeholder:font-medium"
+                                                    className="h-14 pl-12 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold focus:ring-blue-500 placeholder:font-medium"
                                                 />
                                             </div>
                                         </div>
@@ -207,7 +207,7 @@ export default function JournalPage() {
                                                     value={mood}
                                                     onChange={(e) => setMood(e.target.value)}
                                                     placeholder="Ex: Confiante, Neutro, Eufórico"
-                                                    className="h-14 pl-12 rounded-2xl border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold focus:ring-blue-500 placeholder:font-medium"
+                                                    className="h-14 pl-12 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 font-bold focus:ring-blue-500 placeholder:font-medium"
                                                 />
                                             </div>
                                         </div>
@@ -227,7 +227,7 @@ export default function JournalPage() {
                     {filteredEntries.length === 0 ? (
                         <Card className="rounded-[2.5rem] border border-dashed border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/20">
                             <CardContent className="p-20 text-center animate-in fade-in zoom-in-95 duration-700">
-                                <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-6">
+                                <div className="w-24 h-24 bg-slate-100 dark:bg-slate-800 rounded-lg flex items-center justify-center mx-auto mb-6">
                                     <MessageSquare className="h-10 w-10 text-slate-300 dark:text-slate-600" />
                                 </div>
                                 <h3 className="text-2xl font-heading font-black text-slate-900 dark:text-white mb-2 uppercase tracking-tight">
@@ -236,7 +236,7 @@ export default function JournalPage() {
                                 <p className="text-slate-500 dark:text-slate-400 font-medium mb-8 max-w-sm mx-auto">
                                     Comece a documentar sua jornada. O sucesso no trading é 90% mental.
                                 </p>
-                                <Button onClick={() => setIsCreating(true)} className="h-14 px-8 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-500/20">
+                                <Button onClick={() => setIsCreating(true)} className="h-14 px-8 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-lg shadow-blue-500/20">
                                     <Plus className="h-5 w-5 mr-2" />
                                     Escrever minha primeira lição
                                 </Button>
@@ -254,7 +254,7 @@ export default function JournalPage() {
                                         <div className="flex flex-col md:flex-row md:items-start justify-between gap-4">
                                             <div className="space-y-3">
                                                 <div className="flex items-center gap-3">
-                                                    <div className="px-3 py-1 bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full text-[10px] font-black uppercase tracking-widest border border-blue-200 dark:border-blue-500/20">
+                                                    <div className="px-3 py-1 bg-blue-100 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg text-[10px] font-black uppercase tracking-widest border border-blue-200 dark:border-blue-500/20">
                                                         #{entry.id.slice(0, 4)}
                                                     </div>
                                                     <div className="flex items-center gap-1.5 text-xs text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider">
@@ -272,7 +272,7 @@ export default function JournalPage() {
                                             </div>
 
                                             {entry.mood && (
-                                                <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 rounded-2xl text-xs font-black uppercase tracking-widest border border-slate-200 dark:border-slate-700/50">
+                                                <div className="flex items-center gap-2 px-4 py-2 bg-slate-100 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 rounded-lg text-xs font-black uppercase tracking-widest border border-slate-200 dark:border-slate-700/50">
                                                     {entry.mood.toLowerCase().includes('con') || entry.mood.toLowerCase().includes('pos') ? <Smile className="h-3.5 w-3.5 text-emerald-500" /> : entry.mood.toLowerCase().includes('fru') || entry.mood.toLowerCase().includes('neg') ? <Frown className="h-3.5 w-3.5 text-red-500" /> : <Meh className="h-3.5 w-3.5 text-blue-500" />}
                                                     {entry.mood}
                                                 </div>

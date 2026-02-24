@@ -190,7 +190,7 @@ export default function AuthPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-20" />
 
                 <div className="absolute bottom-0 left-0 p-12 z-30 max-w-xl">
-                    <div className="h-1 w-12 bg-blue-500 mb-6 rounded-full" />
+                    <div className="h-1 w-12 bg-blue-500 mb-6 rounded-lg" />
                     <blockquote className="space-y-2">
                         <p className="text-3xl font-heading font-medium text-white leading-relaxed">
                             "A disciplina é a ponte entre as metas e a realização. O TraderLCTNET me ajudou a cruzar essa ponte."
