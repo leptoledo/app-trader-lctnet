@@ -19,7 +19,8 @@ import {
     ChevronLeft,
     ChevronRight,
     Upload,
-    Wallet
+    Wallet,
+    MessageSquare
 } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
@@ -184,6 +185,17 @@ export function Sidebar({ user, mode = "desktop" }: SidebarProps) {
                         <Button
                             variant="ghost"
                             size="sm"
+                            className="w-full justify-start text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800"
+                            asChild
+                        >
+                            <a href="mailto:suporte@traderlct.net">
+                                <MessageSquare className="h-4 w-4 mr-2" />
+                                Feedback
+                            </a>
+                        </Button>
+                        <Button
+                            variant="ghost"
+                            size="sm"
                             className="w-full justify-start text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10"
                             onClick={handleLogout}
                         >
@@ -198,6 +210,11 @@ export function Sidebar({ user, mode = "desktop" }: SidebarProps) {
                             <Link href="/settings">
                                 <Settings className="h-5 w-5" />
                             </Link>
+                        </Button>
+                        <Button variant="ghost" size="icon" asChild className="opacity-70 hover:opacity-100">
+                            <a href="mailto:suporte@traderlct.net">
+                                <MessageSquare className="h-5 w-5" />
+                            </a>
                         </Button>
                         <Button variant="ghost" size="icon" onClick={handleLogout} className="text-red-500 opacity-70 hover:opacity-100">
                             <LogOut className="h-5 w-5" />
