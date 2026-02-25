@@ -55,8 +55,8 @@ export default function ImportPage() {
     }
 
     if (subLoading) return (
-        <div className="flex h-screen items-center justify-center bg-[#f7f9fc] dark:bg-[#0b1220]">
-            <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
+        <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#0b1220]">
+            <Loader2 className="h-8 w-8 animate-spin text-slate-900 dark:text-white" />
         </div>
     )
 
@@ -93,50 +93,45 @@ export default function ImportPage() {
 
     if (!canImport) {
         return (
-            <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
+            <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#0b1220] p-8 transition-colors duration-500">
                 <div className="max-w-3xl mx-auto w-full pt-12 text-center animate-in fade-in slide-in-from-bottom-8 duration-700">
-                    <div className="bg-white dark:bg-slate-900/40 backdrop-blur-xl p-16 rounded-[3rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl relative overflow-hidden group">
-
-                        {/* Decorative Background Glows */}
-                        <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-lg blur-3xl -mr-16 -mt-16 group-hover:bg-blue-500/20 transition-all duration-1000" />
-                        <div className="absolute bottom-0 left-0 p-24 bg-emerald-500/10 rounded-lg blur-3xl -ml-12 -mb-12" />
+                    <div className="bg-white dark:bg-[#0b1220] p-12 md:p-16 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden group">
 
                         <div className="relative z-10 space-y-8">
-                            <div className="w-24 h-24 bg-gradient-to-br from-blue-600 to-indigo-700 rounded-3xl flex items-center justify-center text-white mx-auto shadow-2xl shadow-blue-500/30 transform group-hover:rotate-6 transition-transform duration-500">
-                                <Zap className="h-12 w-12 text-white fill-white/20" />
+                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-900 rounded-md flex items-center justify-center text-slate-400 mx-auto">
+                                <Zap className="h-8 w-8 text-slate-400" />
                             </div>
 
                             <div className="space-y-3">
-                                <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.4em]">Recurso Exclusivo</p>
-                                <h1 className="text-4xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Importação em Massa</h1>
+                                <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Importação em Massa</h1>
                             </div>
 
-                            <p className="text-slate-500 dark:text-slate-400 font-semibold text-lg max-w-lg mx-auto leading-relaxed">
+                            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto leading-relaxed">
                                 A sincronização automática via CSV é o segredo dos traders de alta performance.
-                                <span className="block mt-2 text-blue-500 dark:text-blue-400 font-semibold">Funcionalidade exclusiva do plano PRO.</span>
+                                <span className="block mt-1 text-slate-700 dark:text-slate-300">Funcionalidade exclusiva do plano PRO.</span>
                             </p>
 
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                                <Button size="lg" className="bg-[#2b7de9] hover:bg-[#256bd1] rounded-lg h-16 px-12 font-semibold uppercase tracking-tighter text-lg shadow-xl shadow-blue-500/20 w-full sm:w-auto" asChild>
+                                <Button className="bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 rounded-md h-10 px-8 font-medium text-sm shadow-sm w-full sm:w-auto transition-colors" asChild>
                                     <Link href="/pricing" className="flex items-center gap-2">
-                                        <Sparkles className="h-5 w-5" /> Fazer Upgrade Hoje
+                                        <Sparkles className="h-4 w-4" /> Fazer Upgrade Hoje
                                     </Link>
                                 </Button>
-                                <Button variant="ghost" className="rounded-lg h-16 px-8 font-semibold text-slate-400 hover:text-slate-900 dark:hover:text-white dark:hover:bg-slate-800/50 w-full sm:w-auto" asChild>
+                                <Button variant="outline" className="rounded-md h-10 px-8 font-medium text-sm border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors w-full sm:w-auto" asChild>
                                     <Link href="/trades">Voltar para Trades</Link>
                                 </Button>
                             </div>
 
-                            <div className="pt-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-left">
+                            <div className="pt-8 grid grid-cols-1 md:grid-cols-3 gap-4 text-left">
                                 {[
                                     { icon: Zap, title: "Zero Esforço", desc: "Arraste e solte seu extrato" },
-                                    { icon: ShieldCheck, title: "100% Seguro", desc: "Seus dados criptografados" },
-                                    { icon: Sparkles, title: "Insights Pro", desc: "Análise avançada após carga" }
+                                    { icon: ShieldCheck, title: "100% Seguro", desc: "Seus dados protegidos" },
+                                    { icon: Sparkles, title: "Insights", desc: "Análise avançada" }
                                 ].map((feature, i) => (
-                                    <div key={i} className="bg-slate-50/50 dark:bg-slate-950/30 p-4 rounded-lg border border-slate-100 dark:border-slate-800/50">
-                                        <feature.icon className="h-5 w-5 text-blue-500 mb-2" />
-                                        <p className="text-xs font-semibold text-slate-900 dark:text-white uppercase mb-1">{feature.title}</p>
-                                        <p className="text-[10px] text-slate-400 font-semibold uppercase">{feature.desc}</p>
+                                    <div key={i} className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-md border border-slate-200 dark:border-slate-800 transition-colors hover:border-slate-300 dark:hover:border-slate-700">
+                                        <feature.icon className="h-5 w-5 text-slate-400 mb-3" />
+                                        <p className="text-sm font-medium text-slate-900 dark:text-white mb-1">{feature.title}</p>
+                                        <p className="text-xs text-slate-500">{feature.desc}</p>
                                     </div>
                                 ))}
                             </div>
@@ -148,18 +143,17 @@ export default function ImportPage() {
     }
 
     return (
-        <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
-            <div className="mx-auto grid w-full max-w-7xl gap-8">
+        <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#0b1220] p-8 transition-colors duration-500">
+            <div className="mx-auto grid w-full max-w-6xl gap-8">
 
                 {/* Header */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="flex items-center gap-5">
-                        <Button variant="ghost" size="icon" asChild className="rounded-lg h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
-                            <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
+                    <div className="flex items-center gap-4">
+                        <Button variant="ghost" size="icon" asChild className="rounded-md h-10 w-10 bg-white dark:bg-[#0b1220] shadow-sm border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
+                            <Link href="/trades"><ArrowLeft className="h-4 w-4 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Automação</p>
-                            <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Sync Histórico</h1>
+                            <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Sync Histórico</h1>
                         </div>
                     </div>
                 </div>
@@ -167,34 +161,34 @@ export default function ImportPage() {
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
                     {/* Input Controls */}
-                    <div className="lg:col-span-7 space-y-8 animate-in fade-in slide-in-from-left-8 duration-700 delay-75">
+                    <div className="lg:col-span-7 space-y-6 animate-in fade-in slide-in-from-left-8 duration-700 delay-75">
 
-                        <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-xl space-y-10">
+                        <div className="bg-white dark:bg-[#0b1220] p-8 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm space-y-8">
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">1. Fonte de Dados</label>
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div className="space-y-2">
+                                    <label className="text-xs font-medium text-slate-500 uppercase tracking-widest">1. Fonte de Dados</label>
                                     <Select value={selectedAdapter} onValueChange={onAdapterChange}>
-                                        <SelectTrigger className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm transition-all focus:ring-blue-500">
+                                        <SelectTrigger className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-medium text-sm transition-colors focus:ring-slate-900 dark:focus:ring-white">
                                             <SelectValue placeholder="Selecione o formato" />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                        <SelectContent className="rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] shadow-sm">
                                             {BROKER_ADAPTERS.map(adapter => (
-                                                <SelectItem key={adapter.id} value={adapter.id} className="font-semibold py-3">{adapter.name}</SelectItem>
+                                                <SelectItem key={adapter.id} value={adapter.id} className="font-medium py-2 text-sm">{adapter.name}</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
                                 </div>
 
-                                <div className="space-y-4">
-                                    <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">2. Conta de Destino</label>
+                                <div className="space-y-2">
+                                    <label className="text-xs font-medium text-slate-500 uppercase tracking-widest">2. Conta de Destino</label>
                                     <Select value={selectedAccount} onValueChange={setSelectedAccount}>
-                                        <SelectTrigger className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm transition-all focus:ring-blue-500">
+                                        <SelectTrigger className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-medium text-sm transition-colors focus:ring-slate-900 dark:focus:ring-white">
                                             <SelectValue placeholder="Escolha a conta" />
                                         </SelectTrigger>
-                                        <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                        <SelectContent className="rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] shadow-sm">
                                             {accounts.map(acc => (
-                                                <SelectItem key={acc.id} value={acc.id} className="font-semibold py-3">{acc.name} ({acc.currency})</SelectItem>
+                                                <SelectItem key={acc.id} value={acc.id} className="font-medium py-2 text-sm">{acc.name} ({acc.currency})</SelectItem>
                                             ))}
                                         </SelectContent>
                                     </Select>
@@ -206,26 +200,26 @@ export default function ImportPage() {
                                 <label
                                     htmlFor="csv-upload"
                                     className={cn(
-                                        "flex flex-col items-center justify-center h-64 border-2 border-dashed rounded-[2.5rem] transition-all cursor-pointer",
+                                        "flex flex-col items-center justify-center h-48 border-2 border-dashed rounded-md transition-colors cursor-pointer",
                                         file
-                                            ? "border-emerald-500 bg-emerald-500/5 group-hover:bg-emerald-500/10"
-                                            : "border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/30 group-hover:border-blue-500/50 group-hover:bg-blue-500/[0.03]"
+                                            ? "border-emerald-500 bg-emerald-50 dark:bg-emerald-500/10"
+                                            : "border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/30 hover:border-slate-300 dark:hover:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-900/50"
                                     )}
                                 >
-                                    <div className="space-y-4 text-center p-8">
+                                    <div className="space-y-3 text-center p-6">
                                         <div className={cn(
-                                            "w-20 h-20 rounded-3xl flex items-center justify-center mx-auto shadow-sm transition-all duration-500",
-                                            file ? "bg-emerald-500 rotate-0 scale-110" : "bg-white dark:bg-slate-800 rotate-3 group-hover:rotate-0 scale-100"
+                                            "w-12 h-12 rounded-md flex items-center justify-center mx-auto transition-colors",
+                                            file ? "bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400" : "bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 text-slate-400 shadow-sm"
                                         )}>
                                             {file ? (
-                                                <CheckCircle2 className="h-10 w-10 text-white" />
+                                                <CheckCircle2 className="h-6 w-6" />
                                             ) : (
-                                                <FileSpreadsheet className="h-10 w-10 text-slate-400 dark:text-slate-500 group-hover:text-blue-500" />
+                                                <FileSpreadsheet className="h-6 w-6" />
                                             )}
                                         </div>
                                         <div className="space-y-1">
-                                            <p className="font-semibold text-lg text-slate-900 dark:text-white uppercase tracking-tight">Arraste seu arquivo CSV</p>
-                                            <p className="text-xs text-slate-400 dark:text-slate-500 font-semibold uppercase tracking-widest">
+                                            <p className="font-medium text-sm text-slate-900 dark:text-white">Arraste seu arquivo CSV</p>
+                                            <p className="text-xs text-slate-500">
                                                 {file ? `Arquivo "${file.name}" pronto` : "Ou clique para selecionar manualmente"}
                                             </p>
                                         </div>
@@ -240,9 +234,9 @@ export default function ImportPage() {
                                 </label>
 
                                 {file && (
-                                    <div className="absolute top-4 right-4 animate-in fade-in zoom-in-50 duration-300">
-                                        <Button variant="ghost" size="sm" onClick={() => { setFile(null); setPreviewCount(0); setPreviewTrades([]); }} className="h-10 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-red-500 font-semibold text-xs hover:bg-red-50">
-                                            REMOVER
+                                    <div className="absolute top-2 right-2 animate-in fade-in duration-300">
+                                        <Button variant="ghost" size="sm" onClick={() => { setFile(null); setPreviewCount(0); setPreviewTrades([]); }} className="h-8 rounded-md text-red-500 font-medium text-xs hover:bg-red-50 dark:hover:bg-red-500/10">
+                                            Remover
                                         </Button>
                                     </div>
                                 )}
@@ -252,98 +246,95 @@ export default function ImportPage() {
 
                     {/* Preview Section */}
                     <div className="lg:col-span-5 animate-in fade-in slide-in-from-right-8 duration-700 delay-150">
-                        <Card className="rounded-[2.5rem] border-none shadow-2xl bg-slate-900 dark:bg-slate-950 dark:border dark:border-slate-800/80 text-white h-[660px] flex flex-col overflow-hidden relative">
+                        <Card className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-slate-50 dark:bg-[#0b1220] h-[550px] flex flex-col overflow-hidden relative">
 
-                            {/* Card Accent */}
-                            <div className="absolute top-0 right-0 p-32 bg-blue-500/10 rounded-lg blur-3xl -mr-20 -mt-20 pointer-events-none" />
-
-                            <div className="p-10 flex-1 flex flex-col relative z-10 space-y-8 h-full">
+                            <div className="p-6 flex-1 flex flex-col relative z-10 space-y-6 h-full">
                                 <div className="flex items-center justify-between">
-                                    <h2 className="text-xl font-heading font-semibold uppercase tracking-tight">Prévia dos Dados</h2>
-                                    <div className="flex items-center gap-2">
+                                    <h2 className="text-lg font-medium tracking-tight text-slate-900 dark:text-white">Prévia dos Dados</h2>
+                                    <div className="flex items-center gap-1.5">
                                         <div className={cn(
-                                            "w-2 h-2 rounded-lg",
-                                            previewCount > 0 ? "bg-emerald-500 animate-pulse" : "bg-slate-700"
+                                            "w-2 h-2 rounded-full",
+                                            previewCount > 0 ? "bg-emerald-500" : "bg-slate-300 dark:bg-slate-700"
                                         )} />
-                                        <span className="text-[10px] font-semibold text-slate-500 uppercase tracking-widest">Live Validator</span>
+                                        <span className="text-xs font-medium text-slate-500">Live Validator</span>
                                     </div>
                                 </div>
 
                                 {previewCount > 0 ? (
-                                    <div className="flex-1 flex flex-col min-h-0 space-y-8">
+                                    <div className="flex-1 flex flex-col min-h-0 space-y-6">
 
-                                        <div className="bg-white/5 backdrop-blur-md p-6 rounded-[2rem] border border-white/10 flex items-center justify-between">
+                                        <div className="bg-white dark:bg-[#0b1220] p-4 rounded-md border border-slate-200 dark:border-slate-800 flex items-center justify-between shadow-sm">
                                             <div>
-                                                <p className="text-[10px] font-semibold text-blue-400 uppercase tracking-[0.2em] mb-1">Total Detectado</p>
-                                                <p className="text-4xl font-heading font-semibold tracking-tighter">{previewCount} trades</p>
+                                                <p className="text-xs font-medium text-slate-500 uppercase tracking-widest mb-0.5">Total Detectado</p>
+                                                <p className="text-2xl font-medium tracking-tight text-slate-900 dark:text-white">{previewCount} trades</p>
                                             </div>
-                                            <div className="w-12 h-12 bg-emerald-500/20 rounded-lg flex items-center justify-center">
-                                                <Sparkles className="h-6 w-6 text-emerald-400" />
+                                            <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 rounded-md flex items-center justify-center">
+                                                <Sparkles className="h-5 w-5 text-emerald-500" />
                                             </div>
                                         </div>
 
-                                        <div className="space-y-4 flex-1 flex flex-col min-h-0">
-                                            <div className="flex items-center justify-between px-2">
-                                                <p className="text-[10px] font-semibold text-slate-500 uppercase tracking-[0.2em]">Últimas Entradas</p>
-                                                <p className="text-[10px] font-semibold text-slate-600">Mostrando top 5</p>
+                                        <div className="space-y-3 flex-1 flex flex-col min-h-0">
+                                            <div className="flex items-center justify-between">
+                                                <p className="text-xs font-medium text-slate-500 uppercase tracking-widest">Últimas Entradas</p>
+                                                <p className="text-xs font-medium text-slate-400">Top 5</p>
                                             </div>
 
-                                            <div className="flex-1 overflow-y-auto pr-2 space-y-3 custom-scrollbar">
+                                            <div className="flex-1 overflow-y-auto pr-1 space-y-2 custom-scrollbar">
                                                 {previewTrades.slice(0, 5).map((t, i) => (
-                                                    <div key={i} className="bg-white/[0.03] border border-white/5 p-4 rounded-lg flex justify-between items-center transition-all hover:bg-white/[0.06]">
-                                                        <div className="flex items-center gap-4">
+                                                    <div key={i} className="bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 p-3 rounded-md flex justify-between items-center">
+                                                        <div className="flex items-center gap-3">
                                                             <div className={cn(
-                                                                "w-10 h-10 rounded-xl flex items-center justify-center font-semibold text-[10px]",
-                                                                t.direction === 'LONG' ? "bg-emerald-500/10 text-emerald-400" : "bg-red-500/10 text-red-500"
+                                                                "w-8 h-8 rounded-md flex items-center justify-center font-medium text-[10px]",
+                                                                t.direction === 'LONG' ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400" : "bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400"
                                                             )}>
                                                                 {t.direction === 'LONG' ? 'BUY' : 'SELL'}
                                                             </div>
                                                             <div>
-                                                                <p className="font-semibold text-sm text-white tracking-tight">{t.symbol}</p>
-                                                                <p className="text-[10px] text-slate-500 font-semibold uppercase">{new Date(t.entry_date).toLocaleDateString()}</p>
+                                                                <p className="font-medium text-sm text-slate-900 dark:text-white tracking-tight">{t.symbol}</p>
+                                                                <p className="text-xs text-slate-500">{new Date(t.entry_date).toLocaleDateString()}</p>
                                                             </div>
                                                         </div>
                                                         <div className="text-right">
-                                                            <p className="text-white font-semibold text-sm tracking-tight">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(t.pnl_net || 0)}</p>
-                                                            <p className="text-[10px] text-slate-500 font-semibold font-mono">@{t.entry_price}</p>
+                                                            <p className="text-slate-900 dark:text-white font-medium text-sm tracking-tight">{new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(t.pnl_net || 0)}</p>
+                                                            <p className="text-[10px] text-slate-500 font-mono font-medium">@{t.entry_price}</p>
                                                         </div>
                                                     </div>
                                                 ))}
                                                 {previewCount > 5 && (
-                                                    <div className="py-4 text-center">
-                                                        <p className="text-[10px] text-slate-500 font-semibold uppercase tracking-widest">+ {previewCount - 5} outros registros...</p>
+                                                    <div className="py-2 text-center">
+                                                        <p className="text-xs text-slate-500 font-medium">+ {previewCount - 5} outros registros...</p>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
 
-                                        <div className="bg-blue-500/10 rounded-lg p-4 border border-blue-500/20 flex items-start gap-3">
-                                            <AlertCircle className="h-4 w-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                                            <p className="text-[10px] text-blue-400/80 font-semibold leading-relaxed uppercase tracking-wider">
-                                                Validação pronta. Ao processar, todos os trades serão vinculedos à conta <span className="text-blue-300 underline font-semibold">{accounts.find(a => a.id === selectedAccount)?.name || 'selecionada'}</span>.
+                                        <div className="bg-blue-50 dark:bg-blue-900/10 rounded-md p-3 border border-blue-100 dark:border-blue-800/30 flex items-start gap-2">
+                                            <AlertCircle className="h-4 w-4 text-blue-500 mt-0.5 flex-shrink-0" />
+                                            <p className="text-xs text-blue-700 dark:text-blue-300/80 leading-relaxed">
+                                                Validação pronta. Ao processar, todos os trades serão vinculados à conta <span className="font-medium underline">{accounts.find(a => a.id === selectedAccount)?.name || 'selecionada'}</span>.
                                             </p>
                                         </div>
                                     </div>
                                 ) : (
-                                    <div className="flex-1 flex flex-col items-center justify-center space-y-4 opacity-30">
-                                        <div className="w-20 h-20 rounded-lg border-4 border-dashed border-slate-700 flex items-center justify-center">
-                                            <FileType className="h-8 w-8 text-slate-700" />
+                                    <div className="flex-1 flex flex-col items-center justify-center space-y-3 opacity-50">
+                                        <div className="w-16 h-16 rounded-md border-2 border-dashed border-slate-300 dark:border-slate-700 flex items-center justify-center bg-white dark:bg-[#0b1220]">
+                                            <FileType className="h-6 w-6 text-slate-400 dark:text-slate-500" />
                                         </div>
-                                        <p className="text-xs font-semibold text-slate-600 uppercase tracking-widest">Aguardando arquivo...</p>
+                                        <p className="text-xs font-medium text-slate-500">Aguardando arquivo...</p>
                                     </div>
                                 )}
 
                                 <Button
-                                    className="w-full h-20 rounded-[2rem] bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-lg shadow-2xl shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 disabled:opacity-50 disabled:translate-y-0"
+                                    className="w-full h-10 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
                                     disabled={!file || !selectedAccount || importing}
                                     onClick={handleImport}
                                 >
                                     {importing ? (
                                         <>
-                                            <Loader2 className="h-6 w-6 animate-spin mr-3" /> IMPORTANDO...
+                                            <Loader2 className="h-4 w-4 animate-spin mr-2" /> Importando...
                                         </>
                                     ) : (
-                                        "INICIAR IMPORTAÇÃO"
+                                        "Iniciar Importação"
                                     )}
                                 </Button>
                             </div>

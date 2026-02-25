@@ -17,18 +17,18 @@ export function DateRangeFilter({ value, onChange, customFrom, customTo, onCusto
     return (
         <div className="flex items-center gap-2">
             <Select value={value} onValueChange={onChange}>
-            <SelectTrigger className="w-[180px] rounded-xl h-10 font-bold border-gray-200 bg-white">
-                <SelectValue placeholder="Período" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl border-gray-200 shadow-xl">
-                    <SelectItem value="today" className="font-medium">Hoje</SelectItem>
-                    <SelectItem value="week" className="font-medium">Esta Semana</SelectItem>
-                    <SelectItem value="7d" className="font-medium">Últimos 7 dias</SelectItem>
-                    <SelectItem value="30d" className="font-medium">Últimos 30 dias</SelectItem>
-                    <SelectItem value="90d" className="font-medium">Últimos 90 dias</SelectItem>
-                    <SelectItem value="ytd" className="font-medium">Este ano</SelectItem>
-                    <SelectItem value="all" className="font-medium">Todo período</SelectItem>
-                    <SelectItem value="custom" className="font-medium border-t mt-1 pt-2">Personalizado...</SelectItem>
+                <SelectTrigger className="w-[180px] rounded-md h-9 border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-sm text-sm font-medium transition-colors">
+                    <SelectValue placeholder="Período" />
+                </SelectTrigger>
+                <SelectContent className="rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-lg">
+                    <SelectItem value="today" className="text-sm cursor-pointer py-2">Hoje</SelectItem>
+                    <SelectItem value="week" className="text-sm cursor-pointer py-2">Esta Semana</SelectItem>
+                    <SelectItem value="7d" className="text-sm cursor-pointer py-2">Últimos 7 dias</SelectItem>
+                    <SelectItem value="30d" className="text-sm cursor-pointer py-2">Últimos 30 dias</SelectItem>
+                    <SelectItem value="90d" className="text-sm cursor-pointer py-2">Últimos 90 dias</SelectItem>
+                    <SelectItem value="ytd" className="text-sm cursor-pointer py-2">Este ano</SelectItem>
+                    <SelectItem value="all" className="text-sm cursor-pointer py-2">Todo período</SelectItem>
+                    <SelectItem value="custom" className="text-sm cursor-pointer py-2 border-t border-slate-100 dark:border-slate-800 mt-1 pt-2">Personalizado...</SelectItem>
                 </SelectContent>
             </Select>
 
@@ -38,14 +38,14 @@ export function DateRangeFilter({ value, onChange, customFrom, customTo, onCusto
                         type="date"
                         value={customFrom}
                         onChange={(e) => onCustomChange(e.target.value, customTo || "")}
-                        className="h-10 w-[140px] rounded-xl font-bold border-gray-200"
+                        className="h-9 w-[140px] rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-sm text-sm"
                     />
-                    <span className="text-gray-400 font-bold">à</span>
+                    <span className="text-slate-400 dark:text-slate-500 font-medium text-sm">à</span>
                     <Input
                         type="date"
                         value={customTo}
                         onChange={(e) => onCustomChange(customFrom || "", e.target.value)}
-                        className="h-10 w-[140px] rounded-xl font-bold border-gray-200"
+                        className="h-9 w-[140px] rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 shadow-sm text-sm"
                     />
                 </div>
             )}

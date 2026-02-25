@@ -55,7 +55,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 }}
             />
             <div className="flex flex-1 overflow-hidden">
-                <div className="hidden md:flex">
+                <div className="hidden md:flex w-[60px] shrink-0 relative z-50">
                     <Sidebar />
                 </div>
 

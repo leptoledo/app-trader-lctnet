@@ -10,7 +10,6 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { PwaInstallButton } from "@/components/pwa-install-button"
 import {
   TrendingUp,
-  ChevronRight,
   FileText,
   Calendar,
   Eye,
@@ -20,496 +19,487 @@ import {
   LineChart,
   Facebook,
   Instagram,
-  Twitter
+  Twitter,
+  Github,
+  Youtube,
+  ChevronRight,
+  Database,
+  Lock,
+  Globe,
+  Cpu,
+  BrainCircuit,
+  PieChart,
+  BarChart,
+  Triangle,
+  Activity,
+  Code,
+  MessageSquare
 } from "lucide-react"
-
 
 export default function LandingPage() {
   const { scrollYProgress } = useScroll()
   const heroRef = useRef<HTMLElement>(null)
 
-  // Parallax for dashboard
-  const y = useTransform(scrollYProgress, [0, 0.5], [0, -50])
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.8])
-
   return (
-    <div className="min-h-screen bg-[#f8fafc] dark:bg-[#020617] text-slate-900 dark:text-slate-100 font-sans selection:bg-blue-100 selection:text-blue-900 overflow-x-hidden transition-colors duration-500">
+    <div className="min-h-screen bg-white dark:bg-[#0b1220] text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden transition-colors duration-500">
 
       <ScrollToTop />
 
       {/* --- HEADER --- */}
-      <motion.header
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ type: "spring", stiffness: 100, damping: 20 }}
-        className="fixed top-0 left-0 right-0 z-50 bg-white/90 dark:bg-[#0b1220]/80 backdrop-blur-xl border-b border-slate-200/70 dark:border-slate-800/60 shadow-sm"
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0b1220]/80 backdrop-blur-md border-b border-slate-200/50 dark:border-slate-800/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-20">
-            <div className="flex items-center gap-2.5 transition-transform hover:scale-105 duration-300 cursor-pointer">
-              <div className="bg-gradient-to-br from-blue-600 to-blue-700 p-2 rounded-xl shadow-lg shadow-blue-500/20">
-                <TrendingUp className="h-5 w-5 text-white" />
+          <div className="flex justify-between items-center h-16">
+            <div className="flex items-center gap-2">
+              <div className="bg-emerald-500 p-1.5 rounded-md">
+                <TrendingUp className="h-4 w-4 text-white" />
               </div>
-              <span className="text-xl font-heading font-semibold tracking-tight text-slate-800 dark:text-white">
-                Trader<span className="text-blue-500">LCTNET</span>
+              <span className="text-lg font-semibold tracking-tight text-slate-900 dark:text-white">
+                Trader Journal
               </span>
             </div>
 
-            <nav className="hidden md:flex items-center gap-10">
-              {["Recursos", "Analytics", "Blog"].map((item) => (
-                <Link key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
+            <nav className="hidden md:flex items-center gap-8">
+              {["Recursos", "Analytics", "Comunidade", "Preços", "Blog"].map((item) => (
+                <Link key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">
                   {item}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
                 </Link>
               ))}
-              <Link href="/pricing" className="text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors relative group">
-                Preços
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-blue-600 transition-all group-hover:w-full" />
-              </Link>
             </nav>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               <ModeToggle />
-              <Link href="/login" className="hidden sm:block text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors">Login</Link>
-              <div className="hidden md:block">
+              <Button asChild variant="ghost" className="px-2 sm:px-4 text-sm font-medium hover:text-emerald-500">
+                <Link href="/login">Login</Link>
+              </Button>
+              <div className="block">
                 <PwaInstallButton />
               </div>
-              <Button asChild className="rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white px-7 h-11 text-sm font-semibold shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-0.5 active:scale-95 border border-transparent dark:border-blue-500/30">
-                <Link href="/login">Começar Grátis</Link>
-              </Button>
             </div>
           </div>
         </div>
-      </motion.header>
-
-
+      </header>
 
       <main>
+        {/* --- HERO --- */}
+        <section ref={heroRef} className="pt-32 pb-20 lg:pt-48 lg:pb-32 flex flex-col items-center text-center px-4">
+          <motion.h1
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white max-w-4xl leading-[1.1]"
+          >
+            Opere com disciplina<br />
+            <span className="text-emerald-500">Lucros reais a longo prazo</span>
+          </motion.h1>
 
-        {/* HERO */}
-        <section ref={heroRef} className="relative pt-28 pb-20 lg:pt-36 lg:pb-28 bg-[#f7f9fc] dark:bg-[#0b1220]">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_10%,rgba(59,130,246,0.06),transparent_45%),radial-gradient(circle_at_70%_20%,rgba(14,165,233,0.06),transparent_45%)] pointer-events-none" />
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-            <div className="grid lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-6 space-y-8">
-                <div className="inline-flex items-center gap-2.5 px-4 py-1.5 bg-white/80 dark:bg-slate-900/60 text-slate-700 dark:text-slate-200 rounded-lg border border-slate-200/70 dark:border-slate-800 text-[11px] font-bold uppercase tracking-widest shadow-sm">
-                  Plataforma de journaling profissional
-                </div>
+          <motion.p
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="mt-6 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl font-medium leading-relaxed"
+          >
+            A plataforma de desenvolvimento para traders profissionais. Registre entradas, crie regras de compliance e alcance a consistência com análises avançadas do seu histórico operacional.
+          </motion.p>
 
-                <motion.h1
-                  initial={{ opacity: 0, y: 24 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-bold tracking-tighter text-slate-900 dark:text-white leading-[1.05]"
-                >
-                  Seu diário de trade com <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-500 dark:from-blue-400 dark:to-indigo-400">clareza</span>,
-                  <br className="hidden lg:block" /> disciplina e resultados.
-                </motion.h1>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="flex flex-col sm:flex-row items-center gap-3 mt-10"
+          >
+            <Button asChild className="w-full sm:w-auto rounded-md bg-emerald-500 hover:bg-emerald-600 text-white px-6 h-10 text-sm font-medium shadow-none transition-colors">
+              <Link href="/login">Criar conta gratuita</Link>
+            </Button>
+            <Button asChild variant="outline" className="w-full sm:w-auto rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 px-6 h-10 text-sm font-medium shadow-none transition-colors">
+              <Link href="/dashboard">Ver Demonstração</Link>
+            </Button>
+          </motion.div>
 
-                <motion.p
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-xl font-medium leading-relaxed"
-                >
-                  Registre suas operações, descubra padrões de comportamento e evolua com relatórios acionáveis. Uma plataforma premium feita para traders sérios.
-                </motion.p>
-
-                <motion.div
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: 0.3 }}
-                  className="flex flex-col sm:flex-row items-center gap-4 pt-4"
-                >
-                  <Button asChild className="w-full sm:w-auto rounded-lg bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-8 h-14 text-sm uppercase tracking-widest font-bold shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all hover:-translate-y-1 active:scale-95 group">
-                    <Link href="/login" className="flex items-center justify-center gap-2">
-                      Criar Conta Gratuita
-                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                    </Link>
-                  </Button>
-                  <Button variant="outline" className="w-full sm:w-auto rounded-lg border-slate-200 dark:border-slate-800 px-8 h-14 text-sm uppercase tracking-widest font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all hover:-translate-y-1 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
-                    Ver Live Demo
-                  </Button>
-                </motion.div>
-
-                <div className="grid sm:grid-cols-2 gap-x-4 gap-y-6 pt-8 border-t border-slate-200/50 dark:border-slate-800/50">
-                  {heroPoints.map((point, i) => (
-                    <div key={i} className="flex items-start gap-4">
-                      <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-lg bg-blue-50 dark:bg-blue-900/20">
-                        <div className="h-2 w-2 rounded-lg bg-blue-600 dark:bg-blue-400" />
-                      </div>
-                      <div>
-                        <p className="text-sm font-bold tracking-tight text-slate-900 dark:text-white uppercase">{point.title}</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mt-0.5">{point.desc}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="lg:col-span-6">
-                <motion.div
-                  style={{ y, opacity }}
-                  animate={{ y: [0, -15, 0] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="relative drop-shadow-2xl"
-                >
-                  <div className="absolute -inset-10 bg-gradient-to-br from-indigo-500/20 via-purple-500/10 to-blue-500/20 rounded-[3rem] blur-3xl opacity-50 dark:opacity-80 mix-blend-screen" />
-                  <div className="relative rounded-[2rem] border border-white/20 dark:border-slate-700/50 shadow-2xl overflow-hidden bg-slate-900/5 backdrop-blur-3xl transform perspective-[1000px] rotate-y-[-5deg] rotate-x-[5deg]">
-                    <div className="aspect-[4/3] relative">
-                      <Image
-                        src="/hero-dashboard.png"
-                        alt="TraderLCTNET Professional Dashboard"
-                        fill
-                        className="object-cover"
-                        priority
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
-                    </div>
-                  </div>
-                </motion.div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* TRUST */}
-        <section className="py-14 border-y border-slate-100 dark:border-slate-800 bg-[#f7f9fc] dark:bg-[#0b1220]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-4">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Confiado por profissionais</p>
-                <h3 className="text-2xl md:text-3xl font-heading font-bold text-slate-900 dark:text-white mt-3">Infra que aguenta sua rotina de alta frequência.</h3>
-                <div className="mt-6 flex gap-4">
-                  <div className="px-4 py-3 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-sm font-semibold text-slate-500">
-                    <span className="text-slate-900 dark:text-white">99.9%</span> uptime
-                  </div>
-                  <div className="px-4 py-3 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 text-sm font-semibold text-slate-500">
-                    <span className="text-slate-900 dark:text-white">200ms</span> p95
-                  </div>
-                </div>
-              </div>
-              <div className="lg:col-span-8">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-                  {brokers.map((broker) => (
-                    <div key={broker} className="h-14 rounded-lg bg-white dark:bg-slate-900/60 border border-slate-100 dark:border-slate-800 flex items-center justify-center text-[11px] font-semibold uppercase tracking-widest text-slate-400 dark:text-slate-500 px-3 whitespace-nowrap">
-                      {broker}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* FEATURES */}
-        <section id="recursos" className="py-28 bg-white dark:bg-[#020617]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="text-center max-w-3xl mx-auto mb-16">
-              <span className="text-[#2b7de9] font-bold tracking-wider text-sm uppercase bg-blue-50 dark:bg-blue-900/20 px-3 py-1 rounded-lg">Recursos Premium</span>
-              <h2 className="mt-6 text-4xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Tudo o que você precisa para profissionalizar sua rotina</h2>
-              <p className="mt-4 text-slate-500 dark:text-slate-400 font-normal">Ferramentas pensadas para criar consistência e controle operacional.</p>
-            </div>
-
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {benefits.map((b, i) => (
-                <div key={i} className="group p-8 rounded-3xl border border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900/50 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 relative overflow-hidden">
-                  <div className={`absolute top-0 right-0 p-32 bg-gradient-to-br ${b.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-lg blur-3xl -mr-16 -mt-16`} />
-                  <div className="h-14 w-14 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-lg flex items-center justify-center text-slate-900 dark:text-white mb-8 transition-transform group-hover:scale-110 group-hover:rotate-3 shadow-sm">
-                    {b.icon}
-                  </div>
-                  <h4 className="text-xl font-semibold font-heading text-slate-900 dark:text-white mb-4">{b.title}</h4>
-                  <p className="text-slate-500 dark:text-slate-400 font-normal leading-relaxed text-sm">{b.desc}</p>
+          {/* Logos Group */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 0.5 }}
+            className="mt-20 pt-10"
+          >
+            <p className="text-sm font-medium text-slate-400 dark:text-slate-500 mb-8">Compatível com as principais plataformas mundiais</p>
+            <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
+              {brokers.map((broker) => (
+                <div key={broker} className="text-lg font-bold tracking-wider text-slate-800 dark:text-slate-200">
+                  {broker}
                 </div>
               ))}
             </div>
+          </motion.div>
+        </section>
+
+        {/* --- CUSTOMER STORIES / BENTO GRID FEATURES --- */}
+        <section id="recursos" className="py-24 border-t border-slate-100 dark:border-slate-800/50 bg-slate-50 dark:bg-[#0b1220] border-b">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
+              <div className="max-w-2xl">
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Traders de Alta Frequência</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Utilizado pelas mentes mais inovadoras do mercado.</h2>
+              </div>
+              <Button variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 px-4 h-9 text-sm font-medium shadow-none transition-colors">
+                Ver histórias completas
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 lg:gap-6">
+
+              {/* Feature 1: Large Box - Data Sync */}
+              <div className="col-span-1 md:col-span-8 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 md:p-10 relative overflow-hidden group">
+                <div className="flex flex-col md:flex-row gap-8 items-start justify-between relative z-10 h-full">
+                  <div className="max-w-md">
+                    <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
+                      <Database className="h-5 w-5" />
+                      <h3>Importação Automática</h3>
+                    </div>
+                    <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed">
+                      Conecte sua conta e deixe que nossa infraestrutura importe seu histórico automaticamente. <strong>Todo projeto ganha um banco de dados completo</strong> e criptografado para o seu registro de operações.
+                    </p>
+                    <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
+                      <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-500" /> MetaTrader 5 Integrado</li>
+                      <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-500" /> Histórico 100% cloud-based</li>
+                      <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-500" /> Zero limite de armazenamento</li>
+                    </ul>
+                  </div>
+
+                  {/* Decorative graphic: Database */}
+                  <div className="w-full md:w-1/2 h-full min-h-[200px] bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 flex items-center justify-center relative shadow-inner">
+                    <div className="absolute inset-0 grid grid-cols-6 gap-2 p-4 opacity-10 dark:opacity-20 pointer-events-none">
+                      {Array.from({ length: 24 }).map((_, i) => (
+                        <div key={i} className="bg-slate-400 dark:bg-slate-500 rounded-sm" />
+                      ))}
+                    </div>
+                    <Database className="h-20 w-20 text-slate-300 dark:text-slate-700 relative z-10 group-hover:scale-105 transition-transform duration-700" strokeWidth={1} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature 2: Small Box - Security */}
+              <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden group flex flex-col">
+                <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
+                  <ShieldCheck className="h-5 w-5" />
+                  <h3>Risco & Compliance</h3>
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
+                  Defina limites de rebaixamento e bloqueie overtrading. Securing your equity with rules.
+                </p>
+                <div className="mt-auto bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 font-mono text-xs text-slate-600 dark:text-slate-400 space-y-2 h-32 flex flex-col justify-center shadow-inner group-hover:border-emerald-500/30 transition-colors">
+                  <div className="flex justify-between items-center"><span className="text-emerald-500">Max Daily Loss</span> <span>-$500</span></div>
+                  <div className="flex justify-between items-center"><span className="text-emerald-500">Max Positions</span> <span>3 ativos</span></div>
+                  <div className="flex justify-between items-center text-red-400 opacity-50"><span className="">Lock Account</span> <span>If triggered</span></div>
+                </div>
+              </div>
+
+              {/* Feature 3: Small Box - Psychology */}
+              <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden flex flex-col">
+                <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
+                  <BrainCircuit className="h-5 w-5" />
+                  <h3>Análise Psicológica</h3>
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
+                  Cruze seus dados financeiros com seu estado emocional. Descubra quais emoções custam mais caro.
+                </p>
+                <div className="mt-auto bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 h-32 flex items-center justify-center shadow-inner relative overflow-hidden">
+                  <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1),transparent_50%)]" />
+                  <PieChart className="h-12 w-12 text-slate-300 dark:text-slate-600" strokeWidth={1.5} />
+                </div>
+              </div>
+
+              {/* Feature 4: Small Box - Playbook */}
+              <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden flex flex-col">
+                <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
+                  <FileText className="h-5 w-5" />
+                  <h3>Playbook Digital</h3>
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
+                  Capture evidências de tela dos seus setups. Multi-upload images to store and review scenarios.
+                </p>
+                <div className="mt-auto h-32 relative border border-slate-200 dark:border-slate-800 rounded-xl bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:16px_16px] overflow-hidden flex items-center justify-center shadow-inner">
+                  <div className="p-2 bg-white/50 dark:bg-slate-900/50 backdrop-blur rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-xs font-medium text-slate-600 dark:text-slate-300">Live Sync</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Feature 5: Small Box - Backtest */}
+              <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden flex flex-col group">
+                <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
+                  <LineChart className="h-5 w-5" />
+                  <h3>Data & Backtesting</h3>
+                </div>
+                <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
+                  Expectativa matemática real. Instant ready-to-use insights sobre performance.
+                </p>
+                <div className="mt-auto bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 font-mono text-xs text-slate-600 dark:text-slate-400 space-y-2 h-32 flex flex-col justify-center shadow-inner">
+                  <div className="flex items-center justify-between group-hover:text-emerald-500 transition-colors"><span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-800 rounded">Win Rate</span> <span>68.5%</span></div>
+                  <div className="flex items-center justify-between"><span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-800 rounded">Payoff</span> <span>1.85</span></div>
+                  <div className="flex items-center justify-between"><span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-800 rounded">Profit Factor</span> <span>2.10</span></div>
+                </div>
+              </div>
+
+            </div>
           </div>
         </section>
 
-        {/* WORKFLOW */}
-        <section id="analytics" className="py-28 bg-[#f7f9fc] dark:bg-[#0b1220]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-5 space-y-6">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Fluxo profissional</p>
-                <h2 className="text-4xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Do trade ao insight em poucos minutos.</h2>
-                <p className="text-slate-500 dark:text-slate-400 font-normal">Centralize suas entradas, organize evidências e gere relatórios que realmente mudam seu processo.</p>
-                <div className="space-y-4">
-                  {workflowSteps.map((step) => (
-                    <div key={step.title} className="flex gap-4 items-start">
-                      <div className="h-10 w-10 rounded-lg bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 flex items-center justify-center text-[#2b7de9] font-semibold">{step.num}</div>
+        {/* --- COMMUNITY TESTIMONIALS --- */}
+        <section className="py-24 relative overflow-hidden bg-white dark:bg-[#050914] border-b border-slate-100 dark:border-slate-800/50">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10 mb-16">
+            <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white tracking-tight mb-4">
+              Junte-se à comunidade
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium max-w-2xl mx-auto">
+              Descubra o que a nossa comunidade de traders tem a dizer sobre a experiência no Trader Journal.
+            </p>
+            <Button variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 h-9 px-4 text-xs font-medium shadow-sm transition-colors mx-auto">
+              <MessageSquare className="h-4 w-4 mr-2" /> Junte-se no Discord
+            </Button>
+          </div>
+
+          <div className="relative max-w-[100vw] mx-auto py-10 overflow-hidden">
+            {/* Animated Marquee Rows */}
+            <div className="flex flex-col gap-6 pointer-events-auto">
+
+              {/* Row 1 */}
+              <div className="flex gap-6 w-max animate-marquee-horizontal hover:[animation-play-state:paused]">
+                {/* Clone the array multiple times to ensure continuous horizontal loop */}
+                {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+                  <div key={i} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
+                        {t.avatar}
+                      </div>
                       <div>
-                        <h5 className="font-semibold text-slate-900 dark:text-white">{step.title}</h5>
-                        <p className="text-slate-500 dark:text-slate-400 text-sm font-normal">{step.desc}</p>
+                        <div className="text-[13px] font-medium text-slate-900 dark:text-white">{t.handle}</div>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-              <div className="lg:col-span-7 grid sm:grid-cols-2 gap-6">
-                {workflowCards.map((card) => (
-                  <div key={card.title} className="rounded-3xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900/50 overflow-hidden shadow-md">
-                    <div className="relative aspect-[16/10]">
-                      <Image src={card.image} alt={card.title} fill className="object-cover" />
-                    </div>
-                    <div className="p-6">
-                      <h4 className="font-heading font-semibold text-slate-900 dark:text-white">{card.title}</h4>
-                      <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 font-normal">{card.desc}</p>
-                    </div>
+                    <p className="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed whitespace-normal h-full">
+                      {t.content}
+                    </p>
                   </div>
                 ))}
               </div>
+
+              {/* Row 2 */}
+              <div className="flex gap-6 w-max animate-marquee-horizontal-slow hover:[animation-play-state:paused] ml-[-200px]">
+                {[...testimonials.slice().reverse(), ...testimonials.slice().reverse(), ...testimonials.slice().reverse()].map((t, i) => (
+                  <div key={i} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
+                        {t.avatar}
+                      </div>
+                      <div>
+                        <div className="text-[13px] font-medium text-slate-900 dark:text-white">{t.handle}</div>
+                      </div>
+                    </div>
+                    <p className="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed whitespace-normal h-full">
+                      {t.content}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
             </div>
+
+            {/* Edge fade gradients - Horizontal */}
+            <div className="absolute inset-y-0 left-0 w-12 md:w-40 bg-gradient-to-r from-white dark:from-[#050914] to-transparent z-20 pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-12 md:w-40 bg-gradient-to-l from-white dark:from-[#050914] to-transparent z-20 pointer-events-none" />
           </div>
         </section>
 
-        {/* INSIGHTS */}
-        <section className="py-28 bg-white dark:bg-[#020617]">
+
+        {/* --- TEMPLATES / MODELS --- */}
+        <section className="py-24 bg-slate-50 dark:bg-[#0b1220] border-b border-slate-100 dark:border-slate-800/50">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid lg:grid-cols-12 gap-12 items-center">
-              <div className="lg:col-span-6">
-                <Image src="/landing/reports.png" alt="Relatórios" width={720} height={520} className="rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800" />
+            <div className="text-center mb-16">
+              <h2 className="text-3xl md:text-4xl font-semibold text-slate-900 dark:text-white tracking-tight mb-4">
+                Comece em segundos
+              </h2>
+              <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium">
+                Acelere sua configuração com modelos operacionais construídos por nós e nossa comunidade.
+              </p>
+              <div className="flex items-center justify-center gap-4">
+                <Button variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 h-9 px-4 text-xs font-medium shadow-none">
+                  Ver todos os modelos
+                </Button>
+                <Button variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 h-9 px-4 text-xs font-medium shadow-none">
+                  <Database className="h-4 w-4 mr-2" /> Biblioteca Oficial
+                </Button>
               </div>
-              <div className="lg:col-span-6 space-y-6">
-                <p className="text-[10px] font-black uppercase tracking-[0.3em] text-slate-400">Relatórios acionáveis</p>
-                <h2 className="text-4xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white">Entenda o que realmente move seu resultado.</h2>
-                <p className="text-slate-500 dark:text-slate-400 font-normal">Dashboards e análises por sessão, símbolo e horário para transformar intuição em processo.</p>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {insightPoints.map((point) => (
-                    <div key={point.title} className="p-4 rounded-lg bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
-                      <h5 className="font-semibold text-slate-900 dark:text-white text-sm">{point.title}</h5>
-                      <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">{point.desc}</p>
-                    </div>
-                  ))}
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4 lg:gap-6">
+
+              {/* Template 1 */}
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] flex flex-col overflow-hidden group hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
+                <div className="h-48 bg-slate-50 dark:bg-[#0b1220] border-b border-slate-200 dark:border-slate-800 flex items-center justify-center gap-6">
+                  <div className="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center"><BarChart className="h-7 w-7 text-slate-500" /></div>
+                  <div className="h-14 w-14 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center"><TrendingUp className="h-7 w-7 text-slate-500" /></div>
+                </div>
+                <div className="p-8">
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2 text-lg">Day Trade Starter</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-[13px] mb-6 leading-relaxed">
+                    O kit completo para day trade, com dashboards e tags essenciais rastreando scalpings, custos de corretagem e drawdowns diários.
+                  </p>
+                  <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-emerald-500 transition-colors flex items-center gap-1 group-hover:text-emerald-500">
+                    Ver Modelo <ArrowUpRight className="h-3 w-3" />
+                  </Link>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* BLOG */}
-        <section id="blog" className="py-28 bg-[#f7f9fc] dark:bg-[#020617]">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-8">
-              <div>
-                <h2 className="text-3xl md:text-5xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Education Hub</h2>
-                <p className="text-slate-500 dark:text-slate-400 font-normal mt-4 max-w-md">Artigos técnicos aprofundados para refinar seu edge no mercado.</p>
-              </div>
-              <Button variant="ghost" className="text-[#2b7de9] font-bold hover:bg-white dark:hover:bg-slate-800 hover:shadow-sm px-8 rounded-lg border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
-                Ver todos os artigos <ArrowUpRight className="ml-2 h-4 w-4" />
-              </Button>
-            </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {blogPosts.map((post, i) => (
-                <div key={i} className="group cursor-pointer flex flex-col h-full bg-white dark:bg-slate-900/50 rounded-3xl p-4 border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
-                  <div className="relative aspect-[16/10] bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden mb-6">
-                    <Image src={post.img} alt={post.title} fill className="object-cover group-hover:scale-105 transition-transform duration-700" />
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-lg text-[10px] font-bold uppercase tracking-wider text-slate-900 border border-white/50">
-                      {post.tag}
-                    </div>
-                  </div>
-                  <div className="flex-1 px-2">
-                    <div className="flex items-center gap-2 text-slate-400 text-xs font-bold mb-3">
-                      <Calendar className="h-3 w-3" /> {post.date}
-                    </div>
-                    <h3 className="text-xl font-heading font-semibold text-slate-900 dark:text-white mb-3 group-hover:text-[#2b7de9] transition-colors leading-tight">
-                      {post.title}
-                    </h3>
-                  </div>
+              {/* Template 2 */}
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] flex flex-col overflow-hidden group hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
+                <div className="h-48 bg-slate-50 dark:bg-[#0b1220] border-b border-slate-200 dark:border-slate-800 flex items-center justify-center gap-6">
+                  <div className="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center"><Calendar className="h-7 w-7 text-slate-500" /></div>
+                  <Triangle className="h-14 w-14 text-slate-800 dark:text-slate-700 fill-current opacity-50" />
                 </div>
-              ))}
+                <div className="p-8">
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2 text-lg">Swing Trade Mastery</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-[13px] mb-6 leading-relaxed">
+                    Configuração otimizada para posições longas, acompanhamento de risco/retorno multi-semana e tags automáticas de análise fundamentalista.
+                  </p>
+                  <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-emerald-500 transition-colors flex items-center gap-1 group-hover:text-emerald-500">
+                    Ver Modelo <ArrowUpRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Template 3 */}
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] flex flex-col overflow-hidden group hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
+                <div className="h-48 bg-slate-50 dark:bg-[#0b1220] border-b border-slate-200 dark:border-slate-800 flex items-center justify-center gap-6">
+                  <div className="h-14 w-14 rounded-full bg-slate-200 dark:bg-slate-800 flex items-center justify-center"><PieChart className="h-7 w-7 text-slate-500" /></div>
+                  <div className="h-14 w-14 rounded-xl bg-slate-200 dark:bg-slate-800 flex items-center justify-center"><LineChart className="h-7 w-7 text-slate-500" /></div>
+                </div>
+                <div className="p-8">
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2 text-lg">Métricas Quantitativas</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-[13px] mb-6 leading-relaxed">
+                    Template para relatórios profissionais avançados, focando em estatísticas complexas como Expectância Matemática, Sortino e Value at Risk (VaR).
+                  </p>
+                  <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-emerald-500 transition-colors flex items-center gap-1 group-hover:text-emerald-500">
+                    Ver Modelo <ArrowUpRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
+              {/* Template 4 */}
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] flex flex-col overflow-hidden group hover:border-slate-300 dark:hover:border-slate-700 transition-colors">
+                <div className="h-48 bg-slate-50 dark:bg-[#0b1220] border-b border-slate-200 dark:border-slate-800 flex items-center justify-center gap-6">
+                  <div className="flex gap-2"><div className="h-6 w-6 rounded-md bg-slate-300 dark:bg-slate-700" /><div className="h-6 w-6 rounded-md bg-slate-300 dark:bg-slate-700" /></div>
+                  <div className="h-14 w-14 rounded-full border-4 border-slate-300 dark:border-slate-700" />
+                </div>
+                <div className="p-8">
+                  <h3 className="font-semibold text-slate-900 dark:text-white mb-2 text-lg">Setup Comportamental</h3>
+                  <p className="text-slate-500 dark:text-slate-400 text-[13px] mb-6 leading-relaxed">
+                    Focado no estudo Psicológico do trader. Avalie níveis de ansiedade pré-trade e descubra correlações ocultas de estresse com grandes prejuízos.
+                  </p>
+                  <Link href="/login" className="text-sm font-medium text-slate-400 hover:text-emerald-500 transition-colors flex items-center gap-1 group-hover:text-emerald-500">
+                    Ver Modelo <ArrowUpRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="bg-[#0b1220] py-24 relative overflow-hidden text-center">
-          <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,rgba(43,125,233,0.15))]" />
-          <div className="max-w-4xl mx-auto px-4 relative z-10">
-            <span className="text-blue-300/80 font-semibold tracking-widest text-xs uppercase mb-6 block">Comece agora mesmo</span>
-            <h2 className="text-4xl md:text-6xl font-heading font-semibold text-white tracking-tight mb-8">
-              Pronto para operar com <span className="text-blue-300">consistência real?</span>
+        {/* --- FRAMEWORKS / INTEGRATIONS --- */}
+        <section className="py-24 bg-white dark:bg-[#0b1220] text-center border-b border-slate-100 dark:border-slate-800/50">
+          <div className="max-w-4xl mx-auto px-4">
+            <h2 className="text-2xl md:text-3xl font-medium text-slate-900 dark:text-white mb-2 tracking-tight">
+              Integre com sua<br /> <span className="font-bold">plataforma favorita</span>
             </h2>
-            <p className="text-xl text-slate-300/90 mb-12 max-w-2xl mx-auto font-normal">
-              Experimente gratuitamente e descubra sua vantagem operacional com clareza e disciplina.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild className="rounded-lg bg-white hover:bg-slate-100 text-slate-900 px-10 h-14 text-sm font-bold uppercase tracking-widest transition-all shadow-[0_0_30px_-5px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_-5px_rgba(255,255,255,0.5)] hover:-translate-y-1">
-                <Link href="/login">Criar Conta Grátis <ArrowUpRight className="ml-2 h-4 w-4" /></Link>
-              </Button>
+            <p className="text-slate-500 dark:text-slate-400 mt-4 text-sm font-medium">100% cloud. Importe via CSV ou Connectors nativos.</p>
+            <div className="flex justify-center flex-wrap gap-8 md:gap-12 mt-12 opacity-30 dark:opacity-40">
+              <TrendingUp className="h-8 w-8" />
+              <Database className="h-8 w-8" />
+              <LineChart className="h-8 w-8" />
+              <Zap className="h-8 w-8" />
+              <Calendar className="h-8 w-8" />
+              <Globe className="h-8 w-8" />
             </div>
           </div>
         </section>
 
       </main>
 
-
       {/* --- FOOTER --- */}
-      <footer className="bg-[#f7f9fc] dark:bg-[#0b1220] border-t border-slate-200/70 dark:border-slate-800 pt-20 pb-12">
+      <footer className="bg-white dark:bg-[#0b1220] pt-24 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row justify-between gap-12 mb-20">
-            <div className="max-w-xs">
-              <div className="flex items-center gap-2 mb-6">
-                <div className="bg-slate-900 dark:bg-slate-800 p-1.5 rounded-lg">
-                  <TrendingUp className="h-4 w-4 text-white" />
-                </div>
-                <span className="text-xl font-heading font-semibold tracking-tight text-slate-800 dark:text-white">
-                  Trader<span className="text-blue-500">LCTNET</span>
-                </span>
+          <div className="mb-16">
+            <div className="flex items-center gap-2 mb-8">
+              <div className="bg-emerald-500 p-1.5 rounded-md">
+                <TrendingUp className="h-6 w-6 text-white" />
               </div>
-              <p className="text-sm text-slate-500/90 dark:text-slate-400 font-normal leading-relaxed">
-                Plataforma de journaling e analytics desenvolvida para traders que buscam alta performance e consistência matemática.
-              </p>
+              <span className="text-2xl font-bold tracking-tight text-slate-900 dark:text-white">
+                Trader Journal
+              </span>
             </div>
-
-            <div className="flex gap-16 flex-wrap">
-              {footerLinks.map((col, i) => (
-                <div key={i}>
-                  <h5 className="font-semibold text-slate-700 dark:text-white text-sm mb-6">{col.title}</h5>
-                  <ul className="space-y-4">
-                    {col.links.map((link, j) => (
-                      <li key={j} className="text-sm font-normal text-slate-500/90 dark:text-slate-400 hover:text-blue-500 dark:hover:text-blue-400 cursor-pointer transition-colors">
-                        {link}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
+            <div className="flex gap-6 text-slate-400 dark:text-slate-500">
+              <Twitter className="h-6 w-6 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors" />
+              <Github className="h-6 w-6 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors" />
+              <Youtube className="h-6 w-6 hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors" />
             </div>
           </div>
 
-          <div className="pt-8 border-t border-slate-100 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-6">
-            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">© 2026 Leptoledo Capital. Todos os direitos reservados.</p>
-            <div className="flex gap-6">
-              <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
-                <Facebook className="h-4 w-4" />
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12 mb-16">
+            {footerLinks.map((col, i) => (
+              <div key={i}>
+                <h5 className="font-semibold text-slate-900 dark:text-white text-[15px] mb-6">{col.title}</h5>
+                <ul className="space-y-4">
+                  {col.links.map((link, j) => (
+                    <li key={j} className="text-[14px] text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 cursor-pointer transition-colors">
+                      {link}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
-                <Instagram className="h-4 w-4" />
-              </div>
-              <div className="h-8 w-8 flex items-center justify-center rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-400 hover:bg-blue-50 dark:hover:bg-blue-900 hover:text-blue-600 transition-all cursor-pointer">
-                <Twitter className="h-4 w-4" />
-              </div>
+            ))}
+          </div>
+
+          <div className="pt-8 border-t border-slate-100 dark:border-slate-800/50 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p className="text-xs text-slate-500 dark:text-slate-400">© 2026 Leptoledo Capital. All rights reserved.</p>
+            <div className="flex gap-4 text-xs text-slate-500 dark:text-slate-400">
+              <span className="hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors">Privacy Policy</span>
+              <span className="hover:text-slate-900 dark:hover:text-white cursor-pointer transition-colors">Terms of Service</span>
             </div>
           </div>
         </div>
       </footer>
-
-    </div>
+    </div >
   )
 }
 
-// DATA & CONTENT
-const heroPoints = [
-  {
-    title: "Execução disciplinada",
-    desc: "Checklists de regras para eliminar decisões impulsivas."
-  },
-  {
-    title: "Clareza em minutos",
-    desc: "Resumo diário com pontos de ajuste mais urgentes."
-  },
-  {
-    title: "Edge comprovável",
-    desc: "Relatórios consistentes para validar o playbook."
-  },
-  {
-    title: "Evolução semanal",
-    desc: "Comparativos por sessão, símbolo e horário."
-  }
-]
+function Check({ className }: { className?: string }) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  )
+}
 
-const brokers = ["TradingView", "MetaTrader 5", "NinjaTrader", "Interactive", "Binance", "Bybit"]
+const brokers = ["TradingView", "MetaTrader 5", "NinjaTrader", "Interactive Brokers", "Binance", "Bybit"]
 
-const workflowSteps = [
-  { num: "01", title: "Registre", desc: "Cadastre seus trades ou importe em lote." },
-  { num: "02", title: "Analise", desc: "Compare sessões, símbolos e horários." },
-  { num: "03", title: "Ajuste", desc: "Transforme insights em regras operacionais." }
-]
-
-const workflowCards = [
-  {
-    title: "Dashboard unificado",
-    desc: "Visão geral do desempenho com filtros inteligentes.",
-    image: "/landing/dashboard.png"
-  },
-  {
-    title: "Relatórios prontos",
-    desc: "Entregáveis claros para mentores e sócios.",
-    image: "/landing/reports.png"
-  }
-]
-
-const insightPoints = [
-  { title: "Padrões de erro", desc: "Encontre repetições que drenam o lucro." },
-  { title: "Melhores horários", desc: "Identifique sessões mais rentáveis." },
-  { title: "Setup vencedor", desc: "Mapeie o que funciona com consistência." },
-  { title: "Disciplina diária", desc: "Acompanhe aderência às regras." }
-]
-
-const benefits = [
-  {
-    title: "Importação Automática",
-    desc: "Conecte sua conta do MetaTrader ou ProfitChart e deixe que nós importamos seu histórico em segundos.",
-    icon: <FileText className="h-6 w-6" />,
-    color: "from-blue-500 to-indigo-500"
-  },
-  {
-    title: "Risco & Compliance",
-    desc: "Defina limiares de rebaixamento e receba alertas em tempo real se violar suas próprias regras.",
-    icon: <ShieldCheck className="h-6 w-6" />,
-    color: "from-emerald-500 to-teal-500"
-  },
-  {
-    title: "Análise Psicológica",
-    desc: "Registre como você se sentiu durante o trade e descubra quais emoções custam mais caro.",
-    icon: <Eye className="h-6 w-6" />,
-    color: "from-purple-500 to-pink-500"
-  },
-  {
-    title: "Playbook Digital",
-    desc: "Capture prints dos seus setups e crie uma biblioteca de estratégias vencedoras.",
-    icon: <Calendar className="h-6 w-6" />,
-    color: "from-orange-500 to-red-500"
-  },
-  {
-    title: "Backtesting Real",
-    desc: "Simule resultados baseados na sua expectativa matemática histórica, não em achismos.",
-    icon: <LineChart className="h-6 w-6" />,
-    color: "from-cyan-500 to-blue-500"
-  },
-  {
-    title: "Relatórios IA",
-    desc: "Todo domingo, receba um email detalhado com seus pontos fortes e fracos da semana.",
-    icon: <Zap className="h-6 w-6" />,
-    color: "from-yellow-500 to-orange-500"
-  }
-]
-
-const blogPosts = [
-  {
-    tag: "Psicologia",
-    title: "Por que você devolve tudo na sexta-feira?",
-    img: "https://images.unsplash.com/photo-1611974717537-4340c1157f49?q=80&w=800&auto=format&fit=crop",
-    date: "24 Jan 2026"
-  },
-  {
-    tag: "Técnica",
-    title: "Domine o Order Block em 5 passos",
-    img: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?q=80&w=800&auto=format&fit=crop",
-    date: "20 Jan 2026"
-  },
-  {
-    tag: "Gestão",
-    title: "Como calcular o tamanho do lote ideal",
-    img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop",
-    date: "15 Jan 2026"
-  }
+const testimonials = [
+  { handle: "@marcos_trade", content: "Uso o sistema de gestão há meses. Simplesmente o melhor tracker de emoções. Entender a correlação entre meu sono e Loss diário mudou meu game.", avatar: "MT" },
+  { handle: "@julia_invest", content: "A API do sistema é fantástica. Consegui conectar meus robôs do MetaTrader 5 direto pro banco de dados em menos de 1 hora. Recomendo muito!", avatar: "JI" },
+  { handle: "@dev_trader", content: "Primeira vez rodando localmente a plataforma e funcionou de primeira. A experiência de desenvolvedor (DX) é incrível.", avatar: "DT" },
+  { handle: "@anna_fx", content: "Super rápido, parece muito leve. Foi muito fácil criar minhas regras de compliance para a minha mesa proprietária.", avatar: "AF" },
+  { handle: "@felipe_pro", content: "As automações com Edge Functions para alertar limites de drawdown me salvaram mais de uma vez.", avatar: "FP" },
+  { handle: "@lucas_quant", content: "Muito impressionado com a evolução. O que era apenas um diário virou uma infraestrutura completa para fundos quantitativos.", avatar: "LQ" },
+  { handle: "@carol_swing", content: "Simplesmente incrível. A parte de acompanhar comportamentos pre-trade ajudou a corrigir meus piores gatilhos de overtrading.", avatar: "CS" },
+  { handle: "@vitor_scalp", content: "É muito maneiro como conseguem manter tudo limpo mesmo com tantos dados. A importação em massa nunca travou uma vez.", avatar: "VS" },
+  { handle: "@thiago_prop", content: "Iniciei minha mesa proprietária gerindo risco aqui. Nunca perdi 1 frame de atualização do Painel de Bordo.", avatar: "TP" },
+  { handle: "@rafael_options", content: "Cálculos de payoff exatos. Nenhuma outra plataforma brasileira chega nesse nível de detalhe analítico e clean code.", avatar: "RO" }
 ]
 
 const footerLinks = [
-  { title: "Produto", links: ["Features", "Preços", "Integrações", "Changelog"] },
-  { title: "Recursos", links: ["Documentação", "API", "Comunidade", "Blog"] },
-  { title: "Empresa", links: ["Sobre", "Carreiras", "Legal", "Contato"] }
+  { title: "Produto", links: ["Base de Dados", "Autenticação", "Edge Functions", "Storage", "Analytics", "Preços", "Changelog"] },
+  { title: "Soluções", links: ["Day Trade", "Swing Trade", "Iniciantes", "Avançado", "Startups", "Agências"] },
+  { title: "Recursos", links: ["Blog", "Suporte", "Status do Sistema", "Integrações", "Segurança"] },
+  { title: "Desenvolvedores", links: ["Documentação", "API Reference", "Modelos", "Open Source", "Contribuir"] },
+  { title: "Empresa", links: ["Sobre Nós", "Termos de Serviço", "Política de Privacidade", "Regras de Uso", "Contato"] }
 ]

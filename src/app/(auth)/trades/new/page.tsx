@@ -85,41 +85,40 @@ export default function NewTradePage() {
     }
 
     return (
-        <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
-            <div className="mx-auto grid w-full max-w-2xl gap-8">
+        <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#0b1220] p-8 transition-colors duration-500">
+            <div className="mx-auto grid w-full max-w-3xl gap-8">
 
                 {/* Header Section */}
-                <div className="flex items-center gap-5 animate-in fade-in slide-in-from-top-4 duration-700">
-                    <Button variant="ghost" size="icon" asChild className="rounded-xl h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                    <Button variant="ghost" size="icon" asChild className="rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                     </Button>
                     <div>
-                        <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Diário</p>
-                        <h1 className="text-4xl md:text-5xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Nova Operação</h1>
+                        <h1 className="text-2xl font-medium text-slate-900 dark:text-white-white tracking-tight">Nova Operação</h1>
                     </div>
                 </div>
 
                 {/* Form Card */}
-                <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl shadow-blue-500/5 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+                <div className="bg-white dark:bg-[#0b1220] p-8 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
                                     control={form.control}
                                     name="account_id"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Conta de Trading</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Conta de Trading</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value} disabled={accountsLoading}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors">
+                                                    <SelectTrigger className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 transition-colors">
                                                         <SelectValue placeholder="Selecione a conta" />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl">
+                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-md">
                                                     {accounts.map(acc => (
-                                                        <SelectItem key={acc.id} value={acc.id} className="font-semibold py-3">{acc.name} ({acc.currency})</SelectItem>
+                                                        <SelectItem key={acc.id} value={acc.id} className="font-medium py-2">{acc.name} ({acc.currency})</SelectItem>
                                                     ))}
                                                 </SelectContent>
                                             </Select>
@@ -132,13 +131,13 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="entry_date"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Data e Hora</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Data e Hora</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="datetime-local"
                                                     {...field}
-                                                    className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 transition-colors"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -147,18 +146,18 @@ export default function NewTradePage() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
                                     control={form.control}
                                     name="symbol"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo / Ativo</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Símbolo / Ativo</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="ex: XAUUSD, BTCUSD"
+                                                    placeholder="ex: XAUUSD, EURUSD"
                                                     {...field}
-                                                    className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500 hover:border-blue-500/50 transition-colors placeholder:font-normal"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm uppercase focus:ring-blue-500 transition-colors"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -170,24 +169,20 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="direction"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Direção</FormLabel>
                                             <Select onValueChange={field.onChange} defaultValue={field.value} value={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-xl border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm focus:ring-blue-500 hover:border-blue-500/50 transition-colors">
+                                                    <SelectTrigger className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 transition-colors">
                                                         <SelectValue placeholder="Selecione a direção" />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-xl shadow-2xl">
-                                                    <SelectItem value="LONG" className="font-semibold py-3 text-emerald-500">
-                                                        <span className="flex items-center gap-2">
-                                                            <TrendingUp className="h-4 w-4" /> COMPRA (LONG)
-                                                        </span>
+                                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 rounded-md">
+                                                    <SelectItem value="LONG" className="font-medium py-2 text-emerald-600 dark:text-emerald-500">
+                                                        COMPRA (LONG)
                                                     </SelectItem>
-                                                    <SelectItem value="SHORT" className="font-semibold py-3 text-red-500">
-                                                        <span className="flex items-center gap-2">
-                                                            <TrendingUp className="h-4 w-4 rotate-180" /> VENDA (SHORT)
-                                                        </span>
+                                                    <SelectItem value="SHORT" className="font-medium py-2 text-red-600 dark:text-red-500">
+                                                        VENDA (SHORT)
                                                     </SelectItem>
                                                 </SelectContent>
                                             </Select>
@@ -197,13 +192,13 @@ export default function NewTradePage() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-100 dark:border-slate-800/50">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4 border-t border-slate-200 dark:border-slate-800">
                                 <FormField
                                     control={form.control}
                                     name="entry_price"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Preço Entrada</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Preço Entrada</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="number"
@@ -215,7 +210,7 @@ export default function NewTradePage() {
                                                         const next = event.target.value
                                                         field.onChange(next === "" ? undefined : next)
                                                     }}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 font-mono"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 font-mono"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -226,8 +221,8 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="stop_loss"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-red-400/80 uppercase tracking-[0.2em] ml-1">Stop Loss</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Stop Loss</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="number"
@@ -239,7 +234,7 @@ export default function NewTradePage() {
                                                         const next = event.target.value
                                                         field.onChange(next === "" ? undefined : next)
                                                     }}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-red-50/10 dark:bg-red-500/5 font-semibold text-sm focus:ring-red-500 font-mono"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 font-mono text-red-600 dark:text-red-400"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -250,8 +245,8 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="take_profit"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-emerald-400/80 uppercase tracking-[0.2em] ml-1">Take Profit</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Take Profit</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="number"
@@ -263,7 +258,7 @@ export default function NewTradePage() {
                                                         const next = event.target.value
                                                         field.onChange(next === "" ? undefined : next)
                                                     }}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-emerald-50/10 dark:bg-emerald-500/5 font-semibold text-sm focus:ring-emerald-500 font-mono"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 font-mono text-emerald-600 dark:text-emerald-400"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -277,8 +272,8 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="quantity"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Volume (Lotes)</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Volume (Lotes)</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="number"
@@ -290,7 +285,7 @@ export default function NewTradePage() {
                                                         const next = event.target.value
                                                         field.onChange(next === "" ? undefined : next)
                                                     }}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -301,8 +296,8 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="commission"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Taxas/Comissão</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Taxas/Comissão</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     type="number"
@@ -314,7 +309,7 @@ export default function NewTradePage() {
                                                         const next = event.target.value
                                                         field.onChange(next === "" ? undefined : next)
                                                     }}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -325,13 +320,13 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="ticket_id"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Ticket ID</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">ID Plataforma</FormLabel>
                                             <FormControl>
                                                 <Input
                                                     placeholder="#"
                                                     {...field}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -340,18 +335,18 @@ export default function NewTradePage() {
                                 />
                             </div>
 
-                            <div className="space-y-8 pt-4 border-t border-slate-100 dark:border-slate-800/50">
+                            <div className="space-y-8 pt-4 border-t border-slate-200 dark:border-slate-800">
                                 <FormField
                                     control={form.control}
                                     name="setup_tags"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Setups / Estratégias</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Estratégias/Regras</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="ex: Breakout, Retest, SMC (separado por vírgula)"
+                                                    placeholder="ex: Breakout, Retest (separado por vírgula)"
                                                     {...field}
-                                                    className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500"
+                                                    className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -363,12 +358,12 @@ export default function NewTradePage() {
                                     control={form.control}
                                     name="notes"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Racional da Operação</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Racional da Operação</FormLabel>
                                             <FormControl>
                                                 <Textarea
-                                                    placeholder="Descreva o motivo desta entrada..."
-                                                    className="min-h-[140px] rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 p-6 resize-none transition-all placeholder:font-normal"
+                                                    placeholder="Descreva o motivo da entrada..."
+                                                    className="min-h-[140px] rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 p-4 resize-y transition-colors"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -380,11 +375,11 @@ export default function NewTradePage() {
 
                             <Button
                                 type="submit"
-                                className="w-full h-16 rounded-lg bg-gradient-to-r from-[#1E293B] to-[#0F172A] dark:from-[#3b82f6] dark:to-[#256bd1] text-white font-bold text-xs uppercase tracking-[0.3em] shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] dark:shadow-[0_4px_14px_0_rgba(59,130,246,0.39)] hover:shadow-[0_6px_20px_rgba(0,0,0,0.15)] dark:hover:shadow-[0_6px_20px_rgba(59,130,246,0.45)] hover:bg-[rgba(255,255,255,0.9)] transition-all hover:-translate-y-1 active:scale-95 border border-transparent dark:border-blue-500/30 disabled:opacity-50"
+                                className="w-full h-11 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
                                 disabled={submitting}
                             >
-                                {submitting ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}
-                                REGISTRAR OPERAÇÃO
+                                {submitting ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
+                                Salvar Operação
                             </Button>
                         </form>
                     </Form>

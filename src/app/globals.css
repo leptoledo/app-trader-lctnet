@@ -45,6 +45,19 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
+
+  --animate-marquee-horizontal: marquee-horizontal 320s linear infinite;
+  --animate-marquee-horizontal-slow: marquee-horizontal 380s linear infinite;
+
+  @keyframes marquee-horizontal {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
 }
 
 :root {
@@ -123,5 +136,72 @@
 
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .animate-marquee {
+    animation: marquee 40s linear infinite;
+  }
+
+  .animate-marquee-slow {
+    animation: marquee 60s linear infinite;
+  }
+
+  .animate-marquee-reverse {
+    animation: marquee-reverse 50s linear infinite;
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateY(0);
+    }
+
+    to {
+      transform: translateY(-50%);
+    }
+  }
+
+  @keyframes marquee-reverse {
+    from {
+      transform: translateY(-50%);
+    }
+
+    to {
+      transform: translateY(0);
+    }
+  }
+
+  /* Horizontal Marquee */
+  .animate-marquee-horizontal {
+    animation: marquee-horizontal 40s linear infinite;
+  }
+
+  .animate-marquee-horizontal-slow {
+    animation: marquee-horizontal 60s linear infinite;
+  }
+
+  .animate-marquee-horizontal-reverse {
+    animation: marquee-horizontal-reverse 50s linear infinite;
+  }
+
+  @keyframes marquee-horizontal {
+    from {
+      transform: translateX(0);
+    }
+
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marquee-horizontal-reverse {
+    from {
+      transform: translateX(-50%);
+    }
+
+    to {
+      transform: translateX(0);
+    }
   }
 }

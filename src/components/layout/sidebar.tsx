@@ -38,14 +38,14 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
     return (
         <div
             className={cn(
-                "flex flex-col h-full bg-[#fbfcfd] dark:bg-[#0b1220] border-r border-slate-200 dark:border-slate-800 transition-all duration-300 relative z-20 shrink-0",
-                isMobile ? "w-full" : "w-64"
+                "group flex flex-col h-full bg-[#fbfcfd] dark:bg-[#0b1220] border-r border-slate-200 dark:border-slate-800 transition-all duration-300 z-50 overflow-hidden whitespace-nowrap",
+                isMobile ? "w-full relative" : "w-[60px] hover:w-64 absolute md:fixed top-14 bottom-0 shadow-sm hover:shadow-xl"
             )}
         >
             {/* Navigation */}
-            <nav className="flex-1 px-3 py-4 space-y-1 overflow-y-auto scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
-                <div className="mb-4 px-3">
-                    <p className="text-[11px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Geral</p>
+            <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto scrollbar-none hover:scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
+                <div className="mb-4 px-3 flex items-center h-4">
+                    <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Geral</p>
                 </div>
                 {navigation.map((item) => {
                     const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
@@ -54,14 +54,14 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                             key={item.name}
                             href={item.href}
                             className={cn(
-                                "flex items-center gap-3 px-3 py-1.5 text-sm rounded-md transition-all duration-200 group relative",
+                                "flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-all duration-200 relative",
                                 isActive
                                     ? "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400 font-medium"
                                     : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200"
                             )}
                         >
-                            <item.icon className={cn("h-[18px] w-[18px] flex-shrink-0 transition-colors", isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400 group-hover:text-slate-600 dark:text-slate-500")} />
-                            <span>{item.name}</span>
+                            <item.icon className={cn("h-[18px] w-[18px] shrink-0 transition-colors", isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400")} />
+                            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.name}</span>
                         </Link>
                     )
                 })}

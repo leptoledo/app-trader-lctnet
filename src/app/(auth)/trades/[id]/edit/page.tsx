@@ -272,7 +272,7 @@ export default function EditTradePage() {
 
     if (loadingConfig) {
         return (
-            <div className="flex h-screen items-center justify-center bg-[#f7f9fc] dark:bg-[#0b1220]">
+            <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#0b1220]">
                 <Loader2 className="h-8 w-8 animate-spin text-blue-500" />
             </div>
         )
@@ -281,18 +281,17 @@ export default function EditTradePage() {
     const tradeStatus = form.watch('status')
 
     return (
-        <div className="flex min-h-screen flex-col bg-[#f7f9fc] dark:bg-[#0b1220] p-8 transition-colors duration-500">
-            <div className="mx-auto grid w-full max-w-2xl gap-8">
+        <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#0b1220] p-8 transition-colors duration-500">
+            <div className="mx-auto grid w-full max-w-3xl gap-8">
 
                 {/* Header with Navigation & Actions */}
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="flex items-center gap-5">
-                        <Button variant="ghost" size="icon" asChild className="rounded-lg h-12 w-12 hover:bg-white dark:hover:bg-slate-800 shadow-sm border border-transparent hover:border-slate-200 dark:hover:border-slate-700 transition-all">
+                    <div className="flex items-center gap-4">
+                        <Button variant="ghost" size="icon" asChild className="rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                             <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
-                            <p className="text-[10px] font-semibold text-blue-500 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Editor</p>
-                            <h1 className="text-3xl font-heading font-semibold text-slate-900 dark:text-white tracking-tight">Gerenciar Trade</h1>
+                            <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Gerenciar Operação</h1>
                         </div>
                     </div>
 
@@ -302,7 +301,7 @@ export default function EditTradePage() {
                                 variant="outline"
                                 size="sm"
                                 onClick={copyLink}
-                                className="h-10 rounded-xl border-emerald-200 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400 text-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 font-semibold px-4 transition-all"
+                                className="h-10 rounded-md border-emerald-200 bg-emerald-50 dark:bg-emerald-500/10 dark:text-emerald-400 text-emerald-700 hover:bg-emerald-100 dark:hover:bg-emerald-500/20 font-medium px-4 transition-colors"
                             >
                                 {copying ? <Check className="h-4 w-4 mr-2" /> : <LinkIcon className="h-4 w-4 mr-2" />}
                                 Link
@@ -313,14 +312,14 @@ export default function EditTradePage() {
                             size="sm"
                             onClick={handleShare}
                             className={cn(
-                                "h-10 rounded-xl font-semibold px-4 transition-all",
-                                isShared ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-lg shadow-emerald-500/20" : "border-slate-200 dark:border-slate-800"
+                                "h-10 rounded-md font-medium px-4 transition-colors",
+                                isShared ? "bg-emerald-600 hover:bg-emerald-700 text-white border-none shadow-sm shadow-emerald-500/20" : "border-slate-200 dark:border-slate-800"
                             )}
                         >
                             <Share2 className="h-4 w-4 mr-2" />
                             {isShared ? "Público" : "Compartilhar"}
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={handleDelete} className="h-10 rounded-xl text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-semibold">
+                        <Button variant="ghost" size="sm" onClick={handleDelete} className="h-10 rounded-md text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 font-medium">
                             <Trash2 className="h-4 w-4" />
                         </Button>
                     </div>
@@ -364,15 +363,15 @@ export default function EditTradePage() {
                     </DialogContent>
                 </Dialog>
 
-                <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-6 rounded-[2rem] border border-slate-200/60 dark:border-slate-800/60 shadow-lg animate-in fade-in slide-in-from-top-4 duration-500">
+                <div className="bg-white dark:bg-[#0b1220] p-6 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex flex-col md:flex-row md:items-center gap-4">
                         <div className="flex-1">
-                            <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Nome Público (Opcional)</label>
+                            <label className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Nome Público (Opcional)</label>
                             <Input
                                 value={publicName}
                                 onChange={(e) => setPublicName(e.target.value)}
                                 placeholder="Ex: TraderLCTNET"
-                                className="mt-2 h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm"
+                                className="mt-2 h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm"
                             />
                         </div>
                         <div className="text-xs text-slate-400 font-medium max-w-xs">
@@ -381,34 +380,34 @@ export default function EditTradePage() {
                     </div>
                 </div>
 
-                <div className="bg-white dark:bg-slate-900/40 backdrop-blur-md p-10 rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 shadow-2xl shadow-blue-500/5 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
+                <div className="bg-white dark:bg-[#0b1220] p-8 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
                     <Form {...form}>
                         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
 
                             {/* Status Selector - Modern Style */}
-                            <div className="bg-slate-50 dark:bg-slate-950/40 p-6 rounded-[2rem] border border-slate-100 dark:border-slate-800/60 transition-all">
+                            <div className="bg-slate-50 dark:bg-[#0b1220] p-6 rounded-md border border-slate-200 dark:border-slate-800 transition-colors">
                                 <FormField
                                     control={form.control}
                                     name="status"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <div className="flex items-center gap-2 ml-1">
+                                        <FormItem className="space-y-2">
+                                            <div className="flex items-center gap-2">
                                                 <AlertCircle className="h-4 w-4 text-slate-400" />
-                                                <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Ciclo de Vida</FormLabel>
+                                                <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Estado da Operação</FormLabel>
                                             </div>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
                                                     <SelectTrigger className={cn(
-                                                        "h-14 rounded-lg font-semibold text-sm transition-all",
+                                                        "h-10 rounded-md font-medium text-sm transition-colors",
                                                         field.value === 'CLOSED' ? 'bg-emerald-500/10 border-emerald-500/50 text-emerald-600 dark:text-emerald-400' : 'bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800'
                                                     )}>
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
-                                                    <SelectItem value="OPEN" className="font-semibold py-3">EM ABERTO (RUNNING)</SelectItem>
-                                                    <SelectItem value="CLOSED" className="font-semibold py-3 text-emerald-500">FECHADO (CLOSED)</SelectItem>
-                                                    <SelectItem value="PENDING" className="font-semibold py-3 text-slate-400">PENDENTE (WAITING)</SelectItem>
+                                                <SelectContent className="rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950">
+                                                    <SelectItem value="OPEN" className="font-medium py-2">EM ABERTO (RUNNING)</SelectItem>
+                                                    <SelectItem value="CLOSED" className="font-medium py-2 text-emerald-600">FECHADO (CLOSED)</SelectItem>
+                                                    <SelectItem value="PENDING" className="font-medium py-2 text-slate-500">PENDENTE (WAITING)</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -417,15 +416,15 @@ export default function EditTradePage() {
                                 />
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
                                     control={form.control}
                                     name="symbol"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo do Ativo</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Símbolo do Ativo</FormLabel>
                                             <FormControl>
-                                                <Input {...field} className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm uppercase focus:ring-blue-500" />
+                                                <Input {...field} className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm uppercase focus:ring-blue-500" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -436,17 +435,17 @@ export default function EditTradePage() {
                                     control={form.control}
                                     name="direction"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Direção</FormLabel>
                                             <Select onValueChange={field.onChange} value={field.value}>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-14 rounded-lg border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/50 font-semibold text-sm">
+                                                    <SelectTrigger className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm">
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
-                                                <SelectContent className="rounded-lg bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
-                                                    <SelectItem value="LONG" className="font-semibold py-3 text-emerald-500">COMPRA (LONG)</SelectItem>
-                                                    <SelectItem value="SHORT" className="font-semibold py-3 text-red-500">VENDA (SHORT)</SelectItem>
+                                                <SelectContent className="rounded-md bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
+                                                    <SelectItem value="LONG" className="font-medium py-2 text-emerald-600">COMPRA (LONG)</SelectItem>
+                                                    <SelectItem value="SHORT" className="font-medium py-2 text-red-600">VENDA (SHORT)</SelectItem>
                                                 </SelectContent>
                                             </Select>
                                             <FormMessage />
@@ -457,22 +456,22 @@ export default function EditTradePage() {
 
                             {/* EXIT SECTION - Refined Visuals */}
                             {tradeStatus === 'CLOSED' && (
-                                <div className="p-8 rounded-[2.5rem] bg-emerald-500/5 border border-emerald-500/20 space-y-8 animate-in fade-in slide-in-from-top-4 duration-500">
+                                <div className="p-6 rounded-md bg-emerald-500/5 border border-emerald-500/20 space-y-6 animate-in fade-in slide-in-from-top-4 duration-500">
                                     <div className="flex items-center gap-3 border-b border-emerald-500/10 pb-4">
-                                        <div className="w-8 h-8 rounded-lg bg-emerald-500/20 flex items-center justify-center">
+                                        <div className="w-8 h-8 rounded-md bg-emerald-500/20 flex items-center justify-center">
                                             <Target className="h-4 w-4 text-emerald-600 dark:text-emerald-400" />
                                         </div>
-                                        <h3 className="font-heading font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-tight">Resultados de Encerramento</h3>
+                                        <h3 className="font-medium text-emerald-700 dark:text-emerald-400 tracking-tight">Resultados de Encerramento</h3>
                                     </div>
                                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                         <FormField
                                             control={form.control}
                                             name="exit_date"
                                             render={({ field }) => (
-                                                <FormItem className="space-y-3">
-                                                    <FormLabel className="text-[10px] font-semibold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Data/Hora Saída</FormLabel>
+                                                <FormItem className="space-y-2">
+                                                    <FormLabel className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Data/Hora Saída</FormLabel>
                                                     <FormControl>
-                                                        <Input type="datetime-local" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-semibold text-sm" />
+                                                        <Input type="datetime-local" {...field} className="h-10 rounded-md bg-white dark:bg-slate-950 border-emerald-500/20 font-medium text-sm" />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -482,10 +481,10 @@ export default function EditTradePage() {
                                             control={form.control}
                                             name="exit_price"
                                             render={({ field }) => (
-                                                <FormItem className="space-y-3">
-                                                    <FormLabel className="text-[10px] font-semibold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Preço de Saída</FormLabel>
+                                                <FormItem className="space-y-2">
+                                                    <FormLabel className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Preço de Saída</FormLabel>
                                                     <FormControl>
-                                                        <Input type="number" step="any" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-semibold text-sm" />
+                                                        <Input type="number" step="any" {...field} className="h-10 rounded-md bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-medium text-sm" />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -496,10 +495,10 @@ export default function EditTradePage() {
                                         control={form.control}
                                         name="fees"
                                         render={({ field }) => (
-                                            <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-semibold text-emerald-700/60 dark:text-emerald-400/60 uppercase tracking-widest ml-1">Total de Taxas (Swap/Comm)</FormLabel>
+                                            <FormItem className="space-y-2">
+                                                <FormLabel className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Total de Taxas</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-semibold text-sm" />
+                                                    <Input type="number" step="any" {...field} className="h-10 rounded-md bg-white dark:bg-slate-950 border-emerald-500/20 font-mono font-medium text-sm" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -509,16 +508,16 @@ export default function EditTradePage() {
                             )}
 
                             {/* ORIGINAL ENTRY DETAILS */}
-                            <div className="space-y-8 pt-4 border-t border-slate-100 dark:border-slate-800/50">
+                            <div className="space-y-8 pt-4 border-t border-slate-200 dark:border-slate-800">
                                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                     <FormField
                                         control={form.control}
                                         name="entry_price"
                                         render={({ field }) => (
-                                            <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-semibold text-slate-400 uppercase tracking-[0.2em] ml-1">Preço Entrada</FormLabel>
+                                            <FormItem className="space-y-2">
+                                                <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Preço Entrada</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm font-mono" />
+                                                    <Input type="number" step="any" {...field} className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm font-mono" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -528,10 +527,10 @@ export default function EditTradePage() {
                                         control={form.control}
                                         name="stop_loss"
                                         render={({ field }) => (
-                                            <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-semibold text-red-400/70 uppercase tracking-[0.2em] ml-1">Stop Loss</FormLabel>
+                                            <FormItem className="space-y-2">
+                                                <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Stop Loss</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-red-500/20 bg-red-500/5 font-semibold text-sm font-mono" />
+                                                    <Input type="number" step="any" {...field} className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 text-red-600 dark:text-red-400 font-medium text-sm font-mono" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -541,10 +540,10 @@ export default function EditTradePage() {
                                         control={form.control}
                                         name="take_profit"
                                         render={({ field }) => (
-                                            <FormItem className="space-y-3">
-                                                <FormLabel className="text-[10px] font-semibold text-emerald-400/70 uppercase tracking-[0.2em] ml-1">Take Profit</FormLabel>
+                                            <FormItem className="space-y-2">
+                                                <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Take Profit</FormLabel>
                                                 <FormControl>
-                                                    <Input type="number" step="any" {...field} className="h-12 rounded-xl border-emerald-500/20 bg-emerald-500/5 font-semibold text-sm font-mono" />
+                                                    <Input type="number" step="any" {...field} className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 text-emerald-600 dark:text-emerald-400 font-medium text-sm font-mono" />
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -552,7 +551,7 @@ export default function EditTradePage() {
                                     />
                                 </div>
 
-                                <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-3xl border border-slate-100 dark:border-slate-800/50">
+                                <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-md border border-slate-200 dark:border-slate-800">
                                     <RiskRewardIndicator
                                         entryPrice={form.watch('entry_price') || 0}
                                         stopLoss={form.watch('stop_loss')}
@@ -562,15 +561,15 @@ export default function EditTradePage() {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
                                     control={form.control}
                                     name="quantity"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Volume Executado</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Volume Executado</FormLabel>
                                             <FormControl>
-                                                <Input type="number" step="any" {...field} className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm" />
+                                                <Input type="number" step="any" {...field} className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm" />
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -580,11 +579,11 @@ export default function EditTradePage() {
                                     control={form.control}
                                     name="account_id"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3 opacity-60">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Conta (Read Only)</FormLabel>
+                                        <FormItem className="space-y-2 opacity-60">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Conta (Somente Leitura)</FormLabel>
                                             <Select onValueChange={field.onChange} value={field.value} disabled>
                                                 <FormControl>
-                                                    <SelectTrigger className="h-12 rounded-xl border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm">
+                                                    <SelectTrigger className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm">
                                                         <SelectValue />
                                                     </SelectTrigger>
                                                 </FormControl>
@@ -600,18 +599,18 @@ export default function EditTradePage() {
                                 />
                             </div>
 
-                            <div className="space-y-10 pt-4 border-t border-slate-100 dark:border-slate-800/50">
+                            <div className="space-y-8 pt-4 border-t border-slate-200 dark:border-slate-800">
                                 <FormField
                                     control={form.control}
                                     name="notes"
                                     render={({ field }) => (
-                                        <FormItem className="space-y-3">
-                                            <FormLabel className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Diário & Revisão</FormLabel>
+                                        <FormItem className="space-y-2">
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Diário & Revisão</FormLabel>
                                             <FormControl>
                                                 <Textarea
                                                     {...field}
                                                     placeholder="Como foi seu estado emocional? Seguiu o plano? O que aprendeu?"
-                                                    className="min-h-[160px] rounded-[2rem] border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950/30 font-semibold text-sm focus:ring-blue-500 p-8 resize-none transition-all placeholder:font-normal"
+                                                    className="min-h-[160px] rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 p-4 resize-y transition-colors"
                                                 />
                                             </FormControl>
                                             <FormMessage />
@@ -621,11 +620,11 @@ export default function EditTradePage() {
 
                                 {/* Upload Section */}
                                 <div className="space-y-4">
-                                    <div className="flex items-center gap-2 ml-1">
+                                    <div className="flex items-center gap-2">
                                         <TrendingUp className="h-4 w-4 text-slate-400" />
-                                        <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Evidências de Gráfico</label>
+                                        <label className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Evidências de Gráfico</label>
                                     </div>
-                                    <div className="bg-white/90 dark:bg-slate-950/20 p-8 rounded-[2rem] border border-dashed border-slate-200 dark:border-slate-800">
+                                    <div className="bg-white dark:bg-[#0b1220] p-6 rounded-md border border-dashed border-slate-200 dark:border-slate-800">
                                         <ImageUpload images={images} onImagesChange={setImages} maxImages={3} />
                                     </div>
                                 </div>
@@ -633,11 +632,11 @@ export default function EditTradePage() {
 
                             <Button
                                 type="submit"
-                                className="w-full h-16 rounded-[2rem] bg-[#2b7de9] hover:bg-[#256bd1] text-white font-semibold text-lg shadow-2xl shadow-blue-500/20 transition-all hover:-translate-y-1 active:scale-95 disabled:opacity-50"
+                                className="w-full h-11 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
                                 disabled={submitting}
                             >
-                                {submitting ? <Loader2 className="mr-3 h-6 w-6 animate-spin" /> : null}
-                                SALVAR ALTERAÇÕES
+                                {submitting ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
+                                Salvar Alterações
                             </Button>
                         </form>
                     </Form>

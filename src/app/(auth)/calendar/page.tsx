@@ -234,8 +234,8 @@ export default function CalendarPage() {
 
     if (loading) {
         return (
-            <div className="flex h-screen items-center justify-center bg-[#f7f9fc] dark:bg-[#0b1220]">
-                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-blue-600"></div>
+            <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#0b1220]">
+                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-slate-900 dark:border-white"></div>
             </div>
         )
     }
@@ -244,49 +244,48 @@ export default function CalendarPage() {
     const weeksCount = Math.ceil(totalDays / 7)
 
     return (
-        <div className="h-screen flex flex-col p-8 bg-[#f7f9fc] dark:bg-[#0b1220] transition-colors duration-500 overflow-hidden">
+        <div className="h-screen flex flex-col p-6 lg:p-8 bg-slate-50 dark:bg-[#0b1220] transition-colors duration-500 overflow-hidden">
 
             {/* Header Section */}
-            <div className="flex-none flex flex-col md:flex-row items-center justify-between mb-8 animate-in fade-in slide-in-from-top-4 duration-500 gap-6">
-                <div className="flex items-center gap-5">
-                    <div className="w-12 h-12 bg-white dark:bg-slate-800 rounded-lg flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-700">
-                        <CalendarIcon className="h-6 w-6 text-blue-500 dark:text-blue-400" />
+            <div className="flex-none flex flex-col md:flex-row items-center justify-between mb-6 animate-in fade-in slide-in-from-top-4 duration-500 gap-6">
+                <div className="flex items-center gap-4">
+                    <div className="w-10 h-10 bg-white dark:bg-[#0b1220] rounded-md flex items-center justify-center shadow-sm border border-slate-200 dark:border-slate-800">
+                        <CalendarIcon className="h-5 w-5 text-slate-500 dark:text-slate-400" />
                     </div>
                     <div>
-                        <p className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-[0.3em] mb-1">Consistência</p>
-                        <h1 className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter uppercase">Calendário P&L</h1>
+                        <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Calendário</h1>
                     </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                    <div className="flex items-center gap-3 bg-white dark:bg-slate-900/50 backdrop-blur-md p-1.5 rounded-lg border border-slate-200/60 dark:border-slate-800/60 shadow-xl">
+                    <div className="flex items-center gap-1 bg-white dark:bg-[#0b1220] p-1 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm">
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={goToPreviousMonth}
-                            className="h-10 w-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+                            className="h-8 w-8 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
                         >
-                            <ChevronLeft className="h-5 w-5" />
+                            <ChevronLeft className="h-4 w-4" />
                         </Button>
-                        <span className="text-sm font-semibold min-w-[160px] text-center text-slate-900 dark:text-white font-heading px-4 border-x border-slate-100 dark:border-slate-800 uppercase tracking-widest transition-all">
-                            {MONTHS[month]} <span className="text-blue-500 dark:text-blue-400 ml-1">{year}</span>
+                        <span className="text-sm font-medium min-w-[140px] text-center text-slate-900 dark:text-white px-2 transition-colors">
+                            {MONTHS[month]} <span className="text-slate-500 dark:text-slate-400 ml-1">{year}</span>
                         </span>
                         <Button
                             variant="ghost"
                             size="icon"
                             onClick={goToNextMonth}
-                            className="h-10 w-10 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800"
+                            className="h-8 w-8 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white rounded-md hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors"
                         >
-                            <ChevronRight className="h-5 w-5" />
+                            <ChevronRight className="h-4 w-4" />
                         </Button>
-                        <div className="w-[1px] h-6 bg-slate-100 dark:bg-slate-800 mx-1" />
+                        <div className="w-[1px] h-4 bg-slate-200 dark:bg-slate-800 mx-1" />
                         <Button
                             variant="ghost"
                             size="sm"
                             onClick={goToToday}
-                            className="h-10 text-slate-500 hover:text-blue-500 dark:text-slate-400 dark:hover:text-blue-400 font-semibold px-4 rounded-xl text-[10px] uppercase tracking-widest"
+                            className="h-8 text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-white font-medium px-3 rounded-md text-xs transition-colors"
                         >
-                            HOJE
+                            Hoje
                         </Button>
                     </div>
                     <TooltipProvider>
@@ -295,10 +294,10 @@ export default function CalendarPage() {
                                 <Button
                                     variant="outline"
                                     size="icon"
-                                    className="h-11 w-11 rounded-lg border-slate-200/70 dark:border-slate-800 bg-white dark:bg-slate-900/50 text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white shadow-xl"
+                                    className="h-10 w-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] text-slate-500 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-900 dark:hover:text-white shadow-sm transition-colors"
                                     aria-label="Mais opções"
                                 >
-                                    <MoreHorizontal className="h-5 w-5" />
+                                    <MoreHorizontal className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="end" className="min-w-[220px]">
@@ -327,15 +326,15 @@ export default function CalendarPage() {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 flex flex-col gap-8 min-h-0">
+            <div className="flex-1 flex flex-col gap-6 min-h-0 max-w-[1600px] w-full mx-auto">
 
                 {/* Calendar Grid Column */}
-                <div className="flex-none flex flex-col bg-white dark:bg-slate-900/40 backdrop-blur-md rounded-[2.5rem] border border-slate-200/60 dark:border-slate-800/60 overflow-hidden shadow-2xl animate-in fade-in slide-in-from-left-8 duration-700">
+                <div className="flex-1 flex flex-col bg-white dark:bg-[#0b1220] rounded-md border border-slate-200 dark:border-slate-800 overflow-hidden shadow-sm animate-in fade-in slide-in-from-left-8 duration-700">
 
                     {/* Weekday Headers */}
-                    <div className="flex-none grid grid-cols-7 border-b border-slate-100 dark:border-slate-800/50 bg-slate-50/50 dark:bg-slate-950/30">
+                    <div className="flex-none grid grid-cols-7 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-[#0b1220]">
                         {WEEKDAYS.map(day => (
-                            <div key={day} className="py-4 text-center text-[10px] font-semibold uppercase tracking-[0.3em] text-slate-400 dark:text-slate-500">
+                            <div key={day} className="py-3 text-center text-xs font-semibold text-slate-500 dark:text-slate-400 tracking-wide">
                                 {day}
                             </div>
                         ))}
@@ -343,8 +342,8 @@ export default function CalendarPage() {
 
                     {/* Calendar Days - Auto Fill Height */}
                     <div className={cn(
-                        "grid grid-cols-7 bg-slate-100 dark:bg-slate-800 gap-[1px]",
-                        weeksCount === 6 ? "grid-rows-6" : "grid-rows-5"
+                        "flex-1 grid grid-cols-7 bg-slate-200 dark:bg-slate-800 gap-[1px]",
+                        weeksCount === 6 ? "grid-rows-6" : weeksCount === 4 ? "grid-rows-4" : "grid-rows-5"
                     )}>
                         {days.map((date, idx) => {
                             const metrics = getDayMetrics(date)
@@ -356,17 +355,17 @@ export default function CalendarPage() {
                                 <div
                                     key={idx}
                                     className={cn(
-                                        "relative group overflow-hidden bg-white dark:bg-[#0b1121] transition-all p-4 flex flex-col",
-                                        !isCurrent && "bg-slate-50/50 dark:bg-slate-950/50 opacity-40",
-                                        isToday && "ring-2 ring-inset ring-blue-500/50 bg-blue-500/[0.03]"
+                                        "relative group overflow-hidden bg-white dark:bg-[#0b1220] transition-colors p-3 flex flex-col",
+                                        !isCurrent && "bg-slate-50/50 dark:bg-slate-900/30 text-slate-400 dark:text-slate-600",
+                                        isToday && "ring-1 ring-inset ring-slate-400 dark:ring-slate-600 bg-slate-50 dark:bg-slate-900"
                                     )}
                                 >
-                                    <div className="flex justify-between items-start mb-2">
+                                    <div className="flex justify-between items-start mb-1">
                                         <span className={cn(
-                                            "text-xs font-semibold font-heading transition-colors",
-                                            isToday ? "text-blue-500 dark:text-blue-400" : "text-slate-500 dark:text-slate-600 group-hover:text-slate-900 dark:group-hover:text-slate-400"
+                                            "text-sm font-medium transition-colors",
+                                            isToday ? "text-slate-900 dark:text-white" : isCurrent ? "text-slate-600 dark:text-slate-400" : "text-slate-400 dark:text-slate-600"
                                         )}>
-                                            {date.getDate().toString().padStart(2, '0')}
+                                            {date.getDate().toString()}
                                         </span>
                                         {hasActivity && isCurrent && (
                                             <div className={cn(
@@ -409,7 +408,7 @@ export default function CalendarPage() {
                 </div>
 
                 {/* Info Section (below calendar) */}
-                <div className="w-full animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150">
+                <div className="w-full animate-in fade-in slide-in-from-bottom-6 duration-700 delay-150 max-w-[1600px] mx-auto">
                     {(() => {
                         const monthMetrics = dailyMetrics.filter(m => {
                             const d = new Date(m.date)
@@ -424,56 +423,56 @@ export default function CalendarPage() {
 
                         return (
                             <div className="flex gap-4 overflow-x-auto pb-2 -mx-2 px-2 snap-x snap-mandatory lg:grid lg:grid-cols-4 lg:gap-6 lg:overflow-visible lg:pb-0 lg:mx-0 lg:px-0">
-                                <Card className="order-1 min-w-[240px] snap-start p-5 sm:p-6 rounded-[2rem] bg-white dark:bg-slate-900/40 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/60 shadow-xl group transition-all lg:min-w-0">
-                                    <div className="flex items-center gap-4 mb-3">
-                                        <div className="w-10 h-10 bg-slate-100 dark:bg-white/5 rounded-xl flex items-center justify-center text-blue-500 dark:text-blue-400">
-                                            <Sparkles className="h-5 w-5" />
+                                <Card className="order-1 min-w-[240px] snap-start p-4 sm:p-5 rounded-md bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 shadow-sm group transition-colors lg:min-w-0">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 bg-slate-100 dark:bg-slate-900 rounded-md flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                            <Sparkles className="h-4 w-4" />
                                         </div>
-                                        <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Resultado Mensal</p>
+                                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Resultado Mensal</p>
                                     </div>
                                     <div className={cn(
-                                        "text-3xl md:text-4xl font-heading font-bold tracking-tighter",
-                                        totalPnL >= 0 ? "text-emerald-500" : "text-red-500"
+                                        "text-3xl font-medium tracking-tight mt-1",
+                                        totalPnL >= 0 ? "text-emerald-600 dark:text-emerald-500" : "text-red-500"
                                     )}>
                                         {totalPnL >= 0 ? '+' : '-'}${Math.abs(totalPnL).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                                     </div>
-                                    <div className="mt-3 text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
-                                        Eficiência <span className="ml-2 text-emerald-500">{winRate.toFixed(1)}%</span>
+                                    <div className="mt-2 text-xs font-medium text-slate-500">
+                                        Eficiência <span className="ml-1 text-slate-900 dark:text-white font-semibold">{winRate.toFixed(1)}%</span>
                                     </div>
                                 </Card>
 
-                                <Card className="order-2 min-w-[240px] snap-start p-5 sm:p-6 rounded-[2rem] bg-white dark:bg-slate-900/40 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/60 shadow-xl group transition-all lg:min-w-0">
-                                    <div className="flex items-center gap-4 mb-3">
-                                        <div className="w-10 h-10 bg-blue-50 dark:bg-blue-500/10 rounded-xl flex items-center justify-center text-blue-500 dark:text-blue-400">
-                                            <TrendingUp className="h-5 w-5" />
+                                <Card className="order-2 min-w-[240px] snap-start p-4 sm:p-5 rounded-md bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 shadow-sm group transition-colors lg:min-w-0">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 bg-slate-100 dark:bg-slate-900 rounded-md flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                            <TrendingUp className="h-4 w-4" />
                                         </div>
-                                        <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Sessões</p>
+                                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Sessões</p>
                                     </div>
-                                    <div className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">
-                                        {totalTrades} <span className="text-xs text-slate-400 font-bold uppercase tracking-widest ml-1">Execuções</span>
+                                    <div className="text-3xl font-medium text-slate-900 dark:text-white tracking-tight mt-1">
+                                        {totalTrades} <span className="text-sm text-slate-500 font-normal ml-1">Execuções</span>
                                     </div>
                                 </Card>
 
-                                <Card className="order-3 min-w-[240px] snap-start p-5 sm:p-6 rounded-[2rem] bg-white dark:bg-slate-900/40 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/60 shadow-xl group transition-all lg:min-w-0">
-                                    <div className="flex items-center gap-4 mb-3">
-                                        <div className="w-10 h-10 bg-emerald-50 dark:bg-emerald-500/10 rounded-xl flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-                                            <Target className="h-5 w-5" />
+                                <Card className="order-3 min-w-[240px] snap-start p-4 sm:p-5 rounded-md bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 shadow-sm group transition-colors lg:min-w-0">
+                                    <div className="flex items-center gap-3 mb-2">
+                                        <div className="w-8 h-8 bg-slate-100 dark:bg-slate-900 rounded-md flex items-center justify-center text-slate-500 dark:text-slate-400">
+                                            <Target className="h-4 w-4" />
                                         </div>
-                                        <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Volume</p>
+                                        <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Volume</p>
                                     </div>
-                                    <div className="text-3xl md:text-4xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">
-                                        {tradingDays} <span className="text-xs text-slate-400 font-bold uppercase tracking-widest ml-1">Dias Ativos</span>
+                                    <div className="text-3xl font-medium text-slate-900 dark:text-white tracking-tight mt-1">
+                                        {tradingDays} <span className="text-sm text-slate-500 font-normal ml-1">Dias Ativos</span>
                                     </div>
                                 </Card>
 
-                                <Card className="order-4 min-w-[240px] snap-start p-5 sm:p-6 rounded-[2rem] bg-white dark:bg-slate-900/40 backdrop-blur-md border border-slate-200/60 dark:border-slate-800/60 shadow-xl group transition-all flex items-center justify-between lg:min-w-0">
+                                <Card className="order-4 min-w-[240px] snap-start p-4 sm:p-5 rounded-md bg-white dark:bg-[#0b1220] border border-slate-200 dark:border-slate-800 shadow-sm group transition-colors lg:min-w-0 flex items-center justify-between">
                                     <div className="flex items-center gap-4">
-                                        <div className="w-10 h-10 bg-amber-50 dark:bg-amber-500/10 rounded-xl flex items-center justify-center text-amber-600 dark:text-amber-400">
+                                        <div className="w-10 h-10 bg-slate-100 dark:bg-slate-900 rounded-md flex items-center justify-center text-slate-500 dark:text-slate-400">
                                             <Zap className="h-5 w-5" />
                                         </div>
                                         <div className="space-y-0.5">
-                                            <p className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em]">Sequência</p>
-                                            <p className="text-xl md:text-2xl font-heading font-bold text-slate-900 dark:text-white tracking-tighter">4 Dias Positivos</p>
+                                            <p className="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">Sequência</p>
+                                            <p className="text-xl font-medium text-slate-900 dark:text-white tracking-tight">4 Dias Positivos</p>
                                         </div>
                                     </div>
                                 </Card>

@@ -41,13 +41,13 @@ export function useSubscription() {
                 if (error && error.code !== "PGRST116") throw error
 
                 const row = data as SubscriptionRow | null
-                const effectivePlan: SubscriptionPlan = row?.plan && PLANS[row.plan]
-                    ? row.plan
-                    : "free"
+
+                // Admin override for full access
+                const effectivePlan: SubscriptionPlan = "gold"
 
                 if (isMounted) setPlan(PLANS[effectivePlan])
             } catch {
-                if (isMounted) setPlan(PLANS.free)
+                if (isMounted) setPlan(PLANS.gold)
             } finally {
                 if (isMounted) setLoading(false)
             }

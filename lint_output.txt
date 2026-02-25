@@ -1,0 +1,125 @@
+
+> trader-journal-pwa@0.1.0 lint
+> eslint
+
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/migrate.js
+  2:20  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  3:12  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+  4:14  error  A `require()` style import is forbidden  @typescript-eslint/no-require-imports
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/accounts/page.tsx
+   10:32   warning  'ArrowLeft' is defined but never used                            @typescript-eslint/no-unused-vars
+   12:8    warning  'Link' is defined but never used                                 @typescript-eslint/no-unused-vars
+   30:69   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   32:58   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   37:60   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   52:32   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+   95:25   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  114:25   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  121:37   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  243:41   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  320:147  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  320:171  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/analytics/page.tsx
+   6:96   warning  'Filter' is defined but never used                    @typescript-eslint/no-unused-vars
+  13:39   warning  'CartesianGrid' is defined but never used             @typescript-eslint/no-unused-vars
+  13:90   warning  'PieChart' is defined but never used                  @typescript-eslint/no-unused-vars
+  13:100  warning  'Pie' is defined but never used                       @typescript-eslint/no-unused-vars
+  13:105  warning  'Legend' is defined but never used                    @typescript-eslint/no-unused-vars
+  32:11   warning  'selectedAccount' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/calendar/page.tsx
+  7:63  warning  'Plus' is defined but never used   @typescript-eslint/no-unused-vars
+  7:99  warning  'Clock' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/dashboard/page.tsx
+   7:10  warning  'Loader2' is defined but never used        @typescript-eslint/no-unused-vars
+  53:10  warning  'user' is assigned a value but never used  @typescript-eslint/no-unused-vars
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/import/page.tsx
+   7:16  warning  'CardContent' is defined but never used      @typescript-eslint/no-unused-vars
+   7:29  warning  'CardHeader' is defined but never used       @typescript-eslint/no-unused-vars
+   7:41  warning  'CardTitle' is defined but never used        @typescript-eslint/no-unused-vars
+   7:52  warning  'CardDescription' is defined but never used  @typescript-eslint/no-unused-vars
+  10:10  warning  'Upload' is defined but never used           @typescript-eslint/no-unused-vars
+  25:56  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  35:25  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+  87:25  error    Unexpected any. Specify a different type     @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/journal/page.tsx
+   5:68  warning  'ArrowLeft' is defined but never used     @typescript-eslint/no-unused-vars
+  12:8   warning  'Link' is defined but never used          @typescript-eslint/no-unused-vars
+  50:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  88:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/layout.tsx
+  19:38  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/reports/page.tsx
+    7:21  warning  'TrendingUp' is defined but never used    @typescript-eslint/no-unused-vars
+    7:33  warning  'TrendingDown' is defined but never used  @typescript-eslint/no-unused-vars
+    7:47  warning  'Target' is defined but never used        @typescript-eslint/no-unused-vars
+    7:55  warning  'Award' is defined but never used         @typescript-eslint/no-unused-vars
+  278:64  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  329:64  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  378:64  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/settings/page.tsx
+    8:69  warning  'ArrowLeft' is defined but never used     @typescript-eslint/no-unused-vars
+   84:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  116:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/trades/[id]/edit/page.tsx
+   13:83  warning  'Clock' is defined but never used                     @typescript-eslint/no-unused-vars
+   27:32  warning  'accountsLoading' is assigned a value but never used  @typescript-eslint/no-unused-vars
+   90:22  warning  'error' is defined but never used                     @typescript-eslint/no-unused-vars
+   90:29  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  169:25  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  196:25  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+  245:25  error    Unexpected any. Specify a different type              @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/trades/new/page.tsx
+  18:10  warning  'cn' is defined but never used            @typescript-eslint/no-unused-vars
+  80:25  error    Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/(auth)/trades/page.tsx
+  97:8  warning  React Hook useEffect has a missing dependency: 'applyFilters'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/api/stripe/webhook/route.ts
+  45:67  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  60:63  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/login/page.tsx
+   12:31   warning  'ArrowRight' is defined but never used                           @typescript-eslint/no-unused-vars
+   48:25   error    Unexpected any. Specify a different type                         @typescript-eslint/no-explicit-any
+  196:29   error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+  196:129  error    `"` can be escaped with `&quot;`, `&ldquo;`, `&#34;`, `&rdquo;`  react/no-unescaped-entities
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/page.tsx
+  13:3  warning  'ChevronRight' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/pricing/page.tsx
+  8:10  warning  'cn' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/seed/page.tsx
+   40:15  warning  'diff' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  110:25  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+  124:21  error    Unexpected any. Specify a different type   @typescript-eslint/no-explicit-any
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/app/shared/[token]/page.tsx
+    7:29  warning  'TrendingUp' is defined but never used                                                                                                                                                                                                                                                   @typescript-eslint/no-unused-vars
+    7:41  warning  'TrendingDown' is defined but never used                                                                                                                                                                                                                                                 @typescript-eslint/no-unused-vars
+    7:55  warning  'Clock' is defined but never used                                                                                                                                                                                                                                                        @typescript-eslint/no-unused-vars
+   11:10  warning  'EquityChart' is defined but never used                                                                                                                                                                                                                                                  @typescript-eslint/no-unused-vars
+  144:37  warning  Using `<img>` could result in slower LCP and higher bandwidth. Consider using `<Image />` from `next/image` or a custom image loader to automatically optimize images. This may incur additional usage or cost from your provider. See: https://nextjs.org/docs/messages/no-img-element  @next/next/no-img-element
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/components/risk-reward-indicator.tsx
+  8:84  warning  '_direction' is defined but never used  @typescript-eslint/no-unused-vars
+
+/Users/leandrotoledo/app-traders/trader-journal-pwa/src/components/shared-trade-card.tsx
+  16:54  warning  '_direction' is defined but never used  @typescript-eslint/no-unused-vars
+
+✖ 76 problems (36 errors, 40 warnings)
+

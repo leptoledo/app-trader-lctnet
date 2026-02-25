@@ -62,11 +62,11 @@ export default function AuthPage() {
                     {/* Header */}
                     <div className="flex flex-col space-y-2 text-center items-center">
                         <Link href="/" className="flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity">
-                            <div className="bg-blue-600 p-1.5 rounded-lg shadow-md shadow-blue-500/20">
+                            <div className="bg-emerald-500 p-1.5 rounded-lg shadow-md shadow-emerald-500/20">
                                 <TrendingUp className="h-5 w-5 text-white" />
                             </div>
                             <span className="text-xl font-heading font-bold tracking-tight text-slate-900 dark:text-white">
-                                Trader<span className="text-blue-600">LCTNET</span>
+                                Trader Journal
                             </span>
                         </Link>
 
@@ -114,7 +114,7 @@ export default function AuthPage() {
                             <div className="flex items-center justify-between">
                                 <Label htmlFor="password" className="text-slate-600 dark:text-slate-300 font-semibold">Senha</Label>
                                 {view === 'login' && (
-                                    <Link href="#" className="text-xs font-semibold text-blue-600 hover:text-blue-500">
+                                    <Link href="#" className="text-xs font-semibold text-emerald-600 dark:text-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">
                                         Esqueceu a senha?
                                     </Link>
                                 )}
@@ -129,7 +129,7 @@ export default function AuthPage() {
                             />
                         </div>
 
-                        <Button className="w-full h-11 text-base font-semibold bg-[#2b7de9] hover:bg-[#256bd1] shadow-lg shadow-blue-500/20" type="submit" disabled={loading}>
+                        <Button className="w-full h-11 text-base font-semibold bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 border-0" type="submit" disabled={loading}>
                             {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                             {view === 'login' ? 'Entrar na Plataforma' : 'Criar Conta Gratuita'}
                         </Button>
@@ -159,14 +159,14 @@ export default function AuthPage() {
                         {view === 'login' ? (
                             <p className="text-slate-500 dark:text-slate-400">
                                 Não tem uma conta?{" "}
-                                <button onClick={() => setView('signup')} className="font-semibold text-blue-600 hover:text-blue-500 hover:underline transition-all">
+                                <button onClick={() => setView('signup')} className="font-semibold text-emerald-600 dark:text-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400 hover:underline transition-all">
                                     Cadastre-se agora
                                 </button>
                             </p>
                         ) : (
                             <p className="text-slate-500 dark:text-slate-400">
                                 Já tem uma conta?{" "}
-                                <button onClick={() => setView('login')} className="font-semibold text-blue-600 hover:text-blue-500 hover:underline transition-all">
+                                <button onClick={() => setView('login')} className="font-semibold text-emerald-600 dark:text-emerald-500 hover:text-emerald-500 dark:hover:text-emerald-400 hover:underline transition-all">
                                     Faça login
                                 </button>
                             </p>
@@ -178,7 +178,7 @@ export default function AuthPage() {
 
             {/* --- RIGHT SIDE (Image) --- */}
             <div className="hidden lg:block relative bg-[#0b1220] overflow-hidden">
-                <div className="absolute inset-0 bg-blue-900/20 mix-blend-multiply z-10" />
+                <div className="absolute inset-0 bg-emerald-900/20 mix-blend-multiply z-10" />
                 <Image
                     src="/images/auth-side-panel.png"
                     alt="Trading Flow State"
@@ -190,14 +190,14 @@ export default function AuthPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent z-20" />
 
                 <div className="absolute bottom-0 left-0 p-12 z-30 max-w-xl">
-                    <div className="h-1 w-12 bg-blue-500 mb-6 rounded-lg" />
+                    <div className="h-1 w-12 bg-emerald-500 mb-6 rounded-lg" />
                     <blockquote className="space-y-2">
                         <p className="text-3xl font-heading font-medium text-white leading-relaxed">
-                            "A disciplina é a ponte entre as metas e a realização. O TraderLCTNET me ajudou a cruzar essa ponte."
+                            "A disciplina é a ponte entre as metas e a realização. O Trader Journal me ajudou a cruzar essa ponte."
                         </p>
                         <footer className="pt-4">
                             <div className="text-base font-bold text-white">Ricardo S.</div>
-                            <div className="text-sm text-blue-400 font-medium">Trader Profissional - Full Time</div>
+                            <div className="text-sm text-emerald-400 font-medium">Trader Profissional - Full Time</div>
                         </footer>
                     </blockquote>
                 </div>

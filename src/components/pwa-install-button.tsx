@@ -43,50 +43,60 @@ export function PwaInstallButton() {
   }, [])
 
   if (isStandalone) return null
-  if (!deferredPrompt && !isIos) return null
 
   const handleInstall = async () => {
-    if (!deferredPrompt) return
-    await deferredPrompt.prompt()
-    await deferredPrompt.userChoice
-    setDeferredPrompt(null)
+    if (deferredPrompt) {
+      await deferredPrompt.prompt()
+      await deferredPrompt.userChoice
+      setDeferredPrompt(null)
+    } else {
+      setShowIosHelp(true)
+    }
   }
 
   return (
     <>
-      {deferredPrompt ? (
-        <Button
-          onClick={handleInstall}
-          className="h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-lg shadow-emerald-500/20"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Instalar App
-        </Button>
-      ) : (
-        <Button
-          onClick={() => setShowIosHelp(true)}
-          className="h-11 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black uppercase text-[10px] tracking-widest px-6 shadow-lg shadow-emerald-500/20"
-        >
-          <Download className="h-4 w-4 mr-2" />
-          Instalar no iOS
-        </Button>
-      )}
+      <Button
+        onClick={handleInstall}
+        className="rounded-md bg-emerald-500 hover:bg-emerald-600 text-white px-4 h-9 text-sm font-medium border-0 shadow-none transition-colors"
+      >
+        <Download className="h-4 w-4 mr-2" />
+        Instalar App
+      </Button>
 
       <Dialog open={showIosHelp} onOpenChange={setShowIosHelp}>
         <DialogContent className="rounded-lg max-w-md">
           <DialogHeader>
-            <DialogTitle>Instalar no iPhone/iPad</DialogTitle>
+            <DialogTitle>{isIos ? "Instalar no iPhone/iPad" : "Instalar Aplicativo PWA"}</DialogTitle>
             <DialogDescription>
-              No iOS, a instalação é feita pelo menu do Safari.
+              {isIos
+                ? "No iOS, a instalação é feita de forma manual pelo menu do Safari."
+                : "Seu navegador já suporta a instalação deste Web App ou ainda está carregando a permissão!"}
             </DialogDescription>
           </DialogHeader>
-          <div className="space-y-2 text-sm text-slate-500">
-            <p>1) Abra este site no Safari.</p>
-            <p>2) Toque no botão de compartilhar.</p>
-            <p>3) Escolha “Adicionar à Tela de Início”.</p>
+          <div className="space-y-3 text-sm text-slate-600 dark:text-slate-400">
+            {isIos ? (
+              <div className="flex flex-col gap-1">
+                <p>1) Abra este site diretamente no <b>Safari</b>.</p>
+                <p>2) Na barra de navegação embaixo, toque no botão de compartilhar.</p>
+                <p>3) Role a lista de opções e escolha “<b>Adicionar à Tela de Início</b>”.</p>
+              </div>
+            ) : (
+              <div className="flex flex-col gap-1">
+                <p>
+                  1) Fique atento à barra de endereços do seu navegador, na parte de cima da tela.
+                </p>
+                <p>
+                  2) Procure por um botão em formato de <Download className="inline h-4 w-4 bg-slate-100 dark:bg-slate-800 rounded mx-1 p-0.5" /> (Download ou Instalar).
+                </p>
+                <p className="mt-2 text-xs opacity-80 border-t border-slate-200 dark:border-slate-800 pt-2">
+                  Dica Alternativa: Você também pode abrir o menu de "três pontinhos" do seu navegador (Google Chrome, Edge, etc) e clicar em <b>"Instalar Aplicativo"</b> / "Adicionar à Tela Inicial".
+                </p>
+              </div>
+            )}
           </div>
           <DialogFooter>
-            <Button onClick={() => setShowIosHelp(false)} className="rounded-xl">Entendi</Button>
+            <Button onClick={() => setShowIosHelp(false)} className="rounded-md">Entendi</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
