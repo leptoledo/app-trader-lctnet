@@ -268,7 +268,7 @@ export default function LandingPage() {
               <div className="flex gap-6 w-max animate-marquee-horizontal hover:[animation-play-state:paused]">
                 {/* Clone the array multiple times to ensure continuous horizontal loop */}
                 {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
-                  <div key={i} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
+                  <div key={`r1-${i}`} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
                         {t.avatar}
@@ -284,10 +284,29 @@ export default function LandingPage() {
                 ))}
               </div>
 
-              {/* Row 2 */}
-              <div className="flex gap-6 w-max animate-marquee-horizontal-slow hover:[animation-play-state:paused] ml-[-200px]">
+              {/* Row 2 - Reverse */}
+              <div className="flex gap-6 w-max animate-marquee-horizontal-reverse hover:[animation-play-state:paused] ml-[-200px]">
                 {[...testimonials.slice().reverse(), ...testimonials.slice().reverse(), ...testimonials.slice().reverse()].map((t, i) => (
-                  <div key={i} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
+                  <div key={`r2-${i}`} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
+                    <div className="flex items-center gap-3 mb-4">
+                      <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
+                        {t.avatar}
+                      </div>
+                      <div>
+                        <div className="text-[13px] font-medium text-slate-900 dark:text-white">{t.handle}</div>
+                      </div>
+                    </div>
+                    <p className="text-[13px] text-slate-600 dark:text-slate-400 leading-relaxed whitespace-normal h-full">
+                      {t.content}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Row 3 - Slow Forward */}
+              <div className="flex gap-6 w-max animate-marquee-horizontal-slow hover:[animation-play-state:paused] ml-[-400px]">
+                {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+                  <div key={`r3-${i}`} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
                         {t.avatar}

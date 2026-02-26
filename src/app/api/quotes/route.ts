@@ -46,7 +46,14 @@ export async function GET(request: Request) {
 
   const url = `${API_BASE}?symbol=${encodeURIComponent(symbols.join(","))}&apikey=${apiKey}`
 
-  const response = await fetch(url, { next: { revalidate: 30 } })
+  let response;
+  try {
+    response = await fetch(url, { next: { revalidate: 30 } })
+  } catch (error) {
+    console.error("quotes API fetch error:", error)
+    return NextResponse.json({ error: "API connection failed" }, { status: 502 })
+  }
+
   if (!response.ok) {
     return NextResponse.json({ error: "Failed to fetch prices" }, { status: 502 })
   }

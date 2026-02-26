@@ -13,6 +13,7 @@ import { supabase } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { importCsvAction } from "@/app/actions/importAction"
 
 export default function ImportPage() {
     const router = useRouter()
@@ -69,19 +70,25 @@ export default function ImportPage() {
         setImporting(true)
         try {
             const trades = await parseTradesCSV(file, selectedAdapter)
-            const { data: { user } } = await supabase.auth.getUser()
+            if (trades.length === 0) {
+                throw new Error("Não foram encontrados trades válidos para exportar neste arquivo.")
+            }
+
+            const { data: { session } } = await supabase.auth.getSession()
+            const user = session?.user
+
+            if (!user || !session?.access_token) throw new Error("Sessão inválida. Por favor, relogue.")
 
             const tradesWithAccount = trades.map(t => ({
                 ...t,
                 account_id: selectedAccount,
-                user_id: user?.id
             }))
 
-            const { error } = await supabase.from('trades').insert(tradesWithAccount)
+            const result = await importCsvAction(user.id, session.access_token, tradesWithAccount)
 
-            if (error) throw error
+            if (!result.success) throw new Error(result.error as string)
 
-            toast.success(`${trades.length} trades importados com sucesso!`)
+            toast.success(result.message)
             router.push('/trades')
             router.refresh()
         } catch (error: any) {

@@ -174,15 +174,15 @@
 
   /* Horizontal Marquee */
   .animate-marquee-horizontal {
-    animation: marquee-horizontal 40s linear infinite;
+    animation: marquee-horizontal 120s linear infinite;
   }
 
   .animate-marquee-horizontal-slow {
-    animation: marquee-horizontal 60s linear infinite;
+    animation: marquee-horizontal 150s linear infinite;
   }
 
   .animate-marquee-horizontal-reverse {
-    animation: marquee-horizontal-reverse 50s linear infinite;
+    animation: marquee-horizontal-reverse 135s linear infinite;
   }
 
   @keyframes marquee-horizontal {

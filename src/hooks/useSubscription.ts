@@ -40,7 +40,7 @@ export function useSubscription() {
 
                 if (error && error.code !== "PGRST116") throw error
 
-                const row = data as SubscriptionRow | null
+                // Removed unused row parsing
 
                 // Admin override for full access
                 const effectivePlan: SubscriptionPlan = "gold"

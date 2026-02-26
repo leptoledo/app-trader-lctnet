@@ -89,7 +89,7 @@ export default function EditTradePage() {
 
             } catch (error: any) {
                 toast.error("Erro ao carregar trade")
-                router.push('/')
+                router.push('/trades')
             } finally {
                 setLoadingConfig(false)
             }
@@ -164,7 +164,7 @@ export default function EditTradePage() {
             if (error) throw error
 
             toast.success("Trade atualizado com sucesso!")
-            router.push('/')
+            router.push('/trades')
             router.refresh()
         } catch (error: any) {
             toast.error(error.message)
@@ -265,7 +265,7 @@ export default function EditTradePage() {
             toast.error(error.message)
         } else {
             toast.success("Trade excluído")
-            router.push('/')
+            router.push('/trades')
             router.refresh()
         }
     }
@@ -288,7 +288,7 @@ export default function EditTradePage() {
                 <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 animate-in fade-in slide-in-from-top-4 duration-500">
                     <div className="flex items-center gap-4">
                         <Button variant="ghost" size="icon" asChild className="rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
-                            <Link href="/"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
+                            <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                         </Button>
                         <div>
                             <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Gerenciar Operação</h1>

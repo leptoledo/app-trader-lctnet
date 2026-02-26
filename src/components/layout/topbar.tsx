@@ -73,7 +73,7 @@ export function Topbar({ user }: TopbarProps) {
             {/* Right side: Actions & Profile */}
             <div className="flex items-center gap-1.5">
                 <Button variant="ghost" size="sm" className="hidden md:flex text-slate-500 hover:text-slate-900 text-[13px] h-8 font-medium" asChild>
-                    <a href="mailto:suporte@traderlct.net">Feedback</a>
+                    <Link href="/feedback">Feedback</Link>
                 </Button>
 
                 <div className="hidden md:flex items-center w-56 bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-md px-2.5 py-1.5 mr-2 transition-colors hover:border-slate-300 cursor-pointer">
@@ -118,10 +118,10 @@ export function Topbar({ user }: TopbarProps) {
                             </Link>
                         </DropdownMenuItem>
                         <DropdownMenuItem asChild>
-                            <a href="mailto:suporte@traderlct.net" className="cursor-pointer">
+                            <Link href="/feedback" className="cursor-pointer">
                                 <MessageSquare className="mr-2 h-4 w-4" />
                                 <span>Feedback</span>
-                            </a>
+                            </Link>
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem onClick={handleLogout} className="text-red-600 cursor-pointer">

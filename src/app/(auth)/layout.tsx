@@ -18,6 +18,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     const router = useRouter()
     const { plan, loading: subLoading } = useSubscription()
     const [user, setUser] = useState<any>(null)
+    const [publicName, setPublicName] = useState<string>("")
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
@@ -27,6 +28,21 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
             if (!user) {
                 router.push('/login')
                 return
+            }
+
+            try {
+                const { data: profile } = await supabase
+                    .from("profiles")
+                    .select("username, settings")
+                    .eq("id", user.id)
+                    .single()
+
+                const settings = (profile?.settings as Record<string, unknown>) || {}
+                const nameFromSettings = (settings.public_name as string) || ""
+                setPublicName(nameFromSettings || profile?.username || user.user_metadata?.name || "")
+            } catch {
+                // Ignore profile load constraints, fallback to metadata
+                setPublicName(user.user_metadata?.name || "")
             }
 
             setUser(user)
@@ -48,7 +64,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         <div className="flex flex-col h-screen overflow-hidden bg-white dark:bg-[#020617]">
             <Topbar
                 user={{
-                    name: user?.user_metadata?.name,
+                    name: publicName,
                     email: user?.email,
                     avatar: user?.user_metadata?.avatar_url,
                     plan: plan.name

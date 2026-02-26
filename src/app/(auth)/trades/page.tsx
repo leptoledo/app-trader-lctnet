@@ -649,9 +649,17 @@ export default function TradesPage() {
                                             </span>
                                         </TableCell>
                                         <TableCell>
-                                            <span className="font-heading font-semibold text-sm text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">
-                                                {trade.symbol}
-                                            </span>
+                                            <div className="flex items-center gap-2">
+                                                <span className="font-heading font-semibold text-sm text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+                                                    {trade.symbol}
+                                                </span>
+                                                {trade.notes === "SYNC_BINANCE" && (
+                                                    <span className="text-[9px] font-bold bg-[#FCD535]/10 text-[#FCD535] border border-[#FCD535]/20 px-1.5 py-0.5 rounded-sm uppercase tracking-wide">Binance</span>
+                                                )}
+                                                {trade.notes === "SYNC_CSV" && (
+                                                    <span className="text-[9px] font-bold bg-blue-500/10 text-blue-500 border border-blue-500/20 px-1.5 py-0.5 rounded-sm uppercase tracking-wide">Plataforma</span>
+                                                )}
+                                            </div>
                                         </TableCell>
                                         <TableCell>
                                             <span className={cn(

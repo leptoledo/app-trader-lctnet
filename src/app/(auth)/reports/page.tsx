@@ -254,15 +254,20 @@ export default function ReportsPage() {
                                             axisLine={false}
                                         />
                                         <Tooltip
-                                            contentStyle={{
-                                                backgroundColor: '#0b1220',
-                                                borderColor: '#1e293b',
-                                                color: '#f8fafc',
-                                                borderRadius: '6px',
-                                                fontSize: '12px',
+                                            content={({ active, payload, label }) => {
+                                                if (active && payload && payload.length) {
+                                                    const val = payload[0].value as number;
+                                                    return (
+                                                        <div className="bg-[#0b1220] border border-slate-800 p-3 rounded-lg shadow-xl">
+                                                            <p className="text-[10px] font-semibold text-slate-400 mb-1">{label}</p>
+                                                            <p className="text-sm font-semibold text-emerald-500">
+                                                                Patrimônio: ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                            </p>
+                                                        </div>
+                                                    )
+                                                }
+                                                return null;
                                             }}
-                                            itemStyle={{ color: '#10b981' }}
-                                            formatter={(value: any) => [`$${parseFloat(value || 0).toFixed(2)}`, 'Patrimônio']}
                                         />
                                         <Line
                                             type="monotone"
@@ -304,14 +309,21 @@ export default function ReportsPage() {
                                         />
                                         <Tooltip
                                             cursor={{ fill: '#1e293b', opacity: 0.1 }}
-                                            contentStyle={{
-                                                backgroundColor: '#0b1220',
-                                                borderColor: '#1e293b',
-                                                color: '#f8fafc',
-                                                borderRadius: '6px',
-                                                fontSize: '12px',
+                                            content={({ active, payload, label }) => {
+                                                if (active && payload && payload.length) {
+                                                    const val = payload[0].value as number;
+                                                    const color = val >= 0 ? 'text-emerald-500' : 'text-red-500';
+                                                    return (
+                                                        <div className="bg-[#0b1220] border border-slate-800 p-3 rounded-lg shadow-xl">
+                                                            <p className="text-[10px] font-semibold text-slate-400 mb-1">{label}</p>
+                                                            <p className={`text-sm font-semibold ${color}`}>
+                                                                P&L: ${val.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                                            </p>
+                                                        </div>
+                                                    )
+                                                }
+                                                return null;
                                             }}
-                                            formatter={(value: any) => [`$${parseFloat(value || 0).toFixed(2)}`, 'P&L']}
                                         />
                                         <Bar dataKey="pnl" radius={[4, 4, 0, 0]}>
                                             {dayOfWeekData.map((entry, index) => (
@@ -352,14 +364,20 @@ export default function ReportsPage() {
                                         />
                                         <Tooltip
                                             cursor={{ fill: '#1e293b', opacity: 0.1 }}
-                                            contentStyle={{
-                                                backgroundColor: '#0b1220',
-                                                borderColor: '#1e293b',
-                                                color: '#f8fafc',
-                                                borderRadius: '6px',
-                                                fontSize: '12px',
+                                            content={({ active, payload, label }) => {
+                                                if (active && payload && payload.length) {
+                                                    const val = payload[0].value as number;
+                                                    return (
+                                                        <div className="bg-[#0b1220] border border-slate-800 p-3 rounded-lg shadow-xl">
+                                                            <p className="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">{label}</p>
+                                                            <p className="text-sm font-semibold text-emerald-500">
+                                                                {val} Trades
+                                                            </p>
+                                                        </div>
+                                                    )
+                                                }
+                                                return null;
                                             }}
-                                            formatter={(value: any) => [value, 'Trades']}
                                         />
                                         <Bar dataKey="count" fill="#10b981" radius={[0, 4, 4, 0]} />
                                     </BarChart>
