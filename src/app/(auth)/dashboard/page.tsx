@@ -23,6 +23,10 @@ import { useAccounts } from "@/hooks/useAccounts"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { InfoTooltip } from "@/components/ui/info-tooltip"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import dynamic from "next/dynamic"
+import { demoTrades } from "@/lib/demo-data"
+
+const DemoTour = dynamic(() => import("@/components/demo-tour").then(mod => mod.DemoTour), { ssr: false })
 
 export default function Dashboard() {
   const router = useRouter()
@@ -54,12 +58,20 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
+        const isDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+        if (isDemo) {
+          setUser({ id: "demo-id", email: "trader@demonstracao.com", user_metadata: { name: "Trader Pro (Demo)" } as any } as any)
+          setTrades(demoTrades as any)
+          setLoading(false)
+          return
+        }
+
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) {
           router.push('/login')
           return
         }
-        setUser(user)
+        setUser(user as any)
 
         const { data, error } = await supabase
           .from('trades')
@@ -154,7 +166,7 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-[#f7f9fc] dark:bg-[#0b1220] flex flex-col font-sans pb-12 transition-colors duration-500">
-
+      <DemoTour />
       {/* Clean Dashboard Header */}
       <div className="bg-white dark:bg-[#0b1220] border-b border-slate-200 dark:border-slate-800 px-6 py-4 flex flex-col md:flex-row justify-between items-center sticky top-0 z-40 gap-4 shrink-0">
         <div className="flex items-center gap-4 w-full md:w-auto">
@@ -178,23 +190,25 @@ export default function Dashboard() {
         </div>
 
         <div className="flex items-center gap-4 w-full md:w-auto overflow-x-auto scrollbar-hide pb-2 md:pb-0">
-          <DateRangeFilter
-            value={dateRange}
-            onChange={setDateRange}
-            customFrom={customRange.from ? customRange.from.toISOString().split('T')[0] : ""}
-            customTo={customRange.to ? customRange.to.toISOString().split('T')[0] : ""}
-            onCustomChange={(from, to) => {
-              setCustomRange({
-                from: from ? new Date(from) : undefined,
-                to: to ? new Date(to) : undefined
-              })
-            }}
-          />
+          <div id="tour-date-filter">
+            <DateRangeFilter
+              value={dateRange}
+              onChange={setDateRange}
+              customFrom={customRange.from ? customRange.from.toISOString().split('T')[0] : ""}
+              customTo={customRange.to ? customRange.to.toISOString().split('T')[0] : ""}
+              onCustomChange={(from, to) => {
+                setCustomRange({
+                  from: from ? new Date(from) : undefined,
+                  to: to ? new Date(to) : undefined
+                })
+              }}
+            />
+          </div>
 
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button asChild className="rounded-md bg-emerald-600 hover:bg-emerald-700 text-white h-9 px-4 text-sm font-medium shadow-sm transition-colors border border-transparent flex-shrink-0">
+                <Button id="tour-new-trade" asChild className="rounded-md bg-emerald-600 hover:bg-emerald-700 text-white h-9 px-4 text-sm font-medium shadow-sm transition-colors border border-transparent flex-shrink-0">
                   <Link href="/trades/new" className="flex items-center gap-2">
                     <Plus className="h-4 w-4" /> Novo Trade
                   </Link>
@@ -209,7 +223,7 @@ export default function Dashboard() {
       <div className="max-w-[1600px] mx-auto w-full px-6 py-8 space-y-8">
 
         {/* 1. PERFORMANCE RIBBON */}
-        <section className="animate-in fade-in slide-in-from-top-4 duration-500">
+        <section id="tour-consistency" className="animate-in fade-in slide-in-from-top-4 duration-500">
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
             <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
               Consistência Semanal
@@ -268,7 +282,7 @@ export default function Dashboard() {
 
           {/* LEFT COLUMN: ACTIVITY & EQUITY */}
           <div className="lg:col-span-8 lg:sticky lg:top-24 space-y-8 animate-in fade-in slide-in-from-left-4 duration-500">
-            <section>
+            <section id="tour-equity">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
                 <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
                   Curva de Patrimônio
@@ -308,7 +322,7 @@ export default function Dashboard() {
               </div>
             </section>
 
-            <section>
+            <section id="tour-recent-trades">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
                 <h2 className="text-sm font-medium text-slate-900 dark:text-white flex items-center gap-2">
                   Últimos Trades
@@ -344,7 +358,7 @@ export default function Dashboard() {
               </div>
               <div className="grid gap-6">
                 {/* Profit Factor Card - High Impact */}
-                <Card className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#0b1220] relative overflow-hidden">
+                <Card id="tour-profit-factor" className="rounded-md border border-slate-200 dark:border-slate-800 shadow-sm bg-white dark:bg-[#0b1220] relative overflow-hidden">
                   <CardHeader className="pb-4 p-6 overflow-hidden">
                     <CardTitle className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-widest truncate">FATOR DE LUCRO</CardTitle>
                     <div className="text-4xl lg:text-5xl font-semibold tracking-tighter text-slate-900 dark:text-white leading-none mt-2">

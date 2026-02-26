@@ -120,7 +120,7 @@ export default function LandingPage() {
               <Link href="/login">Criar conta gratuita</Link>
             </Button>
             <Button asChild variant="outline" className="w-full sm:w-auto rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 px-6 h-10 text-sm font-medium shadow-none transition-colors">
-              <Link href="/dashboard">Ver Demonstração</Link>
+              <Link href="/dashboard?demo=true">Ver Demonstração</Link>
             </Button>
           </motion.div>
 

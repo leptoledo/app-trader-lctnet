@@ -23,6 +23,16 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
 
     useEffect(() => {
         async function getUser() {
+            // Demo mode check
+            const isDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+
+            if (isDemo) {
+                setUser({ id: "demo-id", email: "trader@demonstracao.com", user_metadata: { name: "Trader Pro (Demo)" } });
+                setPublicName("Trader Pro (Demo)");
+                setLoading(false);
+                return;
+            }
+
             const { data: { user } } = await supabase.auth.getUser()
 
             if (!user) {
@@ -52,10 +62,10 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
         getUser()
     }, [router])
 
-    if (loading || subLoading) {
+    if (loading || (!user && new URLSearchParams(window.location.search).get("demo") !== "true" && subLoading)) {
         return (
-            <div className="flex h-screen items-center justify-center">
-                <div className="animate-spin rounded-lg h-8 w-8 border-b-2 border-emerald-600"></div>
+            <div className="flex h-screen items-center justify-center bg-slate-50 dark:bg-[#0b1220]">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500"></div>
             </div>
         )
     }
