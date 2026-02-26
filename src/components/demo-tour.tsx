@@ -23,7 +23,6 @@ export function DemoTour() {
                 showProgress: true,
                 animate: true,
                 doneBtnText: "Finalizar Tour",
-                closeBtnText: "Pular",
                 nextBtnText: "Próximo",
                 prevBtnText: "Anterior",
                 popoverClass: "dark:bg-[#0b1220] dark:text-white border-slate-200 dark:border-slate-800",
