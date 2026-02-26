@@ -56,11 +56,13 @@ export const PLANS: Record<SubscriptionPlan, PlanConfig> = {
         price: 49,
         stripePriceId: process.env.NEXT_PUBLIC_STRIPE_GOLD_PRICE_ID,
         features: [
-            'Tudo do Pro',
+            'Trades ilimitados',
             'Contas ilimitadas',
             'Histórico vitalício',
+            'Import automático (CSV, MT5)',
+            'Analytics preditivo avançado',
+            'Gestão de risco automatizada',
             'Acesso antecipado a API',
-            'Sinais exclusivos',
             'Suporte prioritário (VIP)'
         ],
         limits: {

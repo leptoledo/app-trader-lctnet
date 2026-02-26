@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button"
 import { ScrollToTop } from "@/components/scroll-to-top"
 import { ModeToggle } from "@/components/mode-toggle"
 import { PwaInstallButton } from "@/components/pwa-install-button"
+import { cn } from "@/lib/utils"
 import {
   TrendingUp,
   FileText,
@@ -60,7 +61,15 @@ export default function LandingPage() {
 
             <nav className="hidden md:flex items-center gap-8">
               {["Recursos", "Analytics", "Comunidade", "Preços", "Blog"].map((item) => (
-                <Link key={item} href={`#${item.toLowerCase()}`} className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">
+                <Link
+                  key={item}
+                  href={
+                    item === "Preços" ? "/pricing" :
+                      item === "Blog" ? "/blog" :
+                        `/#${item.toLowerCase()}`
+                  }
+                  className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors"
+                >
                   {item}
                 </Link>
               ))}

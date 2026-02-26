@@ -16,7 +16,7 @@ async function run() {
         console.log("Connected to database.");
 
         // Ler o script SQL escrito anteriormente
-        const sqlPath = path.join(__dirname, 'supabase', 'migrations', '20260225113600_create_sync_tables.sql');
+        const sqlPath = path.join(__dirname, 'supabase', 'migrations', '20260226130000_create_blog_posts.sql');
         const sqlScript = fs.readFileSync(sqlPath, 'utf8');
 
         // Executar script no Supabase remoto
