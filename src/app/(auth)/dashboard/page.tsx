@@ -58,7 +58,10 @@ export default function Dashboard() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const isDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+        const urlDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+        const sessionDemo = typeof window !== 'undefined' ? sessionStorage.getItem('demo_mode') === 'true' : false;
+        const isDemo = urlDemo || sessionDemo;
+
         if (isDemo) {
           setUser({ id: "demo-id", email: "trader@demonstracao.com", user_metadata: { name: "Trader Pro (Demo)" } as any } as any)
           setTrades(demoTrades as any)

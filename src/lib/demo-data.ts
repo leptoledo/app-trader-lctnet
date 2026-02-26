@@ -24,7 +24,7 @@ export function generateDemoTrades() {
         tradeDate.setHours(randomHour, Math.floor(Math.random() * 60));
 
         const symbol = symbols[Math.floor(Math.random() * symbols.length)];
-        const direction = Math.random() > 0.5 ? "long" : "short";
+        const direction = Math.random() > 0.5 ? "LONG" : "SHORT";
 
         // Let's configure a profitable strategy: 62% win rate
         const isWin = Math.random() < 0.62;
@@ -56,7 +56,7 @@ export function generateDemoTrades() {
             profile_id: "demo-user",
             symbol,
             direction,
-            status: "closed",
+            status: "CLOSED",
             entry_price: symbol.includes("USD") || symbol === "EURUSD" ? parseFloat((Math.random() * 0.1 + 1.05).toFixed(4)) : parseFloat((Math.random() * 5000 + 33000).toFixed(2)),
             exit_price: symbol.includes("USD") || symbol === "EURUSD" ? parseFloat((Math.random() * 0.1 + 1.06).toFixed(4)) : parseFloat((Math.random() * 5000 + 33100).toFixed(2)),
             volume,
@@ -79,8 +79,8 @@ export function generateDemoTrades() {
         account_id: "demo-account",
         profile_id: "demo-user",
         symbol: "US30",
-        direction: "long",
-        status: "closed",
+        direction: "LONG",
+        status: "CLOSED",
         entry_price: 38450.00,
         exit_price: 38550.00,
         volume: 2.0,
@@ -99,8 +99,8 @@ export function generateDemoTrades() {
         account_id: "demo-account",
         profile_id: "demo-user",
         symbol: "EURUSD",
-        direction: "short",
-        status: "closed",
+        direction: "SHORT",
+        status: "CLOSED",
         entry_price: 1.0850,
         exit_price: 1.0870,
         volume: 5.0,

@@ -12,6 +12,23 @@ export function useAccounts() {
 
     const fetchAccounts = async () => {
         try {
+            const isDemo = typeof window !== 'undefined' && sessionStorage.getItem('demo_mode') === 'true';
+            if (isDemo) {
+                setAccounts([{
+                    id: "demo-account",
+                    user_id: "demo-user",
+                    name: "Conta de Demonstração (USD)",
+                    currency: "USD",
+                    initial_balance: 10000,
+                    current_balance: 10000,
+                    is_archived: false,
+                    created_at: new Date().toISOString(),
+                    updated_at: new Date().toISOString()
+                } as Account])
+                setLoading(false)
+                return
+            }
+
             const { data: { user } } = await supabase.auth.getUser()
             if (!user) return
 
