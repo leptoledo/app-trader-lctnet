@@ -99,6 +99,18 @@ export default function TradesPage() {
     const fetchTrades = async () => {
         setLoading(true)
         try {
+            const urlDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+            const sessionDemo = typeof window !== 'undefined' ? sessionStorage.getItem('demo_mode') === 'true' : false;
+            const isDemo = urlDemo || sessionDemo;
+
+            if (isDemo) {
+                import("@/lib/demo-data").then(({ demoTrades }) => {
+                    setTrades(demoTrades as any)
+                    setLoading(false)
+                })
+                return;
+            }
+
             const { data, error } = await supabase
                 .from('trades')
                 .select('*')

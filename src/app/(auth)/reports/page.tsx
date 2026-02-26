@@ -50,6 +50,19 @@ export default function ReportsPage() {
     useEffect(() => {
         async function fetchData() {
             try {
+                const urlDemo = new URLSearchParams(window.location.search).get("demo") === "true";
+                const sessionDemo = typeof window !== 'undefined' ? sessionStorage.getItem('demo_mode') === 'true' : false;
+                const isDemo = urlDemo || sessionDemo;
+
+                if (isDemo) {
+                    import("@/lib/demo-data").then(({ demoTrades }) => {
+                        setTrades(demoTrades as any)
+                        setMetrics(calculateMetrics(demoTrades as any))
+                        setLoading(false)
+                    })
+                    return;
+                }
+
                 let query = supabase
                     .from('trades')
                     .select('*')
