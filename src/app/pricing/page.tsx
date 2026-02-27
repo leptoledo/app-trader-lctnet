@@ -26,7 +26,7 @@ export default function PricingPage() {
             return
         }
 
-        toast.loading("Iniciando checkout seguro...")
+        const toastId = toast.loading("Iniciando checkout seguro...")
 
         try {
             const response = await fetch('/api/stripe/checkout', {
@@ -37,16 +37,26 @@ export default function PricingPage() {
 
             const data = await response.json()
 
+            if (!response.ok) {
+                if (response.status === 401 || data.error === 'Não autorizado') {
+                    toast.dismiss(toastId)
+                    toast.error("Você precisa estar logado para assinar.")
+                    // Redireciona para o login com callback
+                    window.location.href = '/login?callbackUrl=/pricing'
+                    return
+                }
+                throw new Error(data.error || "Erro ao criar sessão de pagamento")
+            }
+
             if (data.url) {
                 window.location.href = data.url
             } else {
-                throw new Error("Erro ao criar sessão de pagamento")
+                throw new Error("Erro desconhecido. URL de pagamento ausente.")
             }
         } catch (err) {
             const message = err instanceof Error ? err.message : String(err)
+            toast.dismiss(toastId)
             toast.error(message)
-        } finally {
-            toast.dismiss()
         }
     }
 
