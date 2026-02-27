@@ -46,7 +46,13 @@ export default function AuthPage() {
                 setView('login') // Switch to login after signup
             }
         } catch (error: any) {
-            toast.error(error.message || "Ocorreu um erro. Tente novamente.")
+            let msg = error.message
+            if (msg === "Database error saving new user") {
+                msg = "Este Nome de Usuário já está em uso. Por favor, escolha outro."
+            } else if (msg === "User already registered") {
+                msg = "Este E-mail já está cadastrado. Tente fazer login."
+            }
+            toast.error(msg || "Ocorreu um erro. Tente novamente.")
         } finally {
             setLoading(false)
         }
