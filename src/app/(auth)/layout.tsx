@@ -9,6 +9,7 @@ import { useSubscription } from "@/hooks/useSubscription"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
+import { toast } from "sonner"
 
 interface AuthLayoutProps {
     children: React.ReactNode
@@ -40,7 +41,31 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                 return;
             }
 
-            const { data: { user } } = await supabase.auth.getUser()
+            let authUser = null
+            let authError = null
+
+            try {
+                const result = await supabase.auth.getUser()
+                authUser = result.data?.user
+                authError = result.error
+            } catch (e: any) {
+                authError = e
+            }
+
+            // Handle invalid/expired refresh token — clear session and redirect to login
+            if (authError) {
+                const errorMsg = authError?.message || ''
+                const isRefreshError = errorMsg.includes('Refresh Token Not Found') || 
+                                       errorMsg.includes('Invalid Refresh Token') ||
+                                       errorMsg.includes('refresh_token_not_found')
+                if (isRefreshError) {
+                    await supabase.auth.signOut()
+                    router.push('/login')
+                    return
+                }
+            }
+
+            const user = authUser
 
             if (!user) {
                 router.push('/login')
@@ -55,6 +80,14 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                     .single()
 
                 const settings = (profile?.settings as Record<string, unknown>) || {}
+                
+                if (settings.is_banned) {
+                    await supabase.auth.signOut()
+                    toast.error("Sua conta foi suspensa temporariamente.")
+                    router.push('/login')
+                    return
+                }
+
                 const nameFromSettings = (settings.public_name as string) || ""
                 setPublicName(nameFromSettings || profile?.username || user.user_metadata?.name || "")
             } catch {

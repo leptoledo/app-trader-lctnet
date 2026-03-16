@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { createBlogPostAction } from "@/app/actions/blogAction"
@@ -11,6 +11,19 @@ import Link from "next/link"
 export default function NewPostPage() {
     const router = useRouter()
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect(() => {
+        const checkRole = async () => {
+            const { supabase } = await import("@/lib/supabase")
+            const { data: user } = await supabase.auth.getUser()
+            if (user?.user) {
+                const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.user.id).single()
+                setIsAdmin(profile?.role === "admin")
+            }
+        }
+        checkRole()
+    }, [])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -126,8 +139,17 @@ export default function NewPostPage() {
                             className="w-5 h-5 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-500"
                         />
                         <div>
-                            <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Publicar Imediatamente</p>
-                            <p className="text-xs text-emerald-600 dark:text-emerald-500">Deixe desmarcado para salvar como rascunho</p>
+                            {isAdmin ? (
+                                <>
+                                    <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Publicar Imediatamente</p>
+                                    <p className="text-xs text-emerald-600 dark:text-emerald-500">Deixe desmarcado para salvar como rascunho</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Enviar para Revisão</p>
+                                    <p className="text-xs text-emerald-600 dark:text-emerald-500">Ao marcar, o artigo irá para a fila de moderação dos administradores. Desmarque para manter como rascunho pessoal.</p>
+                                </>
+                            )}
                         </div>
                     </div>
 

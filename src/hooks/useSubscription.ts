@@ -4,17 +4,24 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { PLANS, SubscriptionPlan, PlanConfig } from "@/config/plans"
 
-type SubscriptionRow = {
-    plan: SubscriptionPlan | null
-    status: string | null
-    current_period_end: string | null
-}
-
 const planOrder: SubscriptionPlan[] = ["free", "pro", "gold"]
+
+export type SubscriptionDetails = {
+    stripeCustomerId: string | null
+    stripeSubscriptionId: string | null
+    status: string | null
+    currentPeriodEnd: string | null
+}
 
 export function useSubscription() {
     const [plan, setPlan] = useState<PlanConfig>(PLANS.free)
     const [loading, setLoading] = useState(true)
+    const [details, setDetails] = useState<SubscriptionDetails>({
+        stripeCustomerId: null,
+        stripeSubscriptionId: null,
+        status: null,
+        currentPeriodEnd: null
+    })
 
     const isAtLeast = (tier: SubscriptionPlan) => {
         return planOrder.indexOf(plan.id) >= planOrder.indexOf(tier)
@@ -34,20 +41,29 @@ export function useSubscription() {
 
                 const { data, error } = await supabase
                     .from("subscriptions")
-                    .select("plan,status,current_period_end")
+                    .select("plan, status, current_period_end, stripe_customer_id, stripe_subscription_id")
                     .eq("user_id", user.id)
                     .single()
 
+                // PGRST116 = no row found (user is free tier)
                 if (error && error.code !== "PGRST116") throw error
 
-                // Removed unused row parsing
+                const activeStatuses = ["active", "trialing"]
+                const isActive = data && activeStatuses.includes(data.status ?? "")
+                const dbPlan = (data?.plan ?? "free") as SubscriptionPlan
+                const effectivePlan = isActive ? dbPlan : "free"
 
-                // Admin override for full access
-                const effectivePlan: SubscriptionPlan = "gold"
-
-                if (isMounted) setPlan(PLANS[effectivePlan])
+                if (isMounted) {
+                    setPlan(PLANS[effectivePlan] ?? PLANS.free)
+                    setDetails({
+                        stripeCustomerId: data?.stripe_customer_id ?? null,
+                        stripeSubscriptionId: data?.stripe_subscription_id ?? null,
+                        status: data?.status ?? null,
+                        currentPeriodEnd: data?.current_period_end ?? null
+                    })
+                }
             } catch {
-                if (isMounted) setPlan(PLANS.gold)
+                if (isMounted) setPlan(PLANS.free)
             } finally {
                 if (isMounted) setLoading(false)
             }
@@ -63,6 +79,7 @@ export function useSubscription() {
     return {
         plan,
         loading,
+        details,
         isFree: plan.id === "free",
         isPro: plan.id === "pro",
         isGold: plan.id === "gold",

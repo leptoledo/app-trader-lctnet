@@ -2,6 +2,8 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
 import { cn } from "@/lib/utils"
 import {
     LayoutDashboard,
@@ -32,14 +34,41 @@ const navigation = [
     { name: "Comunidade", href: "/community", icon: Users },
     { name: "Contas", href: "/accounts", icon: Wallet },
     { name: "Gestão de Risco", href: "/risk", icon: ShieldAlert },
-    { name: "Blog Admin", href: "/admin/posts", icon: PenTool },
     { name: "Importar", href: "/import", icon: Upload },
     { name: "Configurações", href: "/settings", icon: Settings },
+]
+
+const adminNavigation = [
+    { name: "Painel Geral", href: "/admin/dashboard", icon: LayoutDashboard },
+    { name: "Gestão de Usuários", href: "/admin/users", icon: Users },
+    { name: "Blog Admin", href: "/admin/posts", icon: PenTool },
 ]
 
 export function Sidebar({ mode = "desktop" }: SidebarProps) {
     const pathname = usePathname()
     const isMobile = mode === "mobile"
+    const [isAdmin, setIsAdmin] = useState(false)
+
+    useEffect(() => {
+        async function checkAdminRole() {
+            // Demo mode check
+            const sessionDemo = typeof window !== 'undefined' ? sessionStorage.getItem('demo_mode') === 'true' : false
+            if (sessionDemo) return // Demo users don't see admin
+
+            const { data: { user } } = await supabase.auth.getUser()
+            if (!user) return
+
+            const { data: profile } = await supabase
+                .from("profiles")
+                .select("role")
+                .eq("id", user.id)
+                .single()
+
+            setIsAdmin(profile?.role === "admin")
+        }
+
+        checkAdminRole()
+    }, [])
 
     return (
         <div
@@ -71,6 +100,33 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                         </Link>
                     )
                 })}
+
+                {/* Admin section — only visible to admins */}
+                {isAdmin && (
+                    <>
+                        <div className="mt-8 mb-4 px-3 flex items-center h-4">
+                            <p className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Administração</p>
+                        </div>
+                        {adminNavigation.map((item) => {
+                            const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
+                            return (
+                                <Link
+                                    key={item.name}
+                                    href={item.href}
+                                    className={cn(
+                                        "flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-all duration-200 relative",
+                                        isActive
+                                            ? "bg-purple-50 text-purple-700 dark:bg-purple-500/10 dark:text-purple-400 font-medium"
+                                            : "text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800/50 hover:text-slate-900 dark:hover:text-slate-200"
+                                    )}
+                                >
+                                    <item.icon className={cn("h-[18px] w-[18px] shrink-0 transition-colors", isActive ? "text-purple-600 dark:text-purple-400" : "text-slate-400")} />
+                                    <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.name}</span>
+                                </Link>
+                            )
+                        })}
+                    </>
+                )}
             </nav>
         </div>
     )

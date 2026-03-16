@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useSubscription } from "@/hooks/useSubscription"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, Sparkles, Zap, Crown } from "lucide-react"
+import { Loader2, Sparkles, Zap, Crown, ExternalLink, CalendarCheck, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
@@ -23,7 +23,7 @@ const SETTINGS_TABS = [
 ]
 
 export default function SettingsPage() {
-    const { plan, loading, isFree } = useSubscription()
+    const { plan, loading, isFree, details } = useSubscription()
     const [publicName, setPublicName] = useState("")
     const [profileLoading, setProfileLoading] = useState(true)
     const [savingProfile, setSavingProfile] = useState(false)
@@ -31,6 +31,7 @@ export default function SettingsPage() {
     const [outlierThreshold, setOutlierThreshold] = useState("25")
     const [savingPreferences, setSavingPreferences] = useState(false)
     const [activeTab, setActiveTab] = useState("general")
+    const [openingPortal, setOpeningPortal] = useState(false)
 
     // Integrations State
     const [binanceApiKey, setBinanceApiKey] = useState("")
@@ -169,6 +170,23 @@ export default function SettingsPage() {
             toast.error(error.message || "Erro ao sincronizar trades.")
         } finally {
             setSyncingTrades(false)
+        }
+    }
+
+    const handleOpenPortal = async () => {
+        setOpeningPortal(true)
+        try {
+            const res = await fetch('/api/stripe/portal', { method: 'POST' })
+            const data = await res.json()
+            if (data.url) {
+                window.location.href = data.url
+            } else {
+                toast.error(data.error || 'Erro ao abrir portal de gerenciamento.')
+            }
+        } catch {
+            toast.error('Erro inesperado ao abrir portal Stripe.')
+        } finally {
+            setOpeningPortal(false)
         }
     }
 
@@ -397,15 +415,39 @@ export default function SettingsPage() {
                                             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-lg">
                                                 {isFree ? "Você está usando a base tecnológica gratuita, possuindo limites estritos de registros no sistema." : "Seu portal está com acesso PRO liberado e todos os atributos destravados."}
                                             </p>
+                                            {!isFree && details.currentPeriodEnd && (
+                                                <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-2 flex items-center gap-1.5">
+                                                    <CalendarCheck className="h-3.5 w-3.5" />
+                                                    Renova em: {new Date(details.currentPeriodEnd).toLocaleDateString('pt-BR')}
+                                                </p>
+                                            )}
+                                            {details.status === 'past_due' && (
+                                                <p className="text-xs text-rose-600 dark:text-rose-400 mt-2 flex items-center gap-1.5">
+                                                    <AlertCircle className="h-3.5 w-3.5" />
+                                                    Pagamento pendente — atualize seu cartão.
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
-                                    {isFree && (
-                                        <Button className="shrink-0 h-9 px-5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium shadow-none w-full md:w-auto h-auto py-2" asChild>
-                                            <Link href="/pricing" className="flex items-center justify-center gap-2">
-                                                <Zap className="h-4 w-4" /> Assinar PRO
-                                            </Link>
-                                        </Button>
-                                    )}
+                                    <div className="flex gap-3 shrink-0 flex-col md:flex-row w-full md:w-auto">
+                                        {isFree ? (
+                                            <Button className="h-9 px-5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium shadow-none h-auto py-2 w-full md:w-auto" asChild>
+                                                <Link href="/pricing" className="flex items-center justify-center gap-2">
+                                                    <Zap className="h-4 w-4" /> Assinar PRO
+                                                </Link>
+                                            </Button>
+                                        ) : (
+                                            <Button
+                                                onClick={handleOpenPortal}
+                                                disabled={openingPortal}
+                                                variant="outline"
+                                                className="h-auto py-2 px-5 text-sm font-medium border-slate-200 dark:border-slate-700 w-full md:w-auto"
+                                            >
+                                                {openingPortal ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <ExternalLink className="h-4 w-4 mr-2" />}
+                                                Gerenciar Assinatura
+                                            </Button>
+                                        )}
+                                    </div>
                                 </div>
 
                                 <div className="p-6 md:p-8 space-y-8">

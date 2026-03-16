@@ -15,9 +15,16 @@ export default function EditPostPage() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [loading, setLoading] = useState(true)
     const [post, setPost] = useState<any>(null)
+    const [isAdmin, setIsAdmin] = useState(false)
 
     useEffect(() => {
-        const fetchPost = async () => {
+        const fetchPostAndRole = async () => {
+            const { data: user } = await supabase.auth.getUser()
+            if (user?.user) {
+                const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.user.id).single()
+                setIsAdmin(profile?.role === "admin")
+            }
+
             if (!params.id) return
 
             const { data, error } = await supabase
@@ -35,7 +42,7 @@ export default function EditPostPage() {
             setLoading(false)
         }
 
-        fetchPost()
+        fetchPostAndRole()
     }, [params.id, router])
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -164,12 +171,21 @@ export default function EditPostPage() {
                             type="checkbox"
                             name="published"
                             value="true"
-                            defaultChecked={post.published}
+                            defaultChecked={post.published || post.status === 'pending' || post.status === 'published'}
                             className="w-5 h-5 rounded border-emerald-300 text-emerald-600 focus:ring-emerald-500"
                         />
                         <div>
-                            <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Publicado</p>
-                            <p className="text-xs text-emerald-600 dark:text-emerald-500">Deixe marcado para que o artigo fique visível aos visitantes</p>
+                            {isAdmin ? (
+                                <>
+                                    <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Publicado</p>
+                                    <p className="text-xs text-emerald-600 dark:text-emerald-500">Deixe marcado para que o artigo fique visível aos visitantes</p>
+                                </>
+                            ) : (
+                                <>
+                                    <p className="text-sm font-bold text-emerald-800 dark:text-emerald-400">Enviar para Revisão</p>
+                                    <p className="text-xs text-emerald-600 dark:text-emerald-500">Ao marcar, o artigo permanece ou vai para a fila de moderação dos administradores.</p>
+                                </>
+                            )}
                         </div>
                     </div>
 

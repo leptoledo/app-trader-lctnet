@@ -29,10 +29,25 @@ export async function createBlogPostAction(formData: FormData) {
         const content = formData.get("content") as string
         const readTime = formData.get("readTime") as string
         const imageUrl = formData.get("image_url") as string
-        const published = formData.get("published") === "true"
+        const requestedPublished = formData.get("published") === "true"
 
         if (!title || !content) {
             throw new Error("Título e conteúdo são campos obrigatórios.")
+        }
+
+        // Determinar o status
+        const { data: profile } = await supabase.from("profiles").select("role").eq("id", userData.user.id).single()
+        const isAdmin = profile?.role === "admin"
+        
+        let status = "draft"
+        let published = false
+
+        if (isAdmin) {
+            status = requestedPublished ? "published" : "draft"
+            published = requestedPublished
+        } else {
+            status = requestedPublished ? "pending" : "draft"
+            published = false
         }
 
         // Gerar slug a partir do título
@@ -58,7 +73,8 @@ export async function createBlogPostAction(formData: FormData) {
                 content,
                 read_time: readTime || "5 min read",
                 image_url: imageUrl || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1470&auto=format&fit=crop',
-                published
+                published,
+                status
             })
 
         if (insertError) {
@@ -99,10 +115,31 @@ export async function updateBlogPostAction(id: string, formData: FormData) {
         const content = formData.get("content") as string
         const readTime = formData.get("readTime") as string
         const imageUrl = formData.get("image_url") as string
-        const published = formData.get("published") === "true"
+        const requestedPublished = formData.get("published") === "true"
 
         if (!title || !content) {
             throw new Error("Título e conteúdo são campos obrigatórios.")
+        }
+
+        // Checar se usuário é dono do post ou se é admin
+        const { data: profile } = await supabase.from("profiles").select("role").eq("id", userData.user.id).single()
+        const isAdmin = profile?.role === "admin"
+        
+        const { data: postData } = await supabase.from("blog_posts").select("author_id").eq("id", id).single()
+        
+        if (!isAdmin && postData?.author_id !== userData.user.id) {
+            throw new Error("Não autorizado para editar este post.")
+        }
+
+        let status = "draft"
+        let published = false
+
+        if (isAdmin) {
+            status = requestedPublished ? "published" : "draft"
+            published = requestedPublished
+        } else {
+            status = requestedPublished ? "pending" : "draft"
+            published = false
         }
 
         const { error: updateError } = await supabase
@@ -114,7 +151,8 @@ export async function updateBlogPostAction(id: string, formData: FormData) {
                 content,
                 read_time: readTime || "5 min read",
                 image_url: imageUrl || 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=1470&auto=format&fit=crop',
-                published
+                published,
+                status
             })
             .eq("id", id)
 
@@ -167,5 +205,51 @@ export async function deleteBlogPostAction(id: string, token: string | null) {
     } catch (error: any) {
         console.error("[BLOG DELETE ERROR]", error)
         return { success: false, error: error.message || "Erro desconhecido ao excluir." }
+    }
+}
+
+export async function moderateBlogPostAction(id: string, action: 'approve' | 'reject', token?: string | null) {
+    try {
+        let supabase = await createSupabaseServerClient()
+
+        if (token) {
+            supabase = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+                { global: { headers: { Authorization: `Bearer ${token}` } } }
+            ) as any;
+        }
+
+        const { data: userData, error: userError } = await supabase.auth.getUser()
+        if (userError || !userData?.user) {
+            throw new Error("Não autorizado.")
+        }
+
+        const { data: profile } = await supabase.from("profiles").select("role").eq("id", userData.user.id).single()
+        if (profile?.role !== "admin") {
+            throw new Error("Apenas administradores podem moderar posts.")
+        }
+
+        const updates = action === 'approve' 
+            ? { status: 'published', published: true } 
+            : { status: 'rejected', published: false }
+
+        const { error: updateError } = await supabase
+            .from("blog_posts")
+            .update(updates)
+            .eq("id", id)
+
+        if (updateError) {
+            throw new Error(`Erro ao moderar post: ${updateError.message}`)
+        }
+
+        revalidatePath("/blog")
+        revalidatePath("/(auth)/blog")
+        revalidatePath("/(auth)/admin/posts")
+
+        return { success: true, message: action === 'approve' ? "Artigo aprovado e publicado!" : "Artigo rejeitado." }
+    } catch (error: any) {
+        console.error("[BLOG MODERATE ERROR]", error)
+        return { success: false, error: error.message || "Erro desconhecido ao moderar post." }
     }
 }
