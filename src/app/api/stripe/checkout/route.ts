@@ -2,10 +2,22 @@ import { NextResponse } from 'next/server';
 import { createSupabaseServerClient } from '@/lib/supabase-server';
 import { createCheckoutSession } from '@/lib/stripe';
 import { PLANS, SubscriptionPlan } from '@/config/plans';
+import { createClient } from '@supabase/supabase-js';
 
 export async function POST(req: Request) {
     try {
-        const supabase = await createSupabaseServerClient();
+        let supabase = await createSupabaseServerClient();
+        
+        const authHeader = req.headers.get('Authorization') || req.headers.get('authorization');
+        if (authHeader && authHeader.startsWith('Bearer ')) {
+            const token = authHeader.split('Bearer ')[1];
+            supabase = createClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL!,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+                { global: { headers: { Authorization: `Bearer ${token}` } } }
+            ) as any;
+        }
+
         const { data: { user }, error: authError } = await supabase.auth.getUser();
 
         if (authError || !user) {

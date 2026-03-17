@@ -21,7 +21,7 @@ export default function BlogAdminPage() {
     const [loading, setLoading] = useState(true)
     const [postToDelete, setPostToDelete] = useState<string | null>(null)
     const [isAdmin, setIsAdmin] = useState(false)
-    const [filter, setFilter] = useState<'all' | 'pending' | 'published'>('all')
+    const [filter, setFilter] = useState<'all' | 'pending' | 'published' | 'rejected'>('all')
 
     useEffect(() => {
         fetchPosts()
@@ -97,6 +97,7 @@ export default function BlogAdminPage() {
 
     const filteredPosts = posts.filter(p => {
         if (filter === 'all') return true;
+        if (filter === 'published') return p.status === 'published' || (!p.status && p.published);
         return p.status === filter;
     });
 
@@ -113,9 +114,11 @@ export default function BlogAdminPage() {
                 </div>
                 <div className="flex items-center gap-3">
                     {isAdmin && (
-                        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
-                            <button onClick={() => setFilter('all')} className={`px-3 py-1 text-sm rounded-md transition-colors ${filter === 'all' ? 'bg-white dark:bg-slate-700 shadow-sm font-medium' : 'text-slate-500'}`}>Todos</button>
-                            <button onClick={() => setFilter('pending')} className={`px-3 py-1 text-sm rounded-md transition-colors ${filter === 'pending' ? 'bg-white dark:bg-slate-700 shadow-sm font-medium text-amber-600' : 'text-slate-500'}`}>Pendentes</button>
+                        <div className="flex flex-wrap bg-slate-100 dark:bg-slate-800 p-1 rounded-lg gap-1">
+                            <button onClick={() => setFilter('all')} className={`px-3 py-1 text-sm rounded-md transition-colors ${filter === 'all' ? 'bg-white dark:bg-slate-700 shadow-sm font-medium' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}>Todos</button>
+                            <button onClick={() => setFilter('pending')} className={`px-3 py-1 text-sm rounded-md transition-colors ${filter === 'pending' ? 'bg-white dark:bg-slate-700 shadow-sm font-medium text-amber-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}>Pendentes</button>
+                            <button onClick={() => setFilter('published')} className={`px-3 py-1 text-sm rounded-md transition-colors ${filter === 'published' ? 'bg-white dark:bg-slate-700 shadow-sm font-medium text-emerald-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}>Publicados</button>
+                            <button onClick={() => setFilter('rejected')} className={`px-3 py-1 text-sm rounded-md transition-colors ${filter === 'rejected' ? 'bg-white dark:bg-slate-700 shadow-sm font-medium text-rose-600' : 'text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'}`}>Rejeitados</button>
                         </div>
                     )}
                     <Button asChild className="bg-emerald-500 hover:bg-emerald-600 shadow-sm text-white transition-colors">
@@ -164,6 +167,22 @@ export default function BlogAdminPage() {
                                             </Button>
                                             <Button variant="outline" size="sm" className="text-rose-600 border-rose-200 hover:bg-rose-50 dark:hover:bg-rose-900/20" onClick={() => handleModerate(post.id, 'reject')}>
                                                 <XCircle className="h-4 w-4 mr-1.5" /> Rejeitar
+                                            </Button>
+                                            <div className="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-1"></div>
+                                        </>
+                                    )}
+                                    {isAdmin && isPublished && (
+                                        <>
+                                            <Button variant="outline" size="sm" className="text-amber-600 border-amber-200 hover:bg-amber-50 dark:hover:bg-amber-900/20" onClick={() => handleModerate(post.id, 'reject')}>
+                                                <AlertTriangle className="h-4 w-4 mr-1.5" /> Despublicar
+                                            </Button>
+                                            <div className="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-1"></div>
+                                        </>
+                                    )}
+                                    {isAdmin && isRejected && (
+                                        <>
+                                            <Button variant="outline" size="sm" className="text-emerald-600 border-emerald-200 hover:bg-emerald-50 dark:hover:bg-emerald-900/20" onClick={() => handleModerate(post.id, 'approve')}>
+                                                <CheckCircle className="h-4 w-4 mr-1.5" /> Reaprovar
                                             </Button>
                                             <div className="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-1"></div>
                                         </>

@@ -10,6 +10,7 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { toast } from "sonner"
 import { PwaInstallButton } from "@/components/pwa-install-button"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { supabase } from "@/lib/supabase"
 
 const footerLinks = [
     { title: "Produto", links: ["Base de Dados", "Autenticação", "Edge Functions", "Storage", "Analytics", "Preços", "Changelog"] },
@@ -29,9 +30,19 @@ export default function PricingPage() {
         const toastId = toast.loading("Iniciando checkout seguro...")
 
         try {
+            const sessionData = await supabase.auth.getSession()
+            const token = sessionData.data.session?.access_token || ''
+
+            const headers: Record<string, string> = {
+                'Content-Type': 'application/json'
+            }
+            if (token) {
+                headers['Authorization'] = `Bearer ${token}`
+            }
+
             const response = await fetch('/api/stripe/checkout', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers,
                 body: JSON.stringify({ planId })
             })
 

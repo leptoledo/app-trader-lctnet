@@ -48,17 +48,28 @@ export function useSubscription() {
                 // PGRST116 = no row found (user is free tier)
                 if (error && error.code !== "PGRST116") throw error
 
+                // Verificar se é admin
+                const { data: profile } = await supabase
+                    .from("profiles")
+                    .select("role")
+                    .eq("id", user.id)
+                    .single()
+
+                const isAdmin = profile?.role === "admin"
+
                 const activeStatuses = ["active", "trialing"]
                 const isActive = data && activeStatuses.includes(data.status ?? "")
                 const dbPlan = (data?.plan ?? "free") as SubscriptionPlan
-                const effectivePlan = isActive ? dbPlan : "free"
+                
+                // Admins têm acesso Gold de forma vitalícia/gratuita, sem depender da base de assinaturas 
+                const effectivePlan = isAdmin ? "gold" : (isActive ? dbPlan : "free")
 
                 if (isMounted) {
                     setPlan(PLANS[effectivePlan] ?? PLANS.free)
                     setDetails({
                         stripeCustomerId: data?.stripe_customer_id ?? null,
                         stripeSubscriptionId: data?.stripe_subscription_id ?? null,
-                        status: data?.status ?? null,
+                        status: isAdmin ? 'active' : (data?.status ?? null),
                         currentPeriodEnd: data?.current_period_end ?? null
                     })
                 }

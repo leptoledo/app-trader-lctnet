@@ -144,48 +144,52 @@ export default function UsersAdminPage() {
                                         <td className="px-6 py-4 text-slate-500">
                                             {new Date(user.created_at).toLocaleDateString('pt-BR')}
                                         </td>
-                                        <td className="px-6 py-4 text-right space-x-2">
-                                            {user.role === 'admin' ? (
-                                                <Button
-                                                    variant="outline"
-                                                    size="sm"
-                                                    className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-500/10 border-amber-200 dark:border-amber-900/50"
-                                                    onClick={() => { setActionUser(user); setActionType('demote') }}
-                                                >
-                                                    <Shield className="h-4 w-4 mr-2" /> Remover Admin
-                                                </Button>
-                                            ) : (
-                                                <Button
-                                                    variant="outline"
-                                                    size="sm"
-                                                    className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 dark:hover:bg-purple-500/10 border-purple-200 dark:border-purple-900/50"
-                                                    onClick={() => { setActionUser(user); setActionType('promote') }}
-                                                >
-                                                    <BadgeCheck className="h-4 w-4 mr-2" /> Tornar Admin
-                                                </Button>
-                                            )}
-                                            
-                                            {user.role !== 'admin' && (
-                                                user.settings?.is_banned ? (
+                                        <td className="px-6 py-4">
+                                            <div className="flex items-center justify-end gap-2">
+                                                {user.role === 'admin' ? (
                                                     <Button
                                                         variant="outline"
                                                         size="sm"
-                                                        className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 border-emerald-200 dark:border-emerald-900/50"
-                                                        onClick={() => { setActionUser(user); setActionType('unban') }}
+                                                        className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 dark:hover:bg-amber-500/10 border-amber-200 dark:border-amber-900/50 w-full sm:w-auto"
+                                                        onClick={() => { setActionUser(user); setActionType('demote') }}
                                                     >
-                                                        <UserCheck className="h-4 w-4" />
+                                                        <Shield className="h-4 w-4 mr-2" /> Remover Admin
                                                     </Button>
                                                 ) : (
                                                     <Button
                                                         variant="outline"
                                                         size="sm"
-                                                        className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-500/10 border-rose-200 dark:border-rose-900/50"
-                                                        onClick={() => { setActionUser(user); setActionType('ban') }}
+                                                        className="text-purple-600 hover:text-purple-700 hover:bg-purple-50 dark:hover:bg-purple-500/10 border-purple-200 dark:border-purple-900/50 w-full sm:w-auto"
+                                                        onClick={() => { setActionUser(user); setActionType('promote') }}
                                                     >
-                                                        <Ban className="h-4 w-4" />
+                                                        <BadgeCheck className="h-4 w-4 mr-2" /> Tornar Admin
                                                     </Button>
-                                                )
-                                            )}
+                                                )}
+                                                
+                                                {user.role !== 'admin' && (
+                                                    user.settings?.is_banned ? (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="text-emerald-600 hover:text-emerald-700 hover:bg-emerald-50 dark:hover:bg-emerald-500/10 border-emerald-200 dark:border-emerald-900/50"
+                                                            onClick={() => { setActionUser(user); setActionType('unban') }}
+                                                            title="Remover Banimento"
+                                                        >
+                                                            <UserCheck className="h-4 w-4" />
+                                                        </Button>
+                                                    ) : (
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="text-rose-600 hover:text-rose-700 hover:bg-rose-50 dark:hover:bg-rose-500/10 border-rose-200 dark:border-rose-900/50"
+                                                            onClick={() => { setActionUser(user); setActionType('ban') }}
+                                                            title="Banir Usuário"
+                                                        >
+                                                            <Ban className="h-4 w-4" />
+                                                        </Button>
+                                                    )
+                                                )}
+                                            </div>
                                         </td>
                                     </tr>
                                 ))}
