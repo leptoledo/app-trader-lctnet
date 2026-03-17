@@ -75,24 +75,33 @@ export default function BlogAdminPage() {
         setLoading(false)
     }
 
-    const handleModerate = async (id: string, action: 'approve' | 'reject') => {
-        setLoading(true)
+    const handleModerate = async (id: string, action: 'approve' | 'reject' | 'unpublish') => {
+        // Optimistic update: change the status locally immediately
+        const newStatus = action === 'approve' ? 'published' : action === 'unpublish' ? 'rejected' : 'rejected'
+        const newPublished = action === 'approve'
+
+        setPosts(prev => prev.map(p =>
+            p.id === id ? { ...p, status: newStatus, published: newPublished } : p
+        ))
+
         try {
             const sessionData = await supabase.auth.getSession()
             const token = sessionData.data.session?.access_token || null
 
-            const result = await moderateBlogPostAction(id, action, token)
+            const serverAction = action === 'unpublish' ? 'reject' : action
+            const result = await moderateBlogPostAction(id, serverAction, token)
 
             if (result.success) {
                 toast.success(result.message)
-                fetchPosts() // recarregar para pegar novos status
             } else {
                 toast.error(result.error)
+                // Revert on failure
+                await fetchPosts()
             }
-        } catch (error) {
+        } catch {
             toast.error("Erro ao moderar post.")
+            await fetchPosts()
         }
-        setLoading(false)
     }
 
     const filteredPosts = posts.filter(p => {
@@ -173,7 +182,7 @@ export default function BlogAdminPage() {
                                     )}
                                     {isAdmin && isPublished && (
                                         <>
-                                            <Button variant="outline" size="sm" className="text-amber-600 border-amber-200 hover:bg-amber-50 dark:hover:bg-amber-900/20" onClick={() => handleModerate(post.id, 'reject')}>
+                                            <Button variant="outline" size="sm" className="text-amber-600 border-amber-200 hover:bg-amber-50 dark:hover:bg-amber-900/20" onClick={() => handleModerate(post.id, 'unpublish')}>
                                                 <AlertTriangle className="h-4 w-4 mr-1.5" /> Despublicar
                                             </Button>
                                             <div className="w-px h-6 bg-slate-200 dark:bg-slate-800 mx-1"></div>
