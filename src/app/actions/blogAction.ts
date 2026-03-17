@@ -210,46 +210,42 @@ export async function deleteBlogPostAction(id: string, token: string | null) {
 
 export async function moderateBlogPostAction(id: string, action: 'approve' | 'reject', token?: string | null) {
     try {
-        let supabase = await createSupabaseServerClient()
+        // Step 1: Verify the caller's identity and role using their token
+        const { createSupabaseAdminClient } = await import("@/lib/supabase-admin")
+        const supabaseAdmin = createSupabaseAdminClient()
 
-        if (token) {
-            supabase = createClient(
-                process.env.NEXT_PUBLIC_SUPABASE_URL!,
-                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-                { global: { headers: { Authorization: `Bearer ${token}` } } }
-            ) as any;
-        }
+        if (!token) throw new Error("Não autorizado.")
 
-        const { data: userData, error: userError } = await supabase.auth.getUser()
-        if (userError || !userData?.user) {
-            throw new Error("Não autorizado.")
-        }
+        const { data: authData, error: authError } = await supabaseAdmin.auth.getUser(token)
+        if (authError || !authData?.user) throw new Error("Sessão inválida.")
 
-        const { data: profile } = await supabase.from("profiles").select("role").eq("id", userData.user.id).single()
-        if (profile?.role !== "admin") {
-            throw new Error("Apenas administradores podem moderar posts.")
-        }
+        const { data: profile } = await supabaseAdmin
+            .from("profiles")
+            .select("role")
+            .eq("id", authData.user.id)
+            .single()
 
-        const updates = action === 'approve' 
-            ? { status: 'published', published: true } 
+        if (profile?.role !== "admin") throw new Error("Apenas administradores podem moderar posts.")
+
+        // Step 2: Perform the update using admin client (bypasses RLS)
+        const updates = action === 'approve'
+            ? { status: 'published', published: true }
             : { status: 'rejected', published: false }
 
-        const { error: updateError } = await supabase
+        const { error: updateError } = await supabaseAdmin
             .from("blog_posts")
             .update(updates)
             .eq("id", id)
 
-        if (updateError) {
-            throw new Error(`Erro ao moderar post: ${updateError.message}`)
-        }
+        if (updateError) throw new Error(`Erro ao moderar post: ${updateError.message}`)
 
         revalidatePath("/blog")
         revalidatePath("/(auth)/blog")
         revalidatePath("/(auth)/admin/posts")
 
         return { success: true, message: action === 'approve' ? "Artigo aprovado e publicado!" : "Artigo rejeitado." }
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[BLOG MODERATE ERROR]", error)
-        return { success: false, error: error.message || "Erro desconhecido ao moderar post." }
+        return { success: false, error: (error as Error).message || "Erro desconhecido ao moderar post." }
     }
 }
