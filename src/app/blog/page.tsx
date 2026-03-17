@@ -1,6 +1,6 @@
 "use client"
 
-import { TrendingUp, Facebook, Instagram, Twitter, Github, Youtube, ArrowRight, Search, FileText } from "lucide-react"
+import { TrendingUp, Twitter, Github, Youtube, ArrowRight, Search, FileText } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -8,7 +8,6 @@ import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/mode-toggle"
 import { PwaInstallButton } from "@/components/pwa-install-button"
 import { ScrollToTop } from "@/components/scroll-to-top"
-import Image from "next/image"
 
 const footerLinks = [
     { title: "Produto", links: ["Base de Dados", "Autenticação", "Edge Functions", "Storage", "Analytics", "Preços", "Changelog"] },
@@ -61,13 +60,12 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 
 export default function BlogPage() {
-    const [posts, setPosts] = useState<any[]>(recentPosts)
-    const [loading, setLoading] = useState(true)
+    const [posts, setPosts] = useState<typeof recentPosts>(recentPosts)
 
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const { data, error } = await supabase
+                const { data } = await supabase
                     .from("blog_posts")
                     .select("*")
                     .eq("published", true)
@@ -87,8 +85,6 @@ export default function BlogPage() {
                 }
             } catch (err) {
                 console.error("Erro ao buscar artigos reais", err)
-            } finally {
-                setLoading(false)
             }
         }
         fetchPosts()

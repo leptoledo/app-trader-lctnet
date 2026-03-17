@@ -5,15 +5,7 @@ import { driver } from "driver.js"
 import "driver.js/dist/driver.css"
 
 export function DemoTour() {
-    const [mounted, setMounted] = useState(false)
-
     useEffect(() => {
-        setMounted(true)
-    }, [])
-
-    useEffect(() => {
-        if (!mounted) return;
-
         const isDemo = new URLSearchParams(window.location.search).get("demo") === "true";
         if (!isDemo) return;
 
@@ -96,7 +88,7 @@ export function DemoTour() {
         }, 1000);
 
         return () => clearTimeout(timer);
-    }, [mounted])
+    }, [])
 
     return null
 }

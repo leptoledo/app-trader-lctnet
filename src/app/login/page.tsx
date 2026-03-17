@@ -9,7 +9,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "sonner"
-import { Loader2, TrendingUp, ArrowRight, Github, Mail } from "lucide-react"
+import { Loader2, TrendingUp, Github, Mail } from "lucide-react"
 
 export default function AuthPage() {
     const router = useRouter()
@@ -45,8 +45,8 @@ export default function AuthPage() {
                 toast.success("Conta criada com sucesso! Verifique seu e-mail.")
                 setView('login') // Switch to login after signup
             }
-        } catch (error: any) {
-            let msg = error.message
+        } catch (error: Error | unknown) {
+            let msg = (error as Error).message
             if (msg === "Database error saving new user") {
                 msg = "Este Nome de Usuário já está em uso. Por favor, escolha outro."
             } else if (msg === "User already registered") {
@@ -199,7 +199,7 @@ export default function AuthPage() {
                     <div className="h-1 w-12 bg-emerald-500 mb-6 rounded-lg" />
                     <blockquote className="space-y-2">
                         <p className="text-3xl font-heading font-medium text-white leading-relaxed">
-                            "A disciplina é a ponte entre as metas e a realização. O Trader Journal me ajudou a cruzar essa ponte."
+                            &quot;A disciplina é a ponte entre as metas e a realização. O Trader Journal me ajudou a cruzar essa ponte.&quot;
                         </p>
                         <footer className="pt-4">
                             <div className="text-base font-bold text-white">Ricardo S.</div>

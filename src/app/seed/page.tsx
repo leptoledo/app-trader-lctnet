@@ -36,8 +36,6 @@ export default function SeedPage() {
         const quantity = 1
 
         let exitPrice = entryPrice
-        // rough estimate diff
-        const diff = Math.abs(pnl) / 10000 // scaling factor for price diff visualization
 
         if (direction === "LONG") {
             exitPrice = isWin ? entryPrice * 1.002 : entryPrice * 0.998
@@ -76,7 +74,7 @@ export default function SeedPage() {
             if (!user) throw new Error("Usuário não autenticado")
 
             // Get first account
-            let { data: accounts } = await supabase.from('accounts').select('id').limit(1)
+            const { data: accounts } = await supabase.from('accounts').select('id').limit(1)
             let accountId = accounts?.[0]?.id
 
             if (!accountId) {
@@ -107,8 +105,8 @@ export default function SeedPage() {
 
             toast.success("50 Trades gerados com sucesso!")
 
-        } catch (error: any) {
-            toast.error("Erro ao gerar trades: " + error.message)
+        } catch (error: unknown) {
+            toast.error("Erro ao gerar trades: " + (error as Error).message)
         } finally {
             setSeeding(false)
         }
@@ -121,8 +119,8 @@ export default function SeedPage() {
             const { error } = await supabase.from('trades').delete().neq('id', '00000000-0000-0000-0000-000000000000') // Delete all
             if (error) throw error
             toast.success("Trades apagados.")
-        } catch (e: any) {
-            toast.error(e.message)
+        } catch (e: unknown) {
+            toast.error((e as Error).message)
         } finally {
             setSeeding(false)
         }

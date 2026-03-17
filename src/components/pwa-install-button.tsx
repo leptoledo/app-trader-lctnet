@@ -90,7 +90,7 @@ export function PwaInstallButton() {
                   2) Procure por um botão em formato de <Download className="inline h-4 w-4 bg-slate-100 dark:bg-slate-800 rounded mx-1 p-0.5" /> (Download ou Instalar).
                 </p>
                 <p className="mt-2 text-xs opacity-80 border-t border-slate-200 dark:border-slate-800 pt-2">
-                  Dica Alternativa: Você também pode abrir o menu de "três pontinhos" do seu navegador (Google Chrome, Edge, etc) e clicar em <b>"Instalar Aplicativo"</b> / "Adicionar à Tela Inicial".
+                  Dica Alternativa: Você também pode abrir o menu de &quot;três pontinhos&quot; do seu navegador (Google Chrome, Edge, etc) e clicar em <b>&quot;Instalar Aplicativo&quot;</b> / &quot;Adicionar à Tela Inicial&quot;.
                 </p>
               </div>
             )}
