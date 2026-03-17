@@ -1,6 +1,6 @@
 "use client"
 
-import { TrendingUp, Twitter, Github, Youtube, ArrowRight, Search, FileText } from "lucide-react"
+import { TrendingUp, Twitter, Github, Youtube, ArrowRight, Search, FileText, PenLine } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { motion } from "framer-motion"
@@ -134,6 +134,11 @@ export default function BlogPage() {
                             <Button asChild variant="ghost" className="px-2 sm:px-4 text-sm font-medium hover:text-emerald-500">
                                 <Link href="/login">Login</Link>
                             </Button>
+                            <Button asChild className="hidden sm:flex h-9 px-4 rounded-lg bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold border-0 shadow-none transition-colors">
+                                <Link href="/blog/new" className="flex items-center gap-1.5">
+                                    <PenLine className="h-3.5 w-3.5" /> Escrever
+                                </Link>
+                            </Button>
                             <div className="block">
                                 <PwaInstallButton />
                             </div>
@@ -197,6 +202,30 @@ export default function BlogPage() {
                             </Button>
                         </motion.div>
                     </div>
+
+                    {/* CTA Banner - Write for us */}
+                    <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.35 }}
+                        className="mb-10 flex flex-col sm:flex-row items-center justify-between gap-4 bg-gradient-to-br from-slate-50 to-emerald-50/50 dark:from-slate-800/50 dark:to-emerald-900/10 border border-slate-200 dark:border-slate-700/50 rounded-2xl p-6"
+                    >
+                        <div className="flex items-start gap-4">
+                            <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-500/10 flex items-center justify-center shrink-0 border border-emerald-200 dark:border-emerald-500/20">
+                                <PenLine className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+                            </div>
+                            <div>
+                                <p className="font-bold text-slate-900 dark:text-white text-sm mb-0.5">Você tem algo a compartilhar?</p>
+                                <p className="text-sm text-slate-500 dark:text-slate-400">Qualquer trader pode contribuir com artigos. Envie o seu — nossa equipe revisa e publica!</p>
+                            </div>
+                        </div>
+                        <Link
+                            href="/blog/new"
+                            className="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition-all duration-200 shadow-sm hover:shadow-emerald-500/20 shrink-0 w-full sm:w-auto justify-center"
+                        >
+                            <PenLine className="h-4 w-4" /> Escrever Artigo
+                        </Link>
+                    </motion.div>
 
                     {!firstPost ? (
                         <div className="flex justify-center items-center py-20">

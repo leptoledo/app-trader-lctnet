@@ -17,7 +17,8 @@ import {
     Wallet,
     Settings,
     ShieldAlert,
-    PenTool
+    PenTool,
+    PenLine
 } from "lucide-react"
 
 interface SidebarProps {
@@ -32,6 +33,7 @@ const navigation = [
     { name: "Diário", href: "/journal", icon: BookOpen },
     { name: "Notebook", href: "/notebook", icon: Notebook },
     { name: "Comunidade", href: "/community", icon: Users },
+    { name: "Escrever no Blog", href: "/blog/new", icon: PenLine },
     { name: "Contas", href: "/accounts", icon: Wallet },
     { name: "Gestão de Risco", href: "/risk", icon: ShieldAlert },
     { name: "Importar", href: "/import", icon: Upload },
