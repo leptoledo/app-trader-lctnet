@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from "next/image"
 import Link from "next/link"
@@ -19,6 +19,13 @@ export default function AuthPage() {
     const [username, setUsername] = useState('')
     const [loading, setLoading] = useState(false)
 
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search)
+            if (params.get('view') === 'signup') setView('signup')
+        }
+    }, [])
+
     const handleAuth = async (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
@@ -30,8 +37,11 @@ export default function AuthPage() {
                     password,
                 })
                 if (error) throw error
-                toast.success("Bem-vindo de volta! Carregando dashboard...")
-                router.push('/dashboard')
+                const params = new URLSearchParams(window.location.search)
+                const callbackUrl = params.get('callbackUrl')
+                
+                toast.success("Bem-vindo de volta! Redirecionando...")
+                router.push(callbackUrl || '/dashboard')
                 router.refresh()
             } else {
                 const { error } = await supabase.auth.signUp({

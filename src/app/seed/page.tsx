@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { notFound } from "next/navigation"
 import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -8,6 +9,9 @@ import { toast } from "sonner"
 import { Loader2, Database } from "lucide-react"
 
 export default function SeedPage() {
+    if (process.env.NODE_ENV === "production") {
+        notFound()
+    }
     const [seeding, setSeeding] = useState(false)
 
     const generateRandomTrade = (accountId: string, userId: string, date: Date) => {

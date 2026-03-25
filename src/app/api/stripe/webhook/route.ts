@@ -4,9 +4,11 @@ import { createSupabaseAdminClient } from '@/lib/supabase-admin'
 import { headers } from 'next/headers'
 import type Stripe from 'stripe'
 
-function getPlanFromAmount(amount: number): 'pro' | 'gold' {
-    // Gold plan is typically the higher priced one (e.g. > R$30 or > 3000 cents)
-    return amount > 3000 ? 'gold' : 'pro'
+function getPlanFromPriceId(priceId: string | undefined): 'pro' | 'gold' {
+    if (priceId === process.env.NEXT_PUBLIC_STRIPE_GOLD_PRICE_ID) {
+        return 'gold'
+    }
+    return 'pro' // Defaults to pro, or could handle 'free' if that ever goes to Stripe
 }
 
 export async function POST(req: Request) {
@@ -46,8 +48,8 @@ export async function POST(req: Request) {
         }
 
         const subscription = await stripe.subscriptions.retrieve(subId)
-        const priceAmount = subscription.items.data[0]?.price?.unit_amount ?? 0
-        const plan = getPlanFromAmount(priceAmount)
+        const priceId = subscription.items.data[0]?.price?.id
+        const plan = getPlanFromPriceId(priceId)
 
         const { error } = await supabase
             .from('subscriptions')
@@ -67,8 +69,8 @@ export async function POST(req: Request) {
     // ── customer.subscription.updated ─────────────────────────────────────────
     if (event.type === 'customer.subscription.updated') {
         const subscription = event.data.object as Stripe.Subscription
-        const priceAmount = subscription.items.data[0]?.price?.unit_amount ?? 0
-        const plan = getPlanFromAmount(priceAmount)
+        const priceId = subscription.items.data[0]?.price?.id
+        const plan = getPlanFromPriceId(priceId)
 
         const { error } = await supabase
             .from('subscriptions')
