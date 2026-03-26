@@ -654,7 +654,7 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2">
-                                                <span className="font-heading font-semibold text-sm text-slate-800 dark:text-white bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">
+                                                <span className="font-heading font-semibold text-sm text-slate-800 dark:text-white">
                                                     {trade.symbol}
                                                 </span>
                                                 {trade.notes === "SYNC_BINANCE" && (
@@ -664,10 +664,8 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell>
                                             <span className={cn(
-                                                "text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider border",
-                                                trade.direction === 'LONG'
-                                                    ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                                                    : "bg-red-500/10 text-red-600 border-red-500/20"
+                                                "text-xs font-semibold uppercase tracking-wider",
+                                                trade.direction === 'LONG' ? "text-emerald-500" : "text-red-500"
                                             )}>
                                                 {trade.direction === 'LONG' ? 'BUY' : 'SELL'}
                                             </span>
@@ -730,10 +728,8 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell className="text-center pr-6">
                                             <span className={cn(
-                                                "text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider",
-                                                trade.status === 'OPEN' ? "bg-blue-500/10 text-blue-500 border border-blue-500/20" :
-                                                    trade.status === 'CLOSED' ? "bg-slate-100 dark:bg-slate-800 text-slate-500 border border-slate-200 dark:border-slate-700" :
-                                                        "bg-orange-500/10 text-orange-500 border border-orange-500/20"
+                                                "text-[10px] font-bold uppercase tracking-wider",
+                                                trade.status === 'OPEN' ? "text-blue-500" : trade.status === 'CLOSED' ? "text-slate-500" : "text-orange-500"
                                             )}>
                                                 {trade.status === 'OPEN' ? 'ABERTO' : trade.status === 'CLOSED' ? 'FECHADO' : 'PEND.'}
                                             </span>
@@ -742,7 +738,7 @@ export default function TradesPage() {
                                             {(() => {
                                                 if (outlierThreshold <= 0) {
                                                     return (
-                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                                        <span className="text-xs font-medium text-slate-500">
                                                             Off
                                                         </span>
                                                     )
@@ -757,7 +753,7 @@ export default function TradesPage() {
                                                 const pct = getOutlierPercent(trade, referencePrice)
                                                 if (pct == null) {
                                                     return (
-                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                                        <span className="text-xs font-medium text-slate-500">
                                                             --
                                                         </span>
                                                     )
@@ -770,15 +766,13 @@ export default function TradesPage() {
                                                         <Tooltip>
                                                             <TooltipTrigger asChild>
                                                                 <span className={cn(
-                                                                    "text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider border cursor-help",
-                                                                    isOutlier
-                                                                        ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
-                                                                        : "bg-blue-500/10 text-blue-500 border-blue-500/20"
+                                                                    "text-xs font-medium cursor-help",
+                                                                    isOutlier ? "text-amber-500" : "text-blue-500"
                                                                 )}>
                                                                     {pct.toFixed(precision)}%
                                                                     {hasLive ? (
-                                                                        <span className="ml-1 inline-flex items-center gap-1 rounded-lg bg-emerald-500/10 px-1.5 py-0.5 text-[8px] font-semibold text-emerald-600">
-                                                                            <span className="h-1.5 w-1.5 rounded-lg bg-emerald-500 animate-pulse" />
+                                                                        <span className="ml-1.5 inline-flex items-center gap-1 text-[10px] font-semibold text-emerald-500">
+                                                                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
                                                                             Live
                                                                         </span>
                                                                     ) : null}
@@ -797,7 +791,7 @@ export default function TradesPage() {
                                                 (() => {
                                                     const r = getLiveRMultiple(trade)
                                                     if (r == null) return (
-                                                        <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200">
+                                                        <span className="text-xs font-medium text-slate-500">
                                                             --
                                                         </span>
                                                     )
@@ -806,7 +800,7 @@ export default function TradesPage() {
                                                         <TooltipProvider>
                                                             <Tooltip>
                                                                 <TooltipTrigger asChild>
-                                                                    <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200 cursor-help">
+                                                                    <span className="text-xs font-medium text-slate-500 cursor-help">
                                                                         {r.toFixed(2)}R
                                                                     </span>
                                                                 </TooltipTrigger>
@@ -833,7 +827,7 @@ export default function TradesPage() {
                                                 <TooltipProvider>
                                                     <Tooltip>
                                                         <TooltipTrigger asChild>
-                                                            <span className="text-[10px] font-semibold px-2 py-1 rounded-lg uppercase tracking-wider bg-slate-100 text-slate-500 border border-slate-200 cursor-help">
+                                                            <span className="text-xs font-medium text-slate-500 cursor-help">
                                                                 {trade.r_multiple != null ? `${trade.r_multiple.toFixed(2)}R` : "--"}
                                                             </span>
                                                         </TooltipTrigger>
@@ -860,9 +854,9 @@ export default function TradesPage() {
                                             <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>
                                                     <Button
-                                                        variant="outline"
+                                                        variant="ghost"
                                                         size="icon"
-                                                        className="h-8 w-8 rounded-lg border-slate-200 text-slate-500 hover:bg-slate-50"
+                                                        className="h-8 w-8 text-slate-400 hover:text-slate-600 hover:bg-transparent"
                                                         aria-label="Mais ações"
                                                     >
                                                         <MoreHorizontal className="h-4 w-4" />
