@@ -24,7 +24,7 @@ import {
     DropdownMenuTrigger
 } from "@/components/ui/dropdown-menu"
 import Link from "next/link"
-import { Plus, Loader2, ArrowLeft, Search, Filter, X, MoreHorizontal, Info } from "lucide-react"
+import { Plus, Loader2, ArrowLeft, Search, Filter, X, MoreHorizontal, Info, ChevronLeft, ChevronRight } from "lucide-react"
 import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import { calculatePnL } from "@/lib/pnl"
@@ -56,6 +56,8 @@ export default function TradesPage() {
     const [searchSymbol, setSearchSymbol] = useState("")
     const [filterDirection, setFilterDirection] = useState<TradeDirection | "ALL">("ALL")
     const [filterStatus, setFilterStatus] = useState<TradeStatus | "ALL">("ALL")
+    const [currentPage, setCurrentPage] = useState(1)
+    const ITEMS_PER_PAGE = 20
 
     useEffect(() => {
         fetchTrades()
@@ -166,6 +168,7 @@ export default function TradesPage() {
         }
 
         setFilteredTrades(result)
+        setCurrentPage(1)
     }
 
     const clearFilters = () => {
@@ -370,6 +373,10 @@ export default function TradesPage() {
             toast.error("Erro ao duplicar trade: " + message)
         }
     }
+
+    const totalPages = Math.ceil(filteredTrades.length / ITEMS_PER_PAGE)
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+    const currentTrades = filteredTrades.slice(startIndex, startIndex + ITEMS_PER_PAGE)
 
     const handleCloseTrade = async () => {
         if (!closingTrade) return
@@ -633,14 +640,14 @@ export default function TradesPage() {
                                         </div>
                                     </TableCell>
                                 </TableRow>
-                            ) : filteredTrades.length === 0 ? (
+                            ) : currentTrades.length === 0 ? (
                                 <TableRow>
                                     <TableCell colSpan={16} className="h-32 text-center text-slate-500 font-medium">
                                         Nenhum trade encontrado com os filtros atuais.
                                     </TableCell>
                                 </TableRow>
                             ) : (
-                                filteredTrades.map((trade) => (
+                                currentTrades.map((trade) => (
                                     <TableRow key={trade.id} className={cn(
                                         "group border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors",
                                         trade.status === "OPEN" && getLivePriceForTrade(trade)
@@ -836,6 +843,39 @@ export default function TradesPage() {
                         </TableBody>
                     </Table>
                 </div>
+
+                {/* Pagination */}
+                {totalPages > 1 && (
+                    <div className="flex items-center justify-between mt-2 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-200">
+                        <div className="text-xs font-semibold uppercase tracking-wider text-slate-400">
+                            Página <span className="text-slate-900 dark:text-white mx-1">{currentPage}</span> de <span className="text-slate-900 dark:text-white ml-1">{totalPages}</span>
+                            <span className="mx-3 text-slate-300 dark:text-slate-800">|</span>
+                            Mostrando <span className="text-slate-900 dark:text-white mx-1">{startIndex + 1}</span> a <span className="text-slate-900 dark:text-white mx-1">{Math.min(startIndex + ITEMS_PER_PAGE, filteredTrades.length)}</span> de <span className="text-slate-900 dark:text-white ml-1">{filteredTrades.length}</span> trades
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                                disabled={currentPage === 1}
+                                className="h-9 px-3 rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-500"
+                            >
+                                <ChevronLeft className="h-4 w-4 mr-1" />
+                                Anterior
+                            </Button>
+                            <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                                disabled={currentPage === totalPages}
+                                className="h-9 px-3 rounded-lg border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-500"
+                            >
+                                Próxima
+                                <ChevronRight className="h-4 w-4 ml-1" />
+                            </Button>
+                        </div>
+                    </div>
+                )}
 
             </div>
 
