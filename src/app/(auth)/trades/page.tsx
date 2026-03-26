@@ -464,68 +464,70 @@ export default function TradesPage() {
                         <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Diário de Trades</h1>
                     </div>
 
-                    <div className="hidden md:flex flex-wrap items-center gap-2 flex-grow justify-end max-w-3xl">
-                        <div className="relative group w-[160px]">
-                            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 group-focus-within:text-blue-400 transition-colors" />
-                            <Input
-                                placeholder="Símbolo..."
-                                className="pl-9 h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] focus:ring-blue-400 font-medium"
-                                value={searchSymbol}
-                                onChange={(e) => setSearchSymbol(e.target.value)}
-                            />
+                    <div className="flex items-center gap-3">
+                        <div className="hidden md:flex flex-wrap items-center gap-2">
+                            <div className="relative group w-[160px]">
+                                <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 group-focus-within:text-blue-400 transition-colors" />
+                                <Input
+                                    placeholder="Símbolo..."
+                                    className="pl-9 h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] focus:ring-blue-400 font-medium"
+                                    value={searchSymbol}
+                                    onChange={(e) => setSearchSymbol(e.target.value)}
+                                />
+                            </div>
+
+                            <div className="w-[140px]">
+                                <Select value={filterDirection} onValueChange={(v) => setFilterDirection(v as TradeDirection | "ALL")}>
+                                    <SelectTrigger className="h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] font-medium">
+                                        <SelectValue placeholder="Direção" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
+                                        <SelectItem value="ALL">Todas Direções</SelectItem>
+                                        <SelectItem value="LONG">BUY (Long)</SelectItem>
+                                        <SelectItem value="SHORT">SELL (Short)</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="w-[140px]">
+                                <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as TradeStatus | "ALL")}>
+                                    <SelectTrigger className="h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] font-medium">
+                                        <SelectValue placeholder="Status" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
+                                        <SelectItem value="ALL">Todos Status</SelectItem>
+                                        <SelectItem value="OPEN">Abertos</SelectItem>
+                                        <SelectItem value="CLOSED">Fechados</SelectItem>
+                                        <SelectItem value="PENDING">Pendentes</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            {(searchSymbol || filterDirection !== "ALL" || filterStatus !== "ALL") && (
+                                <TooltipProvider>
+                                    <Tooltip>
+                                        <TooltipTrigger asChild>
+                                            <Button
+                                                variant="ghost"
+                                                size="icon"
+                                                onClick={clearFilters}
+                                                className="h-9 w-9 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white shrink-0"
+                                            >
+                                                <X className="h-4 w-4" />
+                                            </Button>
+                                        </TooltipTrigger>
+                                        <TooltipContent>Limpar filtros</TooltipContent>
+                                    </Tooltip>
+                                </TooltipProvider>
+                            )}
                         </div>
 
-                        <div className="w-[140px]">
-                            <Select value={filterDirection} onValueChange={(v) => setFilterDirection(v as TradeDirection | "ALL")}>
-                                <SelectTrigger className="h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] font-medium">
-                                    <SelectValue placeholder="Direção" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
-                                    <SelectItem value="ALL">Todas Direções</SelectItem>
-                                    <SelectItem value="LONG">BUY (Long)</SelectItem>
-                                    <SelectItem value="SHORT">SELL (Short)</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        <div className="w-[140px]">
-                            <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as TradeStatus | "ALL")}>
-                                <SelectTrigger className="h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] font-medium">
-                                    <SelectValue placeholder="Status" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
-                                    <SelectItem value="ALL">Todos Status</SelectItem>
-                                    <SelectItem value="OPEN">Abertos</SelectItem>
-                                    <SelectItem value="CLOSED">Fechados</SelectItem>
-                                    <SelectItem value="PENDING">Pendentes</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-
-                        {(searchSymbol || filterDirection !== "ALL" || filterStatus !== "ALL") && (
-                            <TooltipProvider>
-                                <Tooltip>
-                                    <TooltipTrigger asChild>
-                                        <Button
-                                            variant="ghost"
-                                            size="icon"
-                                            onClick={clearFilters}
-                                            className="h-9 w-9 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white shrink-0"
-                                        >
-                                            <X className="h-4 w-4" />
-                                        </Button>
-                                    </TooltipTrigger>
-                                    <TooltipContent>Limpar filtros</TooltipContent>
-                                </Tooltip>
-                            </TooltipProvider>
-                        )}
+                        <Button asChild className="rounded-md bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-6 h-9 text-xs font-medium transition-all shadow-sm flex-shrink-0">
+                            <Link href="/trades/new" className="flex items-center gap-2">
+                                <Plus className="h-4 w-4" /> Novo Trade
+                            </Link>
+                        </Button>
                     </div>
-
-                    <Button asChild className="rounded-md bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-6 h-9 text-xs font-medium transition-all shadow-sm flex-shrink-0">
-                        <Link href="/trades/new" className="flex items-center gap-2">
-                            <Plus className="h-4 w-4" /> Novo Trade
-                        </Link>
-                    </Button>
                 </div>
 
                 {/* Filters (Mobile Sheet) */}
