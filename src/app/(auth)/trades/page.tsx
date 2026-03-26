@@ -605,13 +605,12 @@ export default function TradesPage() {
                     <Table className="min-w-[1200px]">
                         <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
                             <TableRow className="hover:bg-transparent">
-                                <TableHead className="w-[140px] text-xs font-semibold text-slate-400 uppercase tracking-wider py-6 pl-8">Entrada</TableHead>
+                                <TableHead className="w-[140px] text-xs font-semibold text-slate-400 uppercase tracking-wider py-6 pl-8">E / S</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Símbolo</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Direção</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Vol.</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Preço Ent.</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">S/L - T/P</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Saída</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Preço Saída</TableHead>
                                 <TableHead className={cn(
                                     "text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell",
@@ -648,8 +647,9 @@ export default function TradesPage() {
                                             ? "bg-emerald-500/[0.005]"
                                             : ""
                                     )}>
-                                        <TableCell className="pl-8 py-4 text-xs font-medium text-slate-600 dark:text-slate-300">
-                                            {new Date(trade.entry_date).toLocaleDateString()}
+                                        <TableCell className="pl-8 py-4 text-[10px] text-slate-500 font-medium whitespace-nowrap">
+                                            <div className="flex items-center gap-1"><span className="text-slate-400 w-3 font-bold uppercase tracking-wider">E:</span> <span className="text-slate-600 dark:text-slate-300">{new Date(trade.entry_date).toLocaleDateString()}</span></div>
+                                            <div className="flex items-center gap-1 mt-0.5"><span className="text-slate-400 w-3 font-bold uppercase tracking-wider">S:</span> <span className="text-slate-600 dark:text-slate-300">{trade.exit_date ? new Date(trade.exit_date).toLocaleDateString() : '-'}</span></div>
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2">
@@ -675,11 +675,7 @@ export default function TradesPage() {
                                             <div className="flex items-center gap-1"><span className="text-red-400 w-4 font-semibold">SL:</span> {trade.stop_loss || '-'}</div>
                                             <div className="flex items-center gap-1"><span className="text-emerald-400 w-4 font-semibold">TP:</span> {trade.take_profit || '-'}</div>
                                         </TableCell>
-                                        <TableCell className="text-xs font-medium text-slate-600 dark:text-slate-300">
-                                            {trade.exit_date ? (
-                                                new Date(trade.exit_date).toLocaleDateString()
-                                            ) : '-'}
-                                        </TableCell>
+
                                         <TableCell className="text-xs font-mono font-medium text-slate-900 dark:text-white">{formatPrice(trade.exit_price, getPriceDecimals(trade.symbol))}</TableCell>
                                         <TableCell className={cn(
                                             "text-xs font-mono font-medium text-slate-900 dark:text-white hidden md:table-cell",
