@@ -605,8 +605,7 @@ export default function TradesPage() {
                     <Table className="min-w-[1200px]">
                         <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
                             <TableRow className="hover:bg-transparent">
-                                <TableHead className="w-[100px] text-xs font-semibold text-slate-400 uppercase tracking-wider py-6 pl-8">Ticket</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Entrada</TableHead>
+                                <TableHead className="w-[140px] text-xs font-semibold text-slate-400 uppercase tracking-wider py-6 pl-8">Entrada</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Símbolo</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Direção</TableHead>
                                 <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Vol.</TableHead>
@@ -620,7 +619,6 @@ export default function TradesPage() {
                                 )}>
                                     Preço Atual
                                 </TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell w-[88px]">Swap</TableHead>
                                 <TableHead className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider pr-8">Lucro (USD)</TableHead>
                                 <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
                                 <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Outlier</TableHead>
@@ -651,10 +649,7 @@ export default function TradesPage() {
                                             ? "bg-emerald-500/[0.005]"
                                             : ""
                                     )}>
-                                        <TableCell className="pl-8 py-4">
-                                            <span className="font-mono text-xs text-slate-400 group-hover:text-blue-500 transition-colors">{trade.ticket_id || '-'}</span>
-                                        </TableCell>
-                                        <TableCell className="text-xs font-medium text-slate-600 dark:text-slate-300">
+                                        <TableCell className="pl-8 py-4 text-xs font-medium text-slate-600 dark:text-slate-300">
                                             {new Date(trade.entry_date).toLocaleDateString()}
                                             <span className="block text-[10px] text-slate-400 mt-0.5 font-semibold">
                                                 {new Date(trade.entry_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
@@ -667,9 +662,6 @@ export default function TradesPage() {
                                                 </span>
                                                 {trade.notes === "SYNC_BINANCE" && (
                                                     <span className="text-[9px] font-bold bg-[#FCD535]/10 text-[#FCD535] border border-[#FCD535]/20 px-1.5 py-0.5 rounded-sm uppercase tracking-wide">Binance</span>
-                                                )}
-                                                {trade.notes === "SYNC_CSV" && (
-                                                    <span className="text-[9px] font-bold bg-blue-500/10 text-blue-500 border border-blue-500/20 px-1.5 py-0.5 rounded-sm uppercase tracking-wide">Plataforma</span>
                                                 )}
                                             </div>
                                         </TableCell>
@@ -709,18 +701,6 @@ export default function TradesPage() {
                                                     ? formatPrice(getLivePriceForTrade(trade), getPriceDecimals(trade.symbol))
                                                     : "-")
                                                 : "-"}
-                                        </TableCell>
-                                        <TableCell className="text-xs text-slate-500 hidden md:table-cell">
-                                            <TooltipProvider>
-                                                <Tooltip>
-                                                    <TooltipTrigger asChild>
-                                                        <div className="text-orange-400 font-medium cursor-help">
-                                                            {trade.swap ? trade.swap.toFixed(2) : '0.00'}
-                                                        </div>
-                                                    </TooltipTrigger>
-                                                    <TooltipContent>Swap</TooltipContent>
-                                                </Tooltip>
-                                            </TooltipProvider>
                                         </TableCell>
                                         <TableCell className={cn(
                                             "text-right font-mono font-semibold text-sm pr-8",
