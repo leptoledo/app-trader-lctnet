@@ -664,7 +664,7 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell>
                                             <span className={cn(
-                                                "text-xs font-semibold uppercase tracking-wider",
+                                                "inline-block w-9 text-xs font-semibold uppercase tracking-wider",
                                                 trade.direction === 'LONG' ? "text-emerald-500" : "text-red-500"
                                             )}>
                                                 {trade.direction === 'LONG' ? 'BUY' : 'SELL'}
