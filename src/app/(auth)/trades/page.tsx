@@ -57,7 +57,7 @@ export default function TradesPage() {
     const [filterDirection, setFilterDirection] = useState<TradeDirection | "ALL">("ALL")
     const [filterStatus, setFilterStatus] = useState<TradeStatus | "ALL">("ALL")
     const [currentPage, setCurrentPage] = useState(1)
-    const ITEMS_PER_PAGE = 20
+    const ITEMS_PER_PAGE = 10
 
     useEffect(() => {
         fetchTrades()
