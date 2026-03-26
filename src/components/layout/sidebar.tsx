@@ -88,6 +88,8 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                     <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Geral</p>
                 </div>
                 {navigation.map((item) => {
+                    if (item.name === "Depoimentos" && isAdmin) return null;
+
                     const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
                     return (
                         <Link
