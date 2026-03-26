@@ -622,7 +622,6 @@ export default function TradesPage() {
                                 <TableHead className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider pr-8">Lucro (USD)</TableHead>
                                 <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
                                 <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Outlier</TableHead>
-                                <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell">R</TableHead>
                                 <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider pr-6">Ações</TableHead>
                             </TableRow>
                         </TableHeader>
@@ -785,70 +784,6 @@ export default function TradesPage() {
                                                     </TooltipProvider>
                                                 )
                                             })()}
-                                        </TableCell>
-                                        <TableCell className="text-center hidden md:table-cell">
-                                            {trade.status === "OPEN" ? (
-                                                (() => {
-                                                    const r = getLiveRMultiple(trade)
-                                                    if (r == null) return (
-                                                        <span className="text-xs font-medium text-slate-500">
-                                                            --
-                                                        </span>
-                                                    )
-                                                    const livePrice = getLivePriceForTrade(trade)
-                                                    return (
-                                                        <TooltipProvider>
-                                                            <Tooltip>
-                                                                <TooltipTrigger asChild>
-                                                                    <span className="text-xs font-medium text-slate-500 cursor-help">
-                                                                        {r.toFixed(2)}R
-                                                                    </span>
-                                                                </TooltipTrigger>
-                                                                <TooltipContent>
-                                                                    Risco: {(() => {
-                                                                        if (!trade.stop_loss) return "--"
-                                                                        const risk = trade.direction === "LONG"
-                                                                            ? trade.entry_price - trade.stop_loss
-                                                                            : trade.stop_loss - trade.entry_price
-                                                                        return formatPrice(Math.abs(risk), getPriceDecimals(trade.symbol))
-                                                                    })()} • Retorno: {(() => {
-                                                                        if (!livePrice) return "--"
-                                                                        const reward = trade.direction === "LONG"
-                                                                            ? livePrice - trade.entry_price
-                                                                            : trade.entry_price - livePrice
-                                                                        return formatPrice(Math.abs(reward), getPriceDecimals(trade.symbol))
-                                                                    })()}
-                                                                </TooltipContent>
-                                                            </Tooltip>
-                                                        </TooltipProvider>
-                                                    )
-                                                })()
-                                            ) : (
-                                                <TooltipProvider>
-                                                    <Tooltip>
-                                                        <TooltipTrigger asChild>
-                                                            <span className="text-xs font-medium text-slate-500 cursor-help">
-                                                                {trade.r_multiple != null ? `${trade.r_multiple.toFixed(2)}R` : "--"}
-                                                            </span>
-                                                        </TooltipTrigger>
-                                                        <TooltipContent>
-                                                            Risco: {(() => {
-                                                                if (!trade.stop_loss) return "--"
-                                                                const risk = trade.direction === "LONG"
-                                                                    ? trade.entry_price - trade.stop_loss
-                                                                    : trade.stop_loss - trade.entry_price
-                                                                return formatPrice(Math.abs(risk), getPriceDecimals(trade.symbol))
-                                                            })()} • Retorno: {(() => {
-                                                                if (!trade.exit_price) return "--"
-                                                                const reward = trade.direction === "LONG"
-                                                                    ? trade.exit_price - trade.entry_price
-                                                                    : trade.entry_price - trade.exit_price
-                                                                return formatPrice(Math.abs(reward), getPriceDecimals(trade.symbol))
-                                                            })()}
-                                                        </TooltipContent>
-                                                    </Tooltip>
-                                                </TooltipProvider>
-                                            )}
                                         </TableCell>
                                         <TableCell className="text-center pr-6">
                                             <DropdownMenu>
