@@ -458,58 +458,43 @@ export default function TradesPage() {
         <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-[#0b1220] p-8 transition-colors duration-500">
             <div className="mx-auto grid w-full max-w-[1600px] gap-6">
 
-                {/* Header */}
-                <div className="flex flex-col sm:flex-row items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
-                    <div className="flex items-center gap-4">
-                        <div>
-                            <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Diário de Trades</h1>
-                        </div>
+                {/* Header & Desktop Filters */}
+                <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                    <div className="flex items-center gap-4 shrink-0">
+                        <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Diário de Trades</h1>
                     </div>
-                    <Button asChild className="rounded-md bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-6 h-10 text-xs font-medium transition-all shadow-sm flex-shrink-0">
-                        <Link href="/trades/new" className="flex items-center gap-2">
-                            <Plus className="h-4 w-4" /> Novo Trade
-                        </Link>
-                    </Button>
-                </div>
 
-                {/* Filters (Desktop) */}
-                <div className="hidden md:block bg-white dark:bg-[#0b1220] p-4 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm animate-in fade-in slide-in-from-top-6 duration-500 delay-75">
-                    <div className="flex flex-col md:flex-row gap-2 items-end">
-                        <div className="w-full md:w-1/4 space-y-1.5">
-                            <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Símbolo</label>
-                            <div className="relative group">
-                                <Search className="absolute left-4 top-3.5 h-5 w-5 text-slate-400 group-focus-within:text-blue-400 transition-colors" />
-                                <Input
-                                    placeholder="Ex: EURUSD"
-                                    className="pl-12 h-10 rounded-lg border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950 focus:ring-blue-400 font-normal"
-                                    value={searchSymbol}
-                                    onChange={(e) => setSearchSymbol(e.target.value)}
-                                />
-                            </div>
+                    <div className="hidden md:flex flex-wrap items-center gap-2 flex-grow justify-end max-w-3xl">
+                        <div className="relative group w-[160px]">
+                            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400 group-focus-within:text-blue-400 transition-colors" />
+                            <Input
+                                placeholder="Símbolo..."
+                                className="pl-9 h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] focus:ring-blue-400 font-medium"
+                                value={searchSymbol}
+                                onChange={(e) => setSearchSymbol(e.target.value)}
+                            />
                         </div>
 
-                        <div className="w-full md:w-1/4 space-y-1.5">
-                            <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Direção</label>
+                        <div className="w-[140px]">
                             <Select value={filterDirection} onValueChange={(v) => setFilterDirection(v as TradeDirection | "ALL")}>
-                                <SelectTrigger className="h-10 rounded-lg border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950 font-normal">
-                                    <SelectValue placeholder="Todas" />
+                                <SelectTrigger className="h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] font-medium">
+                                    <SelectValue placeholder="Direção" />
                                 </SelectTrigger>
-                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
-                                    <SelectItem value="ALL">Todas</SelectItem>
+                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
+                                    <SelectItem value="ALL">Todas Direções</SelectItem>
                                     <SelectItem value="LONG">BUY (Long)</SelectItem>
                                     <SelectItem value="SHORT">SELL (Short)</SelectItem>
                                 </SelectContent>
                             </Select>
                         </div>
 
-                        <div className="w-full md:w-1/4 space-y-1.5">
-                            <label className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ml-1">Status</label>
+                        <div className="w-[140px]">
                             <Select value={filterStatus} onValueChange={(v) => setFilterStatus(v as TradeStatus | "ALL")}>
-                                <SelectTrigger className="h-10 rounded-lg border-slate-200 dark:border-slate-800 bg-white/90 dark:bg-slate-950 font-normal">
-                                    <SelectValue placeholder="Todos" />
+                                <SelectTrigger className="h-9 text-xs rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0b1220] font-medium">
+                                    <SelectValue placeholder="Status" />
                                 </SelectTrigger>
-                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800">
-                                    <SelectItem value="ALL">Todos os Status</SelectItem>
+                                <SelectContent className="bg-white dark:bg-slate-950 border-slate-200 dark:border-slate-800 text-xs text-slate-700 dark:text-slate-300">
+                                    <SelectItem value="ALL">Todos Status</SelectItem>
                                     <SelectItem value="OPEN">Abertos</SelectItem>
                                     <SelectItem value="CLOSED">Fechados</SelectItem>
                                     <SelectItem value="PENDING">Pendentes</SelectItem>
@@ -517,31 +502,30 @@ export default function TradesPage() {
                             </Select>
                         </div>
 
-                        <div className="flex items-center gap-4 ml-auto">
-                            {(searchSymbol || filterDirection !== "ALL" || filterStatus !== "ALL") ? (
-                                <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest hidden md:block">
-                                    {filteredTrades.length} registros
-                                </span>
-                            ) : null}
-                            {(searchSymbol || filterDirection !== "ALL" || filterStatus !== "ALL") ? (
-                                <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger asChild>
-                                            <Button
-                                                variant="outline"
-                                                size="icon"
-                                                onClick={clearFilters}
-                                                className="h-10 w-10 rounded-lg border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-500"
-                                            >
-                                                <X className="h-5 w-5" />
-                                            </Button>
-                                        </TooltipTrigger>
-                                        <TooltipContent>Limpar filtros</TooltipContent>
-                                    </Tooltip>
-                                </TooltipProvider>
-                            ) : null}
-                        </div>
+                        {(searchSymbol || filterDirection !== "ALL" || filterStatus !== "ALL") && (
+                            <TooltipProvider>
+                                <Tooltip>
+                                    <TooltipTrigger asChild>
+                                        <Button
+                                            variant="ghost"
+                                            size="icon"
+                                            onClick={clearFilters}
+                                            className="h-9 w-9 rounded-md text-slate-400 hover:text-slate-600 dark:hover:text-white shrink-0"
+                                        >
+                                            <X className="h-4 w-4" />
+                                        </Button>
+                                    </TooltipTrigger>
+                                    <TooltipContent>Limpar filtros</TooltipContent>
+                                </Tooltip>
+                            </TooltipProvider>
+                        )}
                     </div>
+
+                    <Button asChild className="rounded-md bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 px-6 h-9 text-xs font-medium transition-all shadow-sm flex-shrink-0">
+                        <Link href="/trades/new" className="flex items-center gap-2">
+                            <Plus className="h-4 w-4" /> Novo Trade
+                        </Link>
+                    </Button>
                 </div>
 
                 {/* Filters (Mobile Sheet) */}
