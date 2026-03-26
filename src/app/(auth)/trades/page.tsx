@@ -606,22 +606,22 @@ export default function TradesPage() {
                         <TableHeader className="bg-slate-50/50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
                             <TableRow className="hover:bg-transparent">
                                 <TableHead className="w-[140px] text-xs font-semibold text-slate-400 uppercase tracking-wider py-6 pl-8">E / S</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Símbolo</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Direção</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Vol.</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Preço Ent.</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">S/L - T/P</TableHead>
-                                <TableHead className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Preço Saída</TableHead>
+                                <TableHead className="w-[120px] text-xs font-semibold text-slate-400 uppercase tracking-wider">Símbolo</TableHead>
+                                <TableHead className="w-[100px] text-xs font-semibold text-slate-400 uppercase tracking-wider">Direção</TableHead>
+                                <TableHead className="w-[80px] text-xs font-semibold text-slate-400 uppercase tracking-wider">Vol.</TableHead>
+                                <TableHead className="w-[110px] text-xs font-semibold text-slate-400 uppercase tracking-wider">Preço Ent.</TableHead>
+                                <TableHead className="w-[120px] text-xs font-semibold text-slate-400 uppercase tracking-wider">S/L - T/P</TableHead>
+                                <TableHead className="w-[110px] text-xs font-semibold text-slate-400 uppercase tracking-wider">Preço Saída</TableHead>
                                 <TableHead className={cn(
-                                    "text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell",
+                                    "w-[110px] text-xs font-semibold text-slate-400 uppercase tracking-wider hidden md:table-cell",
                                     !trades.some((t) => t.status === "OPEN") ? "hidden" : ""
                                 )}>
                                     Preço Atual
                                 </TableHead>
-                                <TableHead className="text-right text-xs font-semibold text-slate-400 uppercase tracking-wider pr-8">Lucro (USD)</TableHead>
-                                <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
-                                <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Outlier</TableHead>
-                                <TableHead className="text-center text-xs font-semibold text-slate-400 uppercase tracking-wider pr-6">Ações</TableHead>
+                                <TableHead className="w-[140px] text-right text-xs font-semibold text-slate-400 uppercase tracking-wider pr-8">Lucro (USD)</TableHead>
+                                <TableHead className="w-[100px] text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Status</TableHead>
+                                <TableHead className="w-[100px] text-center text-xs font-semibold text-slate-400 uppercase tracking-wider">Outlier</TableHead>
+                                <TableHead className="w-[80px] text-center text-xs font-semibold text-slate-400 uppercase tracking-wider pr-6">Ações</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
