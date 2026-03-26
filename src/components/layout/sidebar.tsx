@@ -18,7 +18,8 @@ import {
     Settings,
     ShieldAlert,
     PenTool,
-    PenLine
+    PenLine,
+    MessageSquareHeart
 } from "lucide-react"
 
 interface SidebarProps {
@@ -38,6 +39,7 @@ const navigation = [
     { name: "Gestão de Risco", href: "/risk", icon: ShieldAlert },
     { name: "Importar", href: "/import", icon: Upload },
     { name: "Configurações", href: "/settings", icon: Settings },
+    { name: "Depoimentos", href: "/depoimentos", icon: MessageSquareHeart },
 ]
 
 const adminNavigation = [
