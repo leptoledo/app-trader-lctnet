@@ -478,11 +478,19 @@ export default function LandingPage() {
               <div key={i}>
                 <h5 className="font-semibold text-slate-900 dark:text-white text-[15px] mb-6">{col.title}</h5>
                 <ul className="space-y-4">
-                  {col.links.map((link, j) => (
-                    <li key={j} className="text-[14px] text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 cursor-pointer transition-colors">
-                      {link}
-                    </li>
-                  ))}
+                  {col.links.map((link, j) => {
+                      let href = "#"
+                      if (link === "Termos de Serviço") href = "/terms"
+                      if (link === "Política de Privacidade") href = "/privacy"
+                      if (link === "Preços") href = "/pricing"
+                      if (link === "Blog") href = "/blog"
+                      
+                      return (
+                          <li key={j} className="text-[14px] text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors">
+                              <Link href={href}>{link}</Link>
+                          </li>
+                      )
+                  })}
                 </ul>
               </div>
             ))}

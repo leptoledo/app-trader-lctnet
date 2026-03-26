@@ -10,8 +10,8 @@ import { ModeToggle } from "@/components/mode-toggle"
 import { toast } from "sonner"
 import { PwaInstallButton } from "@/components/pwa-install-button"
 import { ScrollToTop } from "@/components/scroll-to-top"
+import { useRouter } from "next/navigation"
 import { supabase } from "@/lib/supabase"
-
 const footerLinks = [
     { title: "Produto", links: ["Base de Dados", "Autenticação", "Edge Functions", "Storage", "Analytics", "Preços", "Changelog"] },
     { title: "Soluções", links: ["Day Trade", "Swing Trade", "Iniciantes", "Avançado", "Startups", "Agências"] },
@@ -21,9 +21,11 @@ const footerLinks = [
 ]
 
 export default function PricingPage() {
+    const router = useRouter()
+
     const handleSubscribe = async (planId: string) => {
         if (planId === 'free') {
-            window.location.href = '/dashboard'
+            router.push('/dashboard')
             return
         }
 
@@ -35,8 +37,8 @@ export default function PricingPage() {
 
             if (!token) {
                 toast.dismiss(toastId)
-                toast.error("Para assinar um plano, crie sua conta gratuita ou faça login.")
-                window.location.href = '/login?view=signup&callbackUrl=/pricing'
+                toast.info("Por favor, crie sua conta ou faça login para assinar.")
+                router.push('/login?view=signup&callbackUrl=/pricing')
                 return
             }
 
@@ -359,11 +361,19 @@ export default function PricingPage() {
                             <div key={i}>
                                 <h5 className="font-semibold text-slate-900 dark:text-white text-[15px] mb-6">{col.title}</h5>
                                 <ul className="space-y-4">
-                                    {col.links.map((link, j) => (
-                                        <li key={j} className="text-[14px] text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 cursor-pointer transition-colors font-medium">
-                                            {link}
-                                        </li>
-                                    ))}
+                                    {col.links.map((link, j) => {
+                                        let href = "#"
+                                        if (link === "Termos de Serviço") href = "/terms"
+                                        if (link === "Política de Privacidade") href = "/privacy"
+                                        if (link === "Preços") href = "/pricing"
+                                        if (link === "Blog") href = "/blog"
+                                        
+                                        return (
+                                            <li key={j} className="text-[14px] text-slate-500 dark:text-slate-400 hover:text-emerald-500 dark:hover:text-emerald-400 transition-colors font-medium">
+                                                <Link href={href}>{link}</Link>
+                                            </li>
+                                        )
+                                    })}
                                 </ul>
                             </div>
                         ))}
