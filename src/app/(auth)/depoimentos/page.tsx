@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { Card } from "@/components/ui/card"
 import { toast } from "sonner"
 import { Loader2, MessageSquareHeart, CheckCircle2 } from "lucide-react"
 
@@ -89,99 +90,97 @@ export default function DepoimentosPage() {
     }
 
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-[#0b1220] py-12 px-4 sm:px-6 lg:px-8 transition-colors duration-500">
-            <div className="max-w-2xl mx-auto">
-                <div className="bg-white dark:bg-[#111827] rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-sm relative overflow-hidden">
-                    {/* Background decorations */}
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-500" />
-                    <div className="absolute top-0 right-0 p-32 bg-emerald-500/5 rounded-full blur-3xl -mr-16 -mt-16 pointer-events-none" />
-
-                    <div className="relative z-10">
-                        {submitted ? (
-                            <div className="text-center py-12">
-                                <div className="mx-auto w-16 h-16 bg-emerald-100 dark:bg-emerald-900/30 rounded-full flex items-center justify-center mb-6">
-                                    <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+        <div className="flex flex-col bg-slate-50 dark:bg-[#0b1220] p-8 transition-colors duration-500 min-h-[calc(100vh-64px)]">
+            <div className="max-w-3xl mx-auto w-full mt-8 md:mt-12">
+                
+                {submitted ? (
+                    <Card className="py-20 rounded-xl bg-white dark:bg-[#0f1523] border border-slate-200 dark:border-slate-800/60 text-center shadow-sm flex flex-col items-center justify-center relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-500" />
+                        <div className="mx-auto w-16 h-16 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center mb-6">
+                            <CheckCircle2 className="h-8 w-8 text-emerald-600 dark:text-emerald-400" />
+                        </div>
+                        <h2 className="text-xl font-medium text-slate-900 dark:text-white mb-2 tracking-tight">
+                            Comunidade Agradece!
+                        </h2>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-8 max-w-sm leading-relaxed">
+                            Sua experiência foi registrada e agora fará parte da página oficial do Trader Journal.
+                        </p>
+                        <Button 
+                            onClick={() => router.push('/dashboard')}
+                            className="h-10 px-8 rounded-md bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition-colors shadow-none"
+                        >
+                            Voltar ao Dashboard
+                        </Button>
+                    </Card>
+                ) : (
+                    <Card className="rounded-xl bg-white dark:bg-[#0f1523] border border-slate-200 dark:border-slate-800/60 shadow-sm relative overflow-hidden">
+                        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-emerald-400 to-teal-500" />
+                        
+                        <div className="p-8 sm:p-10">
+                            <div className="flex items-start gap-4 mb-8">
+                                <div className="w-12 h-12 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center shrink-0">
+                                    <MessageSquareHeart className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
                                 </div>
-                                <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 tracking-tight">
-                                    Obrigado pelo seu depoimento!
-                                </h2>
-                                <p className="text-slate-500 dark:text-slate-400 mb-8 max-w-md mx-auto">
-                                    Sua mensagem foi recebida com sucesso. Ela passará por uma rápida revisão antes de ser exibida publicamente na nossa página principal.
-                                </p>
-                                <Button 
-                                    onClick={() => router.push('/dashboard')}
-                                    className="bg-emerald-500 hover:bg-emerald-600 text-white font-medium"
-                                >
-                                    Voltar ao Dashboard
-                                </Button>
+                                <div className="pt-1">
+                                    <h1 className="text-xl font-semibold text-slate-900 dark:text-white tracking-tight">Deixe sua Avaliação</h1>
+                                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                        Compartilhe sua experiência usando o Trader Journal com a comunidade.
+                                    </p>
+                                </div>
                             </div>
-                        ) : (
-                            <>
-                                <div className="flex items-center gap-3 mb-8">
-                                    <div className="bg-emerald-100 dark:bg-emerald-900/30 p-2.5 rounded-xl">
-                                        <MessageSquareHeart className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
-                                    </div>
-                                    <div>
-                                        <h1 className="text-2xl font-bold text-slate-900 dark:text-white tracking-tight">Deixe sua Avaliação</h1>
-                                        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                                            Compartilhe sua experiência usando o Trader Journal com a comunidade.
-                                        </p>
+
+                            <form onSubmit={handleSubmit} className="space-y-6">
+                                <div className="space-y-3">
+                                    <Label htmlFor="nickname" className="text-sm font-medium text-slate-900 dark:text-slate-300">
+                                        Como quer ser chamado? (Nickname)
+                                    </Label>
+                                    <Input
+                                        id="nickname"
+                                        placeholder="Ex: @trader_pro"
+                                        value={nickname}
+                                        onChange={(e) => setNickname(e.target.value)}
+                                        required
+                                        maxLength={30}
+                                        className="h-11 rounded-lg bg-slate-50 dark:bg-[#060b13] border-slate-200 dark:border-slate-800 focus-visible:ring-1 focus-visible:ring-emerald-500 focus-visible:ring-offset-0 text-sm"
+                                    />
+                                </div>
+
+                                <div className="space-y-3">
+                                    <Label htmlFor="message" className="text-sm font-medium text-slate-900 dark:text-slate-300">
+                                        Sua Avaliação
+                                    </Label>
+                                    <Textarea
+                                        id="message"
+                                        placeholder="Conte como a plataforma tem ajudado nas suas operações diárias..."
+                                        value={message}
+                                        onChange={(e) => setMessage(e.target.value)}
+                                        required
+                                        rows={4}
+                                        maxLength={500}
+                                        className="resize-none rounded-lg bg-slate-50 dark:bg-[#060b13] border-slate-200 dark:border-slate-800 focus-visible:ring-1 focus-visible:ring-emerald-500 focus-visible:ring-offset-0 p-4 text-sm"
+                                    />
+                                    <div className="flex justify-end text-xs text-slate-400 font-medium">
+                                        {message.length} / 500
                                     </div>
                                 </div>
 
-                                <form onSubmit={handleSubmit} className="space-y-6">
-                                    <div className="space-y-2">
-                                        <Label htmlFor="nickname" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                                            Como quer ser chamado? (Nickname)
-                                        </Label>
-                                        <Input
-                                            id="nickname"
-                                            placeholder="Ex: @trader_pro"
-                                            value={nickname}
-                                            onChange={(e) => setNickname(e.target.value)}
-                                            required
-                                            maxLength={30}
-                                            className="h-12 bg-slate-50 dark:bg-[#060b13] border-slate-200 dark:border-slate-800 focus-visible:ring-emerald-500"
-                                        />
-                                    </div>
-
-                                    <div className="space-y-2">
-                                        <Label htmlFor="message" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
-                                            Sua Avaliação
-                                        </Label>
-                                        <Textarea
-                                            id="message"
-                                            placeholder="Conte como a plataforma tem ajudado nas suas operações diárias..."
-                                            value={message}
-                                            onChange={(e) => setMessage(e.target.value)}
-                                            required
-                                            rows={5}
-                                            maxLength={500}
-                                            className="resize-none bg-slate-50 dark:bg-[#060b13] border-slate-200 dark:border-slate-800 focus-visible:ring-emerald-500 p-4"
-                                        />
-                                        <div className="flex justify-end text-xs text-slate-400 font-medium">
-                                            {message.length} / 500
-                                        </div>
-                                    </div>
-
-                                    <Button 
-                                        type="submit" 
-                                        disabled={loading || !nickname || !message}
-                                        className="w-full h-12 rounded-xl text-sm font-semibold bg-emerald-500 hover:bg-emerald-600 text-white shadow-lg shadow-emerald-500/20 transition-all disabled:opacity-50 disabled:shadow-none"
-                                    >
-                                        {loading ? (
-                                            <>
-                                                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Enviando...
-                                            </>
-                                        ) : (
-                                            "Enviar Depoimento"
-                                        )}
-                                    </Button>
-                                </form>
-                            </>
-                        )}
-                    </div>
-                </div>
+                                <Button 
+                                    type="submit" 
+                                    disabled={loading || !nickname || !message}
+                                    className="w-full h-11 rounded-lg text-sm font-medium bg-emerald-600 hover:bg-emerald-700 text-white shadow-none transition-colors disabled:opacity-50"
+                                >
+                                    {loading ? (
+                                        <>
+                                            <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Processando
+                                        </>
+                                    ) : (
+                                        "Enviar Depoimento"
+                                    )}
+                                </Button>
+                            </form>
+                        </div>
+                    </Card>
+                )}
             </div>
         </div>
     )
