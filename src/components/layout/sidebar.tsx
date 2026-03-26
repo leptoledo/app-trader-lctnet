@@ -46,6 +46,7 @@ const adminNavigation = [
     { name: "Painel Geral", href: "/admin/dashboard", icon: LayoutDashboard },
     { name: "Gestão de Usuários", href: "/admin/users", icon: Users },
     { name: "Blog Admin", href: "/admin/posts", icon: PenTool },
+    { name: "Aprovar Depoimentos", href: "/admin/testimonials", icon: MessageSquareHeart },
 ]
 
 export function Sidebar({ mode = "desktop" }: SidebarProps) {

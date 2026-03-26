@@ -1,8 +1,9 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { supabase } from "@/lib/supabase"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { ScrollToTop } from "@/components/scroll-to-top"
@@ -40,6 +41,34 @@ import {
 export default function LandingPage() {
   const { scrollYProgress } = useScroll()
   const heroRef = useRef<HTMLElement>(null)
+  const [activeTestimonials, setActiveTestimonials] = useState<any[]>([])
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data } = await supabase
+          .from('testimonials')
+          .select('*')
+          .eq('approved', true)
+          .order('created_at', { ascending: false })
+          
+        let formatted: any[] = []
+        if (data && data.length > 0) {
+          formatted = data.map((t: any) => ({
+            handle: t.nickname.startsWith('@') ? t.nickname : `@${t.nickname.replace(/\\s+/g, '_').toLowerCase()}`,
+            content: t.message,
+            avatar: t.nickname.substring(0, 2).toUpperCase()
+          }))
+        }
+        setActiveTestimonials([...formatted, ...testimonials])
+      } catch (e) {
+        setActiveTestimonials(testimonials)
+      }
+    }
+    fetchTestimonials()
+  }, [])
+
+  const displayList = activeTestimonials.length > 0 ? activeTestimonials : testimonials
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0b1220] text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden transition-colors duration-500">
@@ -264,8 +293,10 @@ export default function LandingPage() {
             <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium max-w-2xl mx-auto">
               Descubra o que a nossa comunidade de traders tem a dizer sobre a experiência no Trader Journal.
             </p>
-            <Button variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 h-9 px-4 text-xs font-medium shadow-sm transition-colors mx-auto">
-              <MessageSquare className="h-4 w-4 mr-2" /> Junte-se no Discord
+            <Button asChild variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-white dark:bg-[#111827] text-slate-700 dark:text-slate-300 h-9 px-4 text-xs font-medium shadow-sm transition-colors mx-auto">
+              <Link href="/depoimentos">
+                <MessageSquare className="h-4 w-4 mr-2 inline-block" /> Deixe sua Avaliação
+              </Link>
             </Button>
           </div>
 
@@ -276,7 +307,7 @@ export default function LandingPage() {
               {/* Row 1 */}
               <div className="flex gap-6 w-max animate-marquee-horizontal hover:[animation-play-state:paused]">
                 {/* Clone the array multiple times to ensure continuous horizontal loop */}
-                {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+                {[...displayList, ...displayList, ...displayList].map((t, i) => (
                   <div key={`r1-${i}`} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
@@ -295,7 +326,7 @@ export default function LandingPage() {
 
               {/* Row 2 - Reverse */}
               <div className="flex gap-6 w-max animate-marquee-horizontal-reverse hover:[animation-play-state:paused] ml-[-200px]">
-                {[...testimonials.slice().reverse(), ...testimonials.slice().reverse(), ...testimonials.slice().reverse()].map((t, i) => (
+                {[...displayList.slice().reverse(), ...displayList.slice().reverse(), ...displayList.slice().reverse()].map((t, i) => (
                   <div key={`r2-${i}`} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
@@ -314,7 +345,7 @@ export default function LandingPage() {
 
               {/* Row 3 - Slow Forward */}
               <div className="flex gap-6 w-max animate-marquee-horizontal-slow hover:[animation-play-state:paused] ml-[-400px]">
-                {[...testimonials, ...testimonials, ...testimonials].map((t, i) => (
+                {[...displayList, ...displayList, ...displayList].map((t, i) => (
                   <div key={`r3-${i}`} className="w-[320px] sm:w-[380px] rounded-2xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-[#0b1220] p-6 flex flex-col hover:border-slate-300 dark:hover:border-slate-700 transition-colors shadow-sm cursor-default shrink-0">
                     <div className="flex items-center gap-3 mb-4">
                       <div className="h-10 w-10 flex shrink-0 items-center justify-center rounded-full bg-slate-200 dark:bg-[#1f2937] text-emerald-500 font-bold text-sm">
