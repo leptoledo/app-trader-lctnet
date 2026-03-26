@@ -5,7 +5,7 @@ import { supabase } from "@/lib/supabase"
 import { Button } from "@/components/ui/button"
 import { CheckCircle, XCircle, Clock, Search, MessageSquareHeart } from "lucide-react"
 import { toast } from "sonner"
-import { moderateTestimonialAction } from "@/app/actions/testimonialAdminAction"
+import { moderateTestimonialAction, fetchAdminTestimonialsAction } from "@/app/actions/testimonialAdminAction"
 
 export default function TestimonialsAdminPage() {
     const [testimonials, setTestimonials] = useState<any[]>([])
@@ -16,6 +16,14 @@ export default function TestimonialsAdminPage() {
 
     const fetchTestimonials = async () => {
         setLoading(true)
+        const sessionData = await supabase.auth.getSession()
+        const token = sessionData.data.session?.access_token || null
+
+        if (!token) {
+            setLoading(false)
+            return
+        }
+
         const { data: user } = await supabase.auth.getUser()
         if (!user?.user) return
 
@@ -24,13 +32,11 @@ export default function TestimonialsAdminPage() {
         setIsAdmin(userIsAdmin)
 
         if (userIsAdmin) {
-            const { data, error } = await supabase
-                .from("testimonials")
-                .select("*")
-                .order("created_at", { ascending: false })
-
-            if (data) {
-                setTestimonials(data)
+            const result = await fetchAdminTestimonialsAction(token)
+            if (result.success) {
+                setTestimonials(result.data)
+            } else {
+                toast.error(result.error)
             }
         }
         setLoading(false)
