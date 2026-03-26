@@ -651,9 +651,6 @@ export default function TradesPage() {
                                     )}>
                                         <TableCell className="pl-8 py-4 text-xs font-medium text-slate-600 dark:text-slate-300">
                                             {new Date(trade.entry_date).toLocaleDateString()}
-                                            <span className="block text-[10px] text-slate-400 mt-0.5 font-semibold">
-                                                {new Date(trade.entry_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                                            </span>
                                         </TableCell>
                                         <TableCell>
                                             <div className="flex items-center gap-2">
@@ -683,12 +680,7 @@ export default function TradesPage() {
                                         </TableCell>
                                         <TableCell className="text-xs font-medium text-slate-600 dark:text-slate-300">
                                             {trade.exit_date ? (
-                                                <>
-                                                    {new Date(trade.exit_date).toLocaleDateString()}
-                                                    <span className="block text-[10px] text-slate-400 mt-0.5 font-semibold">
-                                                        {new Date(trade.exit_date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
-                                                    </span>
-                                                </>
+                                                new Date(trade.exit_date).toLocaleDateString()
                                             ) : '-'}
                                         </TableCell>
                                         <TableCell className="text-xs font-mono font-medium text-slate-900 dark:text-white">{formatPrice(trade.exit_price, getPriceDecimals(trade.symbol))}</TableCell>
