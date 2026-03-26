@@ -37,9 +37,9 @@ const navigation = [
     { name: "Escrever no Blog", href: "/blog/new", icon: PenLine },
     { name: "Contas", href: "/accounts", icon: Wallet },
     { name: "Gestão de Risco", href: "/risk", icon: ShieldAlert },
+    { name: "Depoimentos", href: "/depoimentos", icon: MessageSquareHeart },
     { name: "Importar", href: "/import", icon: Upload },
     { name: "Configurações", href: "/settings", icon: Settings },
-    { name: "Depoimentos", href: "/depoimentos", icon: MessageSquareHeart },
 ]
 
 const adminNavigation = [
