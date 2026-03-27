@@ -101,7 +101,7 @@ export default function NewTradePage() {
                 {/* Form Card */}
                 <div className="bg-white dark:bg-[#0b1220] p-8 rounded-md border border-slate-200 dark:border-slate-800 shadow-sm animate-in fade-in slide-in-from-bottom-8 duration-700 delay-100">
                     <Form {...form}>
-                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-10">
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <FormField
