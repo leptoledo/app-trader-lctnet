@@ -89,12 +89,12 @@ export default function NewTradePage() {
             <div className="mx-auto grid w-full max-w-3xl gap-8">
 
                 {/* Header Section */}
-                <div className="flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+                <div className="flex items-center gap-3 animate-in fade-in slide-in-from-top-4 duration-500">
                     <Button variant="ghost" size="icon" asChild className="rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                     </Button>
                     <div>
-                        <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Nova Operação</h1>
+                        <h1 className="text-xl font-medium text-slate-900 dark:text-white tracking-tight">Nova Operação</h1>
                     </div>
                 </div>
 
