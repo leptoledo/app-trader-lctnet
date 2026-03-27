@@ -94,7 +94,7 @@ export default function NewTradePage() {
                         <Link href="/trades"><ArrowLeft className="h-5 w-5 text-slate-500 dark:text-slate-400" /></Link>
                     </Button>
                     <div>
-                        <h1 className="text-2xl font-medium text-slate-900 dark:text-white-white tracking-tight">Nova Operação</h1>
+                        <h1 className="text-2xl font-medium text-slate-900 dark:text-white tracking-tight">Nova Operação</h1>
                     </div>
                 </div>
 
