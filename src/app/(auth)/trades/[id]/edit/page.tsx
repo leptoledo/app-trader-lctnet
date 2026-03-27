@@ -40,7 +40,7 @@ export default function EditTradePage() {
         defaultValues: {
             symbol: "",
             direction: "LONG",
-            entry_date: new Date().toISOString().slice(0, 16),
+            entry_date: new Date().toISOString().slice(0, 10),
             entry_price: 0,
             quantity: 1,
             account_id: "",
@@ -63,9 +63,9 @@ export default function EditTradePage() {
 
                 if (error) throw error
 
-                // Format dates for input[type="datetime-local"]
-                const entryDate = data.entry_date ? new Date(data.entry_date).toISOString().slice(0, 16) : ''
-                const exitDate = data.exit_date ? new Date(data.exit_date).toISOString().slice(0, 16) : ''
+                // Format dates for input[type="date"]
+                const entryDate = data.entry_date ? new Date(data.entry_date).toISOString().slice(0, 10) : ''
+                const exitDate = data.exit_date ? new Date(data.exit_date).toISOString().slice(0, 10) : ''
 
                 form.reset({
                     ...data,
@@ -469,9 +469,9 @@ export default function EditTradePage() {
                                             name="exit_date"
                                             render={({ field }) => (
                                                 <FormItem className="space-y-2">
-                                                    <FormLabel className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Data/Hora Saída</FormLabel>
+                                                    <FormLabel className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-widest">Data de Saída</FormLabel>
                                                     <FormControl>
-                                                        <Input type="datetime-local" {...field} className="h-10 rounded-md bg-white dark:bg-slate-950 border-emerald-500/20 font-medium text-sm" />
+                                                        <Input type="date" {...field} className="h-10 rounded-md bg-white dark:bg-slate-950 border-emerald-500/20 font-medium text-sm" />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -630,14 +630,16 @@ export default function EditTradePage() {
                                 </div>
                             </div>
 
-                            <Button
-                                type="submit"
-                                className="w-full h-11 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
-                                disabled={submitting}
-                            >
-                                {submitting ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
-                                Salvar Alterações
-                            </Button>
+                            <div className="flex justify-end pt-2">
+                                <Button
+                                    type="submit"
+                                    className="w-full sm:w-auto px-10 h-11 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 text-white font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
+                                    disabled={submitting}
+                                >
+                                    {submitting ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
+                                    Salvar Alterações
+                                </Button>
+                            </div>
                         </form>
                     </Form>
                 </div>

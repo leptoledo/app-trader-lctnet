@@ -27,7 +27,7 @@ export default function NewTradePage() {
         defaultValues: {
             symbol: "",
             direction: "LONG",
-            entry_date: new Date().toISOString().slice(0, 16),
+            entry_date: new Date().toISOString().slice(0, 10),
             ticket_id: "",
             setup_tags: "",
             notes: "",
@@ -132,10 +132,10 @@ export default function NewTradePage() {
                                     name="entry_date"
                                     render={({ field }) => (
                                         <FormItem className="space-y-2">
-                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Data e Hora</FormLabel>
+                                            <FormLabel className="text-xs font-semibold text-slate-500 uppercase tracking-widest">Data de Entrada</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    type="datetime-local"
+                                                    type="date"
                                                     {...field}
                                                     className="h-10 rounded-md border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-950/50 font-medium text-sm focus:ring-blue-500 transition-colors"
                                                 />
@@ -373,14 +373,16 @@ export default function NewTradePage() {
                                 />
                             </div>
 
-                            <Button
-                                type="submit"
-                                className="w-full h-11 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
-                                disabled={submitting}
-                            >
-                                {submitting ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
-                                Salvar Operação
-                            </Button>
+                            <div className="flex justify-end pt-2">
+                                <Button
+                                    type="submit"
+                                    className="w-full sm:w-auto px-10 h-11 rounded-md bg-slate-900 hover:bg-slate-800 dark:bg-white dark:hover:bg-slate-100 text-white dark:text-slate-900 font-medium text-sm shadow-sm transition-colors disabled:opacity-50"
+                                    disabled={submitting}
+                                >
+                                    {submitting ? <Loader2 className="mr-3 h-5 w-5 animate-spin" /> : null}
+                                    Salvar Operação
+                                </Button>
+                            </div>
                         </form>
                     </Form>
                 </div>
