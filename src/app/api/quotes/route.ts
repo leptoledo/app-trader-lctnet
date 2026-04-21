@@ -67,16 +67,29 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: payload?.message || "Twelve Data error" }, { status: 400 })
   }
 
-  if (typeof payload?.price === "string") {
+  // Helper to extract price
+  const extractPrice = (val: any) => {
+    if (typeof val === "number") return val;
+    if (typeof val === "string") {
+      const num = Number(val);
+      return Number.isNaN(num) ? null : num;
+    }
+    return null;
+  }
+
+  if (payload?.price !== undefined) {
+    // Single symbol response
     const symbol = symbols[0]
-    const value = Number(payload.price)
-    if (!Number.isNaN(value)) data[symbol] = value
+    const value = extractPrice(payload.price)
+    if (value !== null) data[symbol] = value
   } else if (payload && typeof payload === "object") {
+    // Multiple symbols response
     for (const [key, value] of Object.entries(payload)) {
-      const price = (value as { price?: string })?.price
-      if (typeof price === "string") {
-        const numeric = Number(price)
-        if (!Number.isNaN(numeric)) data[key.toUpperCase()] = numeric
+      if (value && typeof value === "object" && "price" in value) {
+        const priceVal = extractPrice((value as any).price)
+        if (priceVal !== null) {
+          data[key.toUpperCase()] = priceVal
+        }
       }
     }
   }

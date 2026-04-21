@@ -42,10 +42,78 @@ export default function LandingPage() {
   const { scrollYProgress } = useScroll()
   const heroRef = useRef<HTMLElement>(null)
   const [activeTestimonials, setActiveTestimonials] = useState<any[]>([])
+  const [heroData, setHeroData] = useState({
+    title: "Opere com disciplina\nLucros reais a longo prazo",
+    subtitle: "A plataforma de desenvolvimento para traders profissionais. Registre entradas, crie regras de compliance e alcance a consistência com análises avançadas do seu histórico operacional.",
+    primaryBtnText: "Criar conta gratuita",
+    primaryBtnLink: "/login",
+    secondaryBtnText: "Ver Demonstração",
+    secondaryBtnLink: "/dashboard?demo=true",
+    brokersText: "Compatível com as principais plataformas mundiais"
+  })
+
+  const [featuresData, setFeaturesData] = useState({
+    sectionLabel: "Traders de Alta Frequência",
+    sectionTitle: "Utilizado pelas mentes mais inovadoras do mercado.",
+    buttonText: "Ver histórias completas",
+    item1Title: "Importação Automática",
+    item1Desc: "Conecte sua conta e deixe que nossa infraestrutura importe seu histórico automaticamente. Todo projeto ganha um banco de dados completo e criptografado para o seu registro de operações.",
+    item2Title: "Risco & Compliance",
+    item2Desc: "Defina limites de rebaixamento e bloqueie overtrading. Securing your equity with rules.",
+    item3Title: "Análise Psicológica",
+    item3Desc: "Cruze seus dados financeiros com seu estado emocional. Descubra quais emoções custam mais caro.",
+    item4Title: "Playbook Digital",
+    item4Desc: "Capture evidências de tela dos seus setups. Multi-upload images to store and review scenarios.",
+    item5Title: "Data & Backtesting",
+    item5Desc: "Expectativa matemática real. Instant ready-to-use insights sobre performance."
+  })
+
+  const [footerData, setFooterData] = useState({
+    col1Title: "Produto",
+    col1Links: "Base de Dados\nAutenticação\nEdge Functions\nStorage\nAnalytics\nPreços\nChangelog",
+    col2Title: "Soluções",
+    col2Links: "Day Trade\nSwing Trade\nIniciantes\nAvançado\nStartups\nAgências",
+    col3Title: "Recursos",
+    col3Links: "Blog\nSuporte\nStatus do Sistema\nIntegrações\nSegurança",
+    col4Title: "Desenvolvedores",
+    col4Links: "Documentação\nAPI Reference\nModelos\nOpen Source\nContribuir",
+    col5Title: "Empresa",
+    col5Links: "Sobre Nós\nTermos de Serviço\nPolítica de Privacidade\nRegras de Uso\nContato"
+  })
 
   useEffect(() => {
+    const fetchLandingData = async () => {
+      try {
+        const { data } = await supabase
+          .from('landing_page_configs')
+          .select('*')
+          .in('section_id', ['hero', 'features', 'footer'])
+        
+        if (data) {
+          const hero = data.find(d => d.section_id === 'hero')
+          if (hero?.published_content && Object.keys(hero.published_content).length > 0) {
+            setHeroData(prev => ({ ...prev, ...hero.published_content }))
+          }
+          
+          const features = data.find(d => d.section_id === 'features')
+          if (features?.published_content && Object.keys(features.published_content).length > 0) {
+            setFeaturesData(prev => ({ ...prev, ...features.published_content }))
+          }
+
+          const footer = data.find(d => d.section_id === 'footer')
+          if (footer?.published_content && Object.keys(footer.published_content).length > 0) {
+            setFooterData(prev => ({ ...prev, ...footer.published_content }))
+          }
+        }
+      } catch (e) {
+        // fallback to defaults
+      }
+    }
+    fetchLandingData()
+    
     const fetchTestimonials = async () => {
       try {
+
         const { data } = await supabase
           .from('testimonials')
           .select('*')
@@ -69,6 +137,14 @@ export default function LandingPage() {
   }, [])
 
   const displayList = activeTestimonials.length > 0 ? activeTestimonials : testimonials
+
+  const activeFooterLinks = [
+    { title: footerData.col1Title, links: footerData.col1Links.split('\n').map(l => l.trim()).filter(Boolean) },
+    { title: footerData.col2Title, links: footerData.col2Links.split('\n').map(l => l.trim()).filter(Boolean) },
+    { title: footerData.col3Title, links: footerData.col3Links.split('\n').map(l => l.trim()).filter(Boolean) },
+    { title: footerData.col4Title, links: footerData.col4Links.split('\n').map(l => l.trim()).filter(Boolean) },
+    { title: footerData.col5Title, links: footerData.col5Links.split('\n').map(l => l.trim()).filter(Boolean) }
+  ]
 
   return (
     <div className="min-h-screen bg-white dark:bg-[#0b1220] text-slate-900 dark:text-slate-100 font-sans selection:bg-emerald-100 selection:text-emerald-900 overflow-x-hidden transition-colors duration-500">
@@ -126,8 +202,12 @@ export default function LandingPage() {
             transition={{ duration: 0.5 }}
             className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white max-w-4xl leading-[1.1]"
           >
-            Opere com disciplina<br />
-            <span className="text-emerald-500">Lucros reais a longo prazo</span>
+            {heroData.title.split('\n').map((line, i, arr) => (
+              <span key={i} className={i === arr.length - 1 ? "text-emerald-500" : ""}>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </span>
+            ))}
           </motion.h1>
 
           <motion.p
@@ -136,7 +216,7 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-6 text-lg md:text-xl text-slate-500 dark:text-slate-400 max-w-2xl font-medium leading-relaxed"
           >
-            A plataforma de desenvolvimento para traders profissionais. Registre entradas, crie regras de compliance e alcance a consistência com análises avançadas do seu histórico operacional.
+            {heroData.subtitle}
           </motion.p>
 
           <motion.div
@@ -146,10 +226,10 @@ export default function LandingPage() {
             className="flex flex-col sm:flex-row items-center gap-3 mt-10"
           >
             <Button asChild className="w-full sm:w-auto rounded-md bg-emerald-500 hover:bg-emerald-600 text-white px-6 h-10 text-sm font-medium shadow-none transition-colors">
-              <Link href="/login">Criar conta gratuita</Link>
+              <Link href={heroData.primaryBtnLink}>{heroData.primaryBtnText}</Link>
             </Button>
             <Button asChild variant="outline" className="w-full sm:w-auto rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 px-6 h-10 text-sm font-medium shadow-none transition-colors">
-              <Link href="/dashboard?demo=true">Ver Demonstração</Link>
+              <Link href={heroData.secondaryBtnLink}>{heroData.secondaryBtnText}</Link>
             </Button>
           </motion.div>
 
@@ -160,7 +240,7 @@ export default function LandingPage() {
             transition={{ duration: 1, delay: 0.5 }}
             className="mt-20 pt-10"
           >
-            <p className="text-sm font-medium text-slate-400 dark:text-slate-500 mb-8">Compatível com as principais plataformas mundiais</p>
+            <p className="text-sm font-medium text-slate-400 dark:text-slate-500 mb-8">{heroData.brokersText}</p>
             <div className="flex flex-wrap justify-center gap-8 md:gap-16 opacity-40 grayscale hover:grayscale-0 transition-all duration-500">
               {brokers.map((broker) => (
                 <div key={broker} className="text-lg font-bold tracking-wider text-slate-800 dark:text-slate-200">
@@ -176,11 +256,11 @@ export default function LandingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-6">
               <div className="max-w-2xl">
-                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">Traders de Alta Frequência</p>
-                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Utilizado pelas mentes mais inovadoras do mercado.</h2>
+                <p className="text-[10px] font-black uppercase tracking-[0.2em] text-slate-400 mb-2">{featuresData.sectionLabel}</p>
+                <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">{featuresData.sectionTitle}</h2>
               </div>
               <Button variant="outline" className="rounded-md border-slate-200 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-800/50 bg-transparent text-slate-700 dark:text-slate-300 px-4 h-9 text-sm font-medium shadow-none transition-colors">
-                Ver histórias completas
+                {featuresData.buttonText}
               </Button>
             </div>
 
@@ -192,10 +272,10 @@ export default function LandingPage() {
                   <div className="max-w-md">
                     <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
                       <Database className="h-5 w-5" />
-                      <h3>Importação Automática</h3>
+                      <h3>{featuresData.item1Title}</h3>
                     </div>
                     <p className="text-slate-500 dark:text-slate-400 mb-8 text-sm leading-relaxed">
-                      Conecte sua conta e deixe que nossa infraestrutura importe seu histórico automaticamente. <strong>Todo projeto ganha um banco de dados completo</strong> e criptografado para o seu registro de operações.
+                      {featuresData.item1Desc}
                     </p>
                     <ul className="space-y-3 text-sm text-slate-600 dark:text-slate-300">
                       <li className="flex items-center gap-2"><Check className="h-4 w-4 text-emerald-500" /> MetaTrader 5 Integrado</li>
@@ -220,10 +300,10 @@ export default function LandingPage() {
               <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden group flex flex-col">
                 <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
                   <ShieldCheck className="h-5 w-5" />
-                  <h3>Risco & Compliance</h3>
+                  <h3>{featuresData.item2Title}</h3>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
-                  Defina limites de rebaixamento e bloqueie overtrading. Securing your equity with rules.
+                  {featuresData.item2Desc}
                 </p>
                 <div className="mt-auto bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 font-mono text-xs text-slate-600 dark:text-slate-400 space-y-2 h-32 flex flex-col justify-center shadow-inner group-hover:border-emerald-500/30 transition-colors">
                   <div className="flex justify-between items-center"><span className="text-emerald-500">Max Daily Loss</span> <span>-$500</span></div>
@@ -236,10 +316,10 @@ export default function LandingPage() {
               <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden flex flex-col">
                 <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
                   <BrainCircuit className="h-5 w-5" />
-                  <h3>Análise Psicológica</h3>
+                  <h3>{featuresData.item3Title}</h3>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
-                  Cruze seus dados financeiros com seu estado emocional. Descubra quais emoções custam mais caro.
+                  {featuresData.item3Desc}
                 </p>
                 <div className="mt-auto bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 h-32 flex items-center justify-center shadow-inner relative overflow-hidden">
                   <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(16,185,129,0.1),transparent_50%)]" />
@@ -251,10 +331,10 @@ export default function LandingPage() {
               <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden flex flex-col">
                 <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
                   <FileText className="h-5 w-5" />
-                  <h3>Playbook Digital</h3>
+                  <h3>{featuresData.item4Title}</h3>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
-                  Capture evidências de tela dos seus setups. Multi-upload images to store and review scenarios.
+                  {featuresData.item4Desc}
                 </p>
                 <div className="mt-auto h-32 relative border border-slate-200 dark:border-slate-800 rounded-xl bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:16px_16px] overflow-hidden flex items-center justify-center shadow-inner">
                   <div className="p-2 bg-white/50 dark:bg-slate-900/50 backdrop-blur rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm flex items-center gap-2">
@@ -268,10 +348,10 @@ export default function LandingPage() {
               <div className="col-span-1 md:col-span-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] p-8 relative overflow-hidden flex flex-col group">
                 <div className="flex items-center gap-2 mb-4 text-slate-900 dark:text-white font-medium">
                   <LineChart className="h-5 w-5" />
-                  <h3>Data & Backtesting</h3>
+                  <h3>{featuresData.item5Title}</h3>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 mb-6 text-sm">
-                  Expectativa matemática real. Instant ready-to-use insights sobre performance.
+                  {featuresData.item5Desc}
                 </p>
                 <div className="mt-auto bg-slate-50 dark:bg-[#0b1220] rounded-xl border border-slate-200 dark:border-slate-800 p-4 font-mono text-xs text-slate-600 dark:text-slate-400 space-y-2 h-32 flex flex-col justify-center shadow-inner">
                   <div className="flex items-center justify-between group-hover:text-emerald-500 transition-colors"><span className="px-1.5 py-0.5 bg-slate-200 dark:bg-slate-800 rounded">Win Rate</span> <span>68.5%</span></div>
@@ -505,7 +585,7 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8 lg:gap-12 mb-16">
-            {footerLinks.map((col, i) => (
+            {activeFooterLinks.map((col, i) => (
               <div key={i}>
                 <h5 className="font-semibold text-slate-900 dark:text-white text-[15px] mb-6">{col.title}</h5>
                 <ul className="space-y-4">

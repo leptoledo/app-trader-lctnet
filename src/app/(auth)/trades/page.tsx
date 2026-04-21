@@ -75,14 +75,27 @@ export default function TradesPage() {
                 const response = await fetch(`/api/quotes?symbols=${encodeURIComponent(openSymbols.join(","))}`, {
                     signal: controller.signal
                 })
-                if (!response.ok) return
+                
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => null)
+                    console.error("Live prices error:", errorData || response.statusText)
+                    if (errorData?.error === "Missing TWELVE_DATA_API_KEY") {
+                        toast.error("Configuração ausente: TWELVE_DATA_API_KEY não encontrada no servidor.", { id: "twelve-data-key" })
+                    } else if (response.status === 429 || errorData?.error?.includes("limit")) {
+                        toast.error("Limite da API de cotações atingido. Os preços não serão atualizados em tempo real.", { id: "twelve-data-limit" })
+                    }
+                    return
+                }
+                
                 const payload = await response.json()
                 if (payload?.data && typeof payload.data === "object") {
                     setLivePrices(payload.data)
                     setLastPriceUpdate(new Date())
                 }
-            } catch {
-                // ignore price fetch errors
+            } catch (err: any) {
+                if (err.name !== 'AbortError') {
+                    console.error("fetchPrices error:", err)
+                }
             }
         }
 

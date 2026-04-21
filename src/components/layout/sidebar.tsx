@@ -19,7 +19,8 @@ import {
     ShieldAlert,
     PenTool,
     PenLine,
-    MessageSquareHeart
+    MessageSquareHeart,
+    LayoutTemplate
 } from "lucide-react"
 
 interface SidebarProps {
@@ -44,6 +45,7 @@ const navigation = [
 
 const adminNavigation = [
     { name: "Painel Geral", href: "/admin/dashboard", icon: LayoutDashboard },
+    { name: "Landing Page", href: "/admin/landing", icon: LayoutTemplate },
     { name: "Gestão de Usuários", href: "/admin/users", icon: Users },
     { name: "Blog Admin", href: "/admin/posts", icon: PenTool },
     { name: "Aprovar Depoimentos", href: "/admin/testimonials", icon: MessageSquareHeart },
