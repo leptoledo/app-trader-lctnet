@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import { useSubscription } from "@/hooks/useSubscription"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Loader2, Sparkles, Zap, Crown, ExternalLink, CalendarCheck, AlertCircle } from "lucide-react"
+import { Loader2, Zap, Crown, ExternalLink, CalendarCheck, AlertCircle, Trash2, Plus, Wifi, WifiOff, RefreshCw, Sparkles } from "lucide-react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { Input } from "@/components/ui/input"
@@ -13,6 +13,7 @@ import { toast } from "sonner"
 import { ModeToggle } from "@/components/mode-toggle"
 import { saveApiKeysAction } from "@/app/actions/keysAction"
 import { syncTradesAction } from "@/app/actions/syncAction"
+import { connectMetaTraderAction, disconnectMetaTraderAction, getMtConnectedAccountsAction } from "@/app/actions/integrationsAction"
 
 const SETTINGS_TABS = [
     { id: "general", label: "Geral" },
@@ -38,6 +39,67 @@ export default function SettingsPage() {
     const [binanceApiSecret, setBinanceApiSecret] = useState("")
     const [savingKeys, setSavingKeys] = useState(false)
     const [syncingTrades, setSyncingTrades] = useState(false)
+
+    // MetaApi Connected Accounts State
+    const [mtAccounts, setMtAccounts] = useState<any[]>([])
+    const [loadingMtAccounts, setLoadingMtAccounts] = useState(false)
+    const [connectingMt, setConnectingMt] = useState(false)
+    const [showConnectForm, setShowConnectForm] = useState(false)
+    const [mtLogin, setMtLogin] = useState("")
+    const [mtPassword, setMtPassword] = useState("")
+    const [mtServer, setMtServer] = useState("")
+    const [mtPlatform, setMtPlatform] = useState<"mt4" | "mt5">("mt5")
+
+    useEffect(() => {
+        if (activeTab === "integrations") {
+            handleLoadMtAccounts()
+        }
+    }, [activeTab])
+
+    const handleLoadMtAccounts = async () => {
+        setLoadingMtAccounts(true)
+        const { data: { user } } = await supabase.auth.getUser()
+        if (user) {
+            const res = await getMtConnectedAccountsAction(user.id)
+            if (res.success && res.accounts) {
+                setMtAccounts(res.accounts)
+            }
+        }
+        setLoadingMtAccounts(false)
+    }
+
+    const handleConnectMt = async () => {
+        if (!mtLogin || !mtPassword || !mtServer) {
+            toast.error("Preencha login, senha e servidor.")
+            return
+        }
+        setConnectingMt(true)
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) { toast.error("Não autenticado."); setConnectingMt(false); return }
+        const res = await connectMetaTraderAction(user.id, mtLogin, mtPassword, mtServer, mtPlatform)
+        if (res.success) {
+            toast.success(res.message)
+            setMtLogin(""); setMtPassword(""); setMtServer("")
+            setShowConnectForm(false)
+            await handleLoadMtAccounts()
+        } else {
+            toast.error(res.error)
+        }
+        setConnectingMt(false)
+    }
+
+    const handleDisconnectMt = async (id: string, metaapiAccountId: string) => {
+        if (!confirm("Deseja desconectar esta conta? Os trades já registrados não serão apagados.")) return
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+        const res = await disconnectMetaTraderAction(user.id, id, metaapiAccountId)
+        if (res.success) {
+            toast.success(res.message)
+            await handleLoadMtAccounts()
+        } else {
+            toast.error(res.error)
+        }
+    }
 
     useEffect(() => {
         let isMounted = true
@@ -384,6 +446,154 @@ export default function SettingsPage() {
                                         {syncingTrades ? <Loader2 className="h-4 w-4 animate-spin mr-2" /> : <Zap className="h-4 w-4 mr-2" />}
                                         Sincronizar Trades
                                     </Button>
+                                </div>
+                            </div>
+
+                            {/* MetaTrader via MetaApi Section */}
+                            <div className="bg-slate-50 dark:bg-[#111827] border border-slate-200 dark:border-slate-800 rounded-lg overflow-hidden mt-6">
+                                <div className="p-6 border-b border-slate-200 dark:border-slate-800">
+
+                                    <div className="flex items-start justify-between gap-4">
+                                        <div className="space-y-1">
+                                            <label className="text-sm font-medium text-slate-700 dark:text-slate-200">MetaTrader 4 & 5</label>
+                                            <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed max-w-sm">
+                                                Conecte suas contas diretamente inserindo suas credenciais. Os trades são sincronizados automaticamente em tempo real via MetaApi.
+                                            </p>
+                                        </div>
+                                        <Button
+                                            onClick={() => setShowConnectForm(!showConnectForm)}
+                                            className="h-8 px-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-medium shadow-none shrink-0"
+                                        >
+                                            <Plus className="h-3.5 w-3.5 mr-1.5" />
+                                            Conectar Conta
+                                        </Button>
+                                    </div>
+
+                                    {/* Connect Form */}
+                                    {showConnectForm && (
+                                        <div className="mt-5 p-4 bg-white dark:bg-[#0b1220] rounded-lg border border-slate-200 dark:border-slate-700 space-y-4">
+                                            <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wide">Nova Conexão MetaTrader</h4>
+
+                                            {/* Platform toggle */}
+                                            <div className="flex gap-2">
+                                                {(["mt5", "mt4"] as const).map(p => (
+                                                    <button
+                                                        key={p}
+                                                        onClick={() => setMtPlatform(p)}
+                                                        className={cn(
+                                                            "px-4 py-1.5 rounded text-xs font-medium border transition-colors",
+                                                            mtPlatform === p
+                                                                ? "bg-emerald-500 border-emerald-500 text-white"
+                                                                : "border-slate-200 dark:border-slate-700 text-slate-500 dark:text-slate-400 hover:border-slate-300"
+                                                        )}
+                                                    >
+                                                        {p.toUpperCase()}
+                                                    </button>
+                                                ))}
+                                            </div>
+
+                                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                                <div className="space-y-1">
+                                                    <label className="text-[11px] font-bold text-slate-500 uppercase">Login (Nº da Conta)</label>
+                                                    <Input
+                                                        value={mtLogin}
+                                                        onChange={e => setMtLogin(e.target.value)}
+                                                        placeholder="Ex: 1234567"
+                                                        className="h-9 border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1220] text-sm"
+                                                    />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <label className="text-[11px] font-bold text-slate-500 uppercase">Senha do Investidor</label>
+                                                    <Input
+                                                        type="password"
+                                                        value={mtPassword}
+                                                        onChange={e => setMtPassword(e.target.value)}
+                                                        placeholder="Senha MT"
+                                                        className="h-9 border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1220] text-sm"
+                                                    />
+                                                </div>
+                                                <div className="space-y-1">
+                                                    <label className="text-[11px] font-bold text-slate-500 uppercase">Servidor</label>
+                                                    <Input
+                                                        value={mtServer}
+                                                        onChange={e => setMtServer(e.target.value)}
+                                                        placeholder="Ex: MetaQuotes-Demo"
+                                                        className="h-9 border-slate-200 dark:border-slate-700 bg-white dark:bg-[#0b1220] text-sm"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <p className="text-[11px] text-slate-400">
+                                                💡 Use a <strong>senha do investidor</strong> (somente leitura) — nunca a senha master.
+                                            </p>
+
+                                            <div className="flex justify-end gap-2">
+                                                <Button variant="outline" onClick={() => setShowConnectForm(false)} className="h-8 px-4 text-xs border-slate-200 dark:border-slate-700">
+                                                    Cancelar
+                                                </Button>
+                                                <Button
+                                                    onClick={handleConnectMt}
+                                                    disabled={connectingMt}
+                                                    className="h-8 px-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xs shadow-none"
+                                                >
+                                                    {connectingMt ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1.5" /> : <Wifi className="h-3.5 w-3.5 mr-1.5" />}
+                                                    {connectingMt ? "Conectando..." : "Conectar"}
+                                                </Button>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* Connected Accounts List */}
+                                <div className="p-6">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h4 className="text-xs font-semibold text-slate-600 dark:text-slate-300 uppercase tracking-wide">Contas Conectadas</h4>
+                                        <button onClick={handleLoadMtAccounts} className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors">
+                                            <RefreshCw className={cn("h-3.5 w-3.5", loadingMtAccounts && "animate-spin")} />
+                                        </button>
+                                    </div>
+
+                                    {loadingMtAccounts ? (
+                                        <div className="flex items-center justify-center p-6">
+                                            <Loader2 className="h-5 w-5 animate-spin text-emerald-500" />
+                                        </div>
+                                    ) : mtAccounts.length === 0 ? (
+                                        <div className="text-center p-8 bg-white dark:bg-[#0b1220] rounded-lg border border-dashed border-slate-200 dark:border-slate-700">
+                                            <WifiOff className="h-8 w-8 text-slate-300 dark:text-slate-600 mx-auto mb-2" />
+                                            <p className="text-sm text-slate-500 dark:text-slate-400">Nenhuma conta conectada.</p>
+                                            <p className="text-xs text-slate-400 mt-1">Clique em "Conectar Conta" para começar.</p>
+                                        </div>
+                                    ) : (
+                                        <div className="space-y-3">
+                                            {mtAccounts.map((acc) => (
+                                                <div key={acc.id} className="flex items-center justify-between p-4 bg-white dark:bg-[#0b1220] rounded-lg border border-slate-200 dark:border-slate-700">
+                                                    <div className="flex items-center gap-3">
+                                                        <div className={cn(
+                                                            "h-2.5 w-2.5 rounded-full shrink-0",
+                                                            acc.status === "DEPLOYED" ? "bg-emerald-500" :
+                                                            acc.status === "DEPLOY_FAILED" ? "bg-rose-500" : "bg-amber-400 animate-pulse"
+                                                        )} />
+                                                        <div>
+                                                            <p className="text-sm font-medium text-slate-800 dark:text-slate-200">
+                                                                {acc.login} <span className="text-slate-400 font-normal">·</span> <span className="text-slate-500 dark:text-slate-400">{acc.server}</span>
+                                                            </p>
+                                                            <p className="text-[11px] text-slate-400 mt-0.5">
+                                                                {acc.platform?.toUpperCase()} · {acc.account_type}
+                                                                {acc.last_synced_at && ` · Sync: ${new Date(acc.last_synced_at).toLocaleString('pt-BR')}`}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        onClick={() => handleDisconnectMt(acc.id, acc.metaapi_account_id)}
+                                                        className="text-slate-400 hover:text-rose-500 transition-colors p-1.5 rounded"
+                                                        title="Desconectar"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

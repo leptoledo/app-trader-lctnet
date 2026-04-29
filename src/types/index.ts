@@ -28,6 +28,7 @@ export interface Trade {
     fees: number
     commission?: number | null
     swap?: number | null
+    magic_number?: string | null
     ticket_id?: string | null
     pnl_gross?: number | null
     pnl_net?: number | null
@@ -51,4 +52,13 @@ export interface DashboardMetrics {
     maxDrawdown: number
     avgWin: number
     avgLoss: number
+}
+
+export interface ApiToken {
+    id: string
+    user_id: string
+    token: string
+    name: string
+    created_at: string
+    last_used_at?: string | null
 }

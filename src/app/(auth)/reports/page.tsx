@@ -11,12 +11,13 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { analyzeByDayOfWeek, analyzeBySymbol } from "@/lib/advanced-analytics"
 import { cn } from "@/lib/utils"
 import { useAccounts } from "@/hooks/useAccounts"
+import { useAccountStore } from "@/store/useAccountStore"
 
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function ReportsPage() {
     const { accounts } = useAccounts()
-    const [selectedAccountId, setSelectedAccountId] = useState<string>("")
+    const { selectedAccountId, setSelectedAccountId } = useAccountStore()
     const [trades, setTrades] = useState<Trade[]>([])
     const [loading, setLoading] = useState(true)
     const [metrics, setMetrics] = useState({
@@ -35,12 +36,12 @@ export default function ReportsPage() {
     // Set default selected account when accounts load
     useEffect(() => {
         if (accounts.length > 0 && !selectedAccountId) {
-            setSelectedAccountId(accounts[0].id)
+            setSelectedAccountId("all")
         }
     }, [accounts, selectedAccountId])
 
-    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || accounts[0]
-    const currentBalance = selectedAccount ? (selectedAccount.current_balance || selectedAccount.initial_balance) : 0
+    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || { name: 'Todas as Contas', currency: 'USD', current_balance: 0, initial_balance: 0 }
+    const currentBalance = selectedAccountId === "all" ? 0 : (selectedAccount.current_balance || selectedAccount.initial_balance)
 
     // Filter trades by selected account
     // Note: In a real scenario, we might want to refetch or filter the trades list based on account_id if the API supports it, 
@@ -68,7 +69,7 @@ export default function ReportsPage() {
                     .select('*')
                     .order('entry_date', { ascending: false })
 
-                if (selectedAccountId) {
+                if (selectedAccountId && selectedAccountId !== "all") {
                     query = query.eq('account_id', selectedAccountId)
                 }
 
@@ -151,6 +152,7 @@ export default function ReportsPage() {
                                                     <SelectValue placeholder="Selecione..." />
                                                 </SelectTrigger>
                                                 <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 rounded-md">
+                                                    <SelectItem value="all" className="focus:bg-slate-100 dark:focus:bg-slate-800 cursor-pointer">Todas as Contas</SelectItem>
                                                     {accounts.map(acc => (
                                                         <SelectItem key={acc.id} value={acc.id} className="focus:bg-slate-100 dark:focus:bg-slate-800 cursor-pointer">
                                                             {acc.name}

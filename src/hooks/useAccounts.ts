@@ -32,15 +32,31 @@ export function useAccounts() {
             const { data: { user } } = await supabase.auth.getUser()
             if (!user) return
 
-            const { data, error } = await supabase
-                .from('accounts')
-                .select('*')
-                .eq('is_archived', false)
-                .order('created_at', { ascending: true })
+            const [accountsResponse, mtAccountsResponse] = await Promise.all([
+                supabase.from('accounts').select('*').eq('is_archived', false).order('created_at', { ascending: true }),
+                supabase.from('mt_connected_accounts').select('*').order('connected_at', { ascending: true })
+            ])
 
-            if (error) throw error
+            if (accountsResponse.error) throw accountsResponse.error
 
-            if (!data || data.length === 0) {
+            let mergedAccounts = accountsResponse.data || []
+
+            if (!mtAccountsResponse.error && mtAccountsResponse.data) {
+                const mtMapped = mtAccountsResponse.data.map(mt => ({
+                    id: mt.id,
+                    user_id: mt.user_id,
+                    name: `${mt.login} · ${mt.broker || mt.server}`,
+                    currency: mt.currency || 'USD',
+                    initial_balance: mt.balance || 0,
+                    current_balance: mt.balance || 0,
+                    is_archived: false,
+                    created_at: mt.connected_at,
+                    updated_at: mt.last_synced_at || mt.connected_at
+                }))
+                mergedAccounts = [...mergedAccounts, ...mtMapped]
+            }
+
+            if (mergedAccounts.length === 0) {
                 const { data: newAccount, error: createError } = await supabase
                     .from('accounts')
                     .insert([{
@@ -55,7 +71,7 @@ export function useAccounts() {
                 if (createError) throw createError
                 setAccounts([newAccount])
             } else {
-                setAccounts(data)
+                setAccounts(mergedAccounts)
             }
         } catch (error) {
             const message = error instanceof Error ? error.message : 'Unknown error'

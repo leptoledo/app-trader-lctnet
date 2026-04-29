@@ -29,6 +29,7 @@ import { toast } from "sonner"
 import { cn } from "@/lib/utils"
 import { calculatePnL } from "@/lib/pnl"
 import { useRouter } from "next/navigation"
+import { useAccountStore } from "@/store/useAccountStore"
 
 export default function TradesPage() {
     const router = useRouter()
@@ -58,6 +59,7 @@ export default function TradesPage() {
     const [filterStatus, setFilterStatus] = useState<TradeStatus | "ALL">("ALL")
     const [currentPage, setCurrentPage] = useState(1)
     const ITEMS_PER_PAGE = 10
+    const { selectedAccountId } = useAccountStore()
 
     useEffect(() => {
         fetchTrades()
@@ -109,7 +111,7 @@ export default function TradesPage() {
 
     useEffect(() => {
         applyFilters()
-    }, [trades, searchSymbol, filterDirection, filterStatus])
+    }, [trades, searchSymbol, filterDirection, filterStatus, selectedAccountId])
 
     const fetchTrades = async () => {
         setLoading(true)
@@ -167,6 +169,10 @@ export default function TradesPage() {
 
     const applyFilters = () => {
         let result = [...trades]
+
+        if (selectedAccountId !== "all") {
+            result = result.filter(t => t.account_id === selectedAccountId)
+        }
 
         if (searchSymbol) {
             result = result.filter(t => t.symbol.toLowerCase().includes(searchSymbol.toLowerCase()))

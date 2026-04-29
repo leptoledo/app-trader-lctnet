@@ -14,22 +14,23 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { analyzeByDayOfWeek, analyzeByHour, analyzeBySymbol, analyzeRMultiple } from "@/lib/advanced-analytics"
 import { cn } from "@/lib/utils"
 import { useAccounts } from "@/hooks/useAccounts"
+import { useAccountStore } from "@/store/useAccountStore"
 
 export default function AnalyticsPage() {
     const router = useRouter()
     const { accounts } = useAccounts()
-    const [selectedAccountId, setSelectedAccountId] = useState<string>("")
+    const { selectedAccountId, setSelectedAccountId } = useAccountStore()
     const [trades, setTrades] = useState<Trade[]>([])
     const [loading, setLoading] = useState(true)
 
     // Set default selected account when accounts load
     useEffect(() => {
         if (accounts.length > 0 && !selectedAccountId) {
-            setSelectedAccountId(accounts[0].id)
+            setSelectedAccountId("all")
         }
     }, [accounts, selectedAccountId])
 
-    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || accounts[0]
+    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || { name: 'Todas as Contas' }
 
     useEffect(() => {
         async function fetchData() {
@@ -45,7 +46,7 @@ export default function AnalyticsPage() {
                     .select('*')
                     .order('entry_date', { ascending: false })
 
-                if (selectedAccountId) {
+                if (selectedAccountId && selectedAccountId !== "all") {
                     query = query.eq('account_id', selectedAccountId)
                 }
 
@@ -106,6 +107,7 @@ export default function AnalyticsPage() {
                                 <SelectValue placeholder="Selecione..." />
                             </SelectTrigger>
                             <SelectContent className="bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 min-w-[200px]">
+                                <SelectItem value="all" className="cursor-pointer">Todas as Contas</SelectItem>
                                 {accounts.map(acc => (
                                     <SelectItem key={acc.id} value={acc.id} className="cursor-pointer">
                                         {acc.name}

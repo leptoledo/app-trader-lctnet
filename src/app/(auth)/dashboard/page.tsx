@@ -25,6 +25,7 @@ import { InfoTooltip } from "@/components/ui/info-tooltip"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import dynamic from "next/dynamic"
 import { demoTrades } from "@/lib/demo-data"
+import { useAccountStore } from "@/store/useAccountStore"
 
 const DemoTour = dynamic(() => import("@/components/demo-tour").then(mod => mod.DemoTour), { ssr: false })
 
@@ -34,7 +35,7 @@ export default function Dashboard() {
   const [filteredTrades, setFilteredTrades] = useState<Trade[]>([])
   const [loading, setLoading] = useState(true)
   const [dateRange, setDateRange] = useState<DateRangePreset>("week")
-  const [selectedAccountId, setSelectedAccountId] = useState<string>("all")
+  const { selectedAccountId, setSelectedAccountId } = useAccountStore()
   const { accounts } = useAccounts()
   const [equityView, setEquityView] = useState<"balance" | "drawdown">("balance")
   const [customRange, setCustomRange] = useState<{ from: Date | undefined; to: Date | undefined }>({
