@@ -40,8 +40,16 @@ export default function ReportsPage() {
         }
     }, [accounts, selectedAccountId])
 
-    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || { name: 'Todas as Contas', currency: 'USD', current_balance: 0, initial_balance: 0 }
-    const currentBalance = selectedAccountId === "all" ? 0 : (selectedAccount.current_balance || selectedAccount.initial_balance)
+    const totalInitialBalance = accounts.reduce((acc, a) => acc + (a.initial_balance || 0), 0)
+    const totalCurrentBalance = accounts.reduce((acc, a) => acc + (a.current_balance || a.initial_balance || 0), 0)
+
+    const selectedAccount = accounts.find(a => a.id === selectedAccountId) || { 
+        name: 'Todas as Contas', 
+        currency: 'USD', 
+        current_balance: totalCurrentBalance, 
+        initial_balance: totalInitialBalance 
+    }
+    const currentBalance = selectedAccount.current_balance
 
     // Filter trades by selected account
     // Note: In a real scenario, we might want to refetch or filter the trades list based on account_id if the API supports it, 

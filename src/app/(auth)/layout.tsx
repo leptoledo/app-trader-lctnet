@@ -6,7 +6,7 @@ import { useEffect, useState } from "react"
 import { supabase } from "@/lib/supabase"
 import { useRouter } from "next/navigation"
 import { useSubscription } from "@/hooks/useSubscription"
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from "@/components/ui/sheet"
 import { Button } from "@/components/ui/button"
 import { Menu } from "lucide-react"
 import { toast } from "sonner"
@@ -21,6 +21,7 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
     const [user, setUser] = useState<any>(null)
     const [publicName, setPublicName] = useState<string>("")
     const [loading, setLoading] = useState(true)
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
     useEffect(() => {
         async function getUser() {
@@ -148,14 +149,18 @@ export default function AuthLayout({ children }: AuthLayoutProps) {
                             </div>
                             <span className="font-medium">LCTNET</span>
                         </div>
-                        <Sheet>
+                        <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
                             <SheetTrigger asChild>
                                 <Button variant="outline" size="icon" className="h-9 w-9 rounded-md border-slate-200 dark:border-slate-700">
                                     <Menu className="h-4 w-4" />
                                 </Button>
                             </SheetTrigger>
                             <SheetContent side="left" className="p-0 w-[280px] bg-[#fbfcfd] dark:bg-[#0b1220] border-r-slate-200 dark:border-r-slate-800">
-                                <Sidebar mode="mobile" />
+                                <SheetHeader className="sr-only">
+                                    <SheetTitle>Menu de Navegação</SheetTitle>
+                                    <SheetDescription>Navegue pelas seções da plataforma</SheetDescription>
+                                </SheetHeader>
+                                <Sidebar mode="mobile" onAction={() => setMobileMenuOpen(false)} />
                             </SheetContent>
                         </Sheet>
                     </div>

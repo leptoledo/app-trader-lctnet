@@ -32,14 +32,28 @@ export function useAccounts() {
             const { data: { user } } = await supabase.auth.getUser()
             if (!user) return
 
-            const [accountsResponse, mtAccountsResponse] = await Promise.all([
+            const [accountsResponse, mtAccountsResponse, pnlResponse] = await Promise.all([
                 supabase.from('accounts').select('*').eq('is_archived', false).order('created_at', { ascending: true }),
-                supabase.from('mt_connected_accounts').select('*').order('connected_at', { ascending: true })
+                supabase.from('mt_connected_accounts').select('*').order('connected_at', { ascending: true }),
+                supabase.from('trades').select('account_id, pnl_net').eq('status', 'CLOSED')
             ])
 
             if (accountsResponse.error) throw accountsResponse.error
 
-            let mergedAccounts = accountsResponse.data || []
+            // Calculate PnL per account
+            const pnlMap: Record<string, number> = {}
+            if (pnlResponse.data) {
+                pnlResponse.data.forEach(trade => {
+                    if (trade.account_id) {
+                        pnlMap[trade.account_id] = (pnlMap[trade.account_id] || 0) + (trade.pnl_net || 0)
+                    }
+                })
+            }
+
+            let mergedAccounts = (accountsResponse.data || []).map(acc => ({
+                ...acc,
+                current_balance: (acc.initial_balance || 0) + (pnlMap[acc.id] || 0)
+            }))
 
             if (!mtAccountsResponse.error && mtAccountsResponse.data) {
                 const mtMapped = mtAccountsResponse.data.map(mt => ({
@@ -48,7 +62,7 @@ export function useAccounts() {
                     name: `${mt.login} · ${mt.broker || mt.server}`,
                     currency: mt.currency || 'USD',
                     initial_balance: mt.balance || 0,
-                    current_balance: mt.balance || 0,
+                    current_balance: mt.balance || 0, // MT accounts already have synced balance
                     is_archived: false,
                     created_at: mt.connected_at,
                     updated_at: mt.last_synced_at || mt.connected_at
@@ -69,7 +83,7 @@ export function useAccounts() {
                     .single()
 
                 if (createError) throw createError
-                setAccounts([newAccount])
+                setAccounts([{ ...newAccount, current_balance: newAccount.initial_balance }])
             } else {
                 setAccounts(mergedAccounts)
             }

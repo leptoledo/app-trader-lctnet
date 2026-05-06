@@ -25,6 +25,7 @@ import {
 
 interface SidebarProps {
     mode?: "desktop" | "mobile"
+    onAction?: () => void
 }
 
 const navigation = [
@@ -51,7 +52,7 @@ const adminNavigation = [
     { name: "Aprovar Depoimentos", href: "/admin/testimonials", icon: MessageSquareHeart },
 ]
 
-export function Sidebar({ mode = "desktop" }: SidebarProps) {
+export function Sidebar({ mode = "desktop", onAction }: SidebarProps) {
     const pathname = usePathname()
     const isMobile = mode === "mobile"
     const [isAdmin, setIsAdmin] = useState(false)
@@ -80,14 +81,17 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
     return (
         <div
             className={cn(
-                "group flex flex-col h-full bg-[#fbfcfd] dark:bg-[#0b1220] border-r border-slate-200 dark:border-slate-800 transition-all duration-300 z-50 overflow-hidden whitespace-nowrap",
-                isMobile ? "w-full relative" : "w-[60px] hover:w-64 absolute md:fixed top-14 bottom-0 shadow-sm hover:shadow-xl"
+                "group flex flex-col h-full bg-[#fbfcfd] dark:bg-[#0b1220] transition-all duration-300 z-50 overflow-hidden whitespace-nowrap",
+                isMobile ? "w-full" : "w-[60px] hover:w-64 border-r border-slate-200 dark:border-slate-800 absolute md:fixed top-14 bottom-0 shadow-sm hover:shadow-xl"
             )}
         >
             {/* Navigation */}
             <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto scrollbar-none hover:scrollbar-thin scrollbar-thumb-slate-200 dark:scrollbar-thumb-slate-800">
                 <div className="mb-4 px-3 flex items-center h-4">
-                    <p className="text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Geral</p>
+                    <p className={cn(
+    "text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-widest transition-opacity duration-300",
+    isMobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+)}>Geral</p>
                 </div>
                 {navigation.map((item) => {
                     if (item.name === "Depoimentos" && isAdmin) return null;
@@ -97,6 +101,7 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                         <Link
                             key={item.name}
                             href={item.href}
+                            onClick={() => onAction?.()}
                             className={cn(
                                 "flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-all duration-200 relative",
                                 isActive
@@ -105,7 +110,10 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                             )}
                         >
                             <item.icon className={cn("h-[18px] w-[18px] shrink-0 transition-colors", isActive ? "text-emerald-600 dark:text-emerald-400" : "text-slate-400")} />
-                            <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.name}</span>
+                            <span className={cn(
+    "transition-opacity duration-300",
+    isMobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+)}>{item.name}</span>
                         </Link>
                     )
                 })}
@@ -114,7 +122,10 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                 {isAdmin && (
                     <>
                         <div className="mt-8 mb-4 px-3 flex items-center h-4">
-                            <p className="text-[10px] font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300">Administração</p>
+                            <p className={cn(
+    "text-[10px] font-semibold text-purple-600 dark:text-purple-400 uppercase tracking-widest transition-opacity duration-300",
+    isMobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+)}>Administração</p>
                         </div>
                         {adminNavigation.map((item) => {
                             const isActive = pathname === item.href || pathname?.startsWith(item.href + "/")
@@ -122,6 +133,7 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                                 <Link
                                     key={item.name}
                                     href={item.href}
+                                    onClick={() => onAction?.()}
                                     className={cn(
                                         "flex items-center gap-3 px-3 py-2 text-sm rounded-md transition-all duration-200 relative",
                                         isActive
@@ -130,7 +142,10 @@ export function Sidebar({ mode = "desktop" }: SidebarProps) {
                                     )}
                                 >
                                     <item.icon className={cn("h-[18px] w-[18px] shrink-0 transition-colors", isActive ? "text-purple-600 dark:text-purple-400" : "text-slate-400")} />
-                                    <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">{item.name}</span>
+                                    <span className={cn(
+    "transition-opacity duration-300",
+    isMobile ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+)}>{item.name}</span>
                                 </Link>
                             )
                         })}

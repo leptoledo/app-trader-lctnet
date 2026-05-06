@@ -264,7 +264,7 @@ export default function AccountsPage() {
                                     </div>
                                 </div>
 
-                                <div className="opacity-0 group-hover:opacity-100 transition-opacity">
+                                <div className="transition-opacity">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
                                             <Button variant="ghost" size="icon" className="w-8 h-8 text-slate-400 hover:text-slate-900 dark:hover:text-white rounded-md hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors">
